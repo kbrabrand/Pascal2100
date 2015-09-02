@@ -6,14 +6,14 @@ public abstract class PascalDecl extends PascalSyntax {
     //Del 3: Type type = null;
 
     PascalDecl(String id, int lNum) {
-	super(lNum);
-	name = id;
+        super(lNum);
+        name = id;
     }
 
 
     /**
      * checkWhetherAssignable: Utility method to check whether this PascalDecl is
-     * assignable, i.e., may be used to the left of a :=. 
+     * assignable, i.e., may be used to the left of a :=.
      * The compiler must check that a name is used properly;
      * for instance, using a variable name a in "a()" is illegal.
      * This is handled in the following way:

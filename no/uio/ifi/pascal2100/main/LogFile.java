@@ -6,8 +6,11 @@ import no.uio.ifi.pascal2100.scanner.Token;
 import java.io.*;
 
 public class LogFile {
-    boolean doLogBinding = false, doLogParser = false, doLogPrettyPrint = false,
-	doLogScanner = false, doLogTypeChecks = false;
+    boolean doLogBinding = false,
+            doLogParser = false,
+            doLogPrettyPrint = false,
+            doLogScanner = false,
+            doLogTypeChecks = false;
 
     private String logFileName = null;
     private int nLogLines = 0;
@@ -16,38 +19,50 @@ public class LogFile {
     private int prettyIndentation = 0;
 
     void init(String fName) {
-	logFileName = fName;
+        logFileName = fName;
     }
 
     public void finish() {
-	if (prettyLine.length() > 0)
-	    prettyPrintLn();
+        if (prettyLine.length() > 0) {
+            prettyPrintLn();
+        }
     }
-
 
     public String identify() {
-	String t = "Log file";
-	if (logFileName != null)
-	    t += " named " + logFileName;
-	return t;
+        String t = "Log file";
+
+        if (logFileName != null) {
+            t += " named " + logFileName;
+        }
+
+        return t;
     }
 
-
     private void writeLogLine(String data) {
-	if (logFileName == null) return;
+        if (logFileName == null) {
+            return;
+        }
 
-	try {
-	    PrintWriter log = (nLogLines==0 ? new PrintWriter(logFileName) :
-		new PrintWriter(new FileOutputStream(logFileName,true)));
-	    log.println(data);  ++nLogLines;
-	    log.close();
-	} catch (FileNotFoundException e) {
-	    String lName = logFileName;
-	    logFileName = null;  // To avoid infinite recursion
-	                         // Main.error -> noteError -> 
-	                         //   writeLogLine -> ...
-	    Main.error("Cannot open log file " + lName + "!");
-	}
+        try {
+            PrintWriter log;
+
+            if (nLogLines==0) {
+               log = new PrintWriter(logFileName);
+            } else {
+                log = new PrintWriter(new FileOutputStream(logFileName,true));
+            }
+
+            log.println(data);  ++nLogLines;
+            log.close();
+        } catch (FileNotFoundException e) {
+            String lName = logFileName;
+
+            logFileName = null;  // To avoid infinite recursion
+
+            // Main.error -> noteError ->
+            //   writeLogLine -> ...
+            Main.error("Cannot open log file " + lName + "!");
+        }
     }
 
 
@@ -58,8 +73,9 @@ public class LogFile {
      * @param message  The error message
      */
     public void noteError(String message) {
-	if (nLogLines > 0) 
-	    writeLogLine(message);
+        if (nLogLines > 0) {
+            writeLogLine(message);
+        }
     }
 
 
@@ -71,41 +87,46 @@ public class LogFile {
      * @param line     The actual line
      */
     public void noteSourceLine(int lineNum, String line) {
-	if (doLogParser || doLogScanner) 
-	    writeLogLine(String.format("%4d: %s",lineNum,line));
+        if (doLogParser || doLogScanner) {
+            writeLogLine(String.format("%4d: %s",lineNum,line));
+        }
     }
-	
 
     /*
      * Make a note in the log file that a token has been read.
      * This note will only be made if the user has requested it.
      */
     public void noteToken(Token tok) {
-	if (doLogScanner)
-	    writeLogLine("Scanner: " + tok.identify());
+        if (doLogScanner) {
+            writeLogLine("Scanner: " + tok.identify());
+        }
     }
 
-
-    /* Del 3:
-    public void noteTypeCheck(String op, Type t, PascalSyntax where) {
-	if (doLogTypeChecks)
-	    writeLogLine("Type check on line " + where.lineNum + ": " + 
-		"{" + op + "} " + t.identify());
-    }
-
-    public void noteTypeCheck(Type t1, String op, Type t2, PascalSyntax where) {
-	if (doLogTypeChecks)
-	    writeLogLine("Type check on line " + where.lineNum + ": " + 
-		t1.identify() + " {" + op + "} " + t2.identify());
-    }
-    */
+    /**
+     * Del 3:
+     *
+     * public void noteTypeCheck(String op, Type t, PascalSyntax where) {
+     *     if (doLogTypeChecks) {
+     *         writeLogLine("Type check on line " + where.lineNum + ": " +
+     *             "{" + op + "} " + t.identify());
+     *     }
+     * }
+     *
+     *
+     * public void noteTypeCheck(Type t1, String op, Type t2, PascalSyntax where) {
+     *     if (doLogTypeChecks) {
+     *         writeLogLine("Type check on line " + where.lineNum + ": " +
+     *         t1.identify() + " {" + op + "} " + t2.identify());
+     *     }
+     * }
+     */
 
     public void noteBinding(String id, PascalSyntax where, PascalDecl decl) {
-	if (doLogBinding)
-	    writeLogLine("Binding on line " + where.lineNum + ": " + id + 
-		" was declared in " + decl.identify());
+        if (doLogBinding) {
+            writeLogLine("Binding on line " + where.lineNum + ": " + id +
+                " was declared in " + decl.identify());
+        }
     }
-
 
     /**
      * Make a note that the parser has startet parsing a non-terminal.
@@ -114,9 +135,10 @@ public class LogFile {
      * @param name The name of the non-terminal.
      */
     public void enterParser(String name) {
-	if (doLogParser) {
-	    noteParserInfo(name);  ++parseLevel;
-	}
+        if (doLogParser) {
+            noteParserInfo(name);
+            ++parseLevel;
+        }
     }
 
     /**
@@ -126,40 +148,48 @@ public class LogFile {
      * @param name The name of the non-terminal.
      */
     public void leaveParser(String name) {
-	if (doLogParser) {
-	    --parseLevel;  noteParserInfo("/"+name);
-	}
+        if (doLogParser) {
+            --parseLevel;
+            noteParserInfo("/"+name);
+        }
     }
 
     private void noteParserInfo(String name) {
-	String logLine = "Parser:   ";
-	for (int i = 1;  i <= parseLevel;  ++i) logLine += "  ";
-	writeLogLine(logLine + "<" + name + ">");
+        String logLine = "Parser:   ";
+
+        for (int i = 1;  i <= parseLevel;  ++i) {
+            logLine += "  ";
+        }
+
+        writeLogLine(logLine + "<" + name + ">");
     }
 
 
     public void prettyPrint(String s) {
-	if (prettyLine.equals("")) {
-	    for (int i = 1;  i <= prettyIndentation;  i++) 
-		prettyLine += "  ";
-	}
-	prettyLine += s;
+        if (prettyLine.equals("")) {
+            for (int i = 1;  i <= prettyIndentation;  i++) {
+                prettyLine += "  ";
+            }
+        }
+
+        prettyLine += s;
     }
 
     public void prettyPrintLn(String s) {
-	prettyPrint(s);  prettyPrintLn();
+        prettyPrint(s);
+        prettyPrintLn();
     }
 
     public void prettyPrintLn() {
-	writeLogLine(prettyLine);
-	prettyLine = "";
+        writeLogLine(prettyLine);
+        prettyLine = "";
     }
 
     public void prettyIndent() {
-	prettyIndentation++;
+        prettyIndentation++;
     }
 
     public void prettyOutdent() {
-	prettyIndentation--;
+        prettyIndentation--;
     }
 }
