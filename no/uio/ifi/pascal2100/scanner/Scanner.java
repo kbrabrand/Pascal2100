@@ -325,10 +325,11 @@ public class Scanner {
     
     /**
      * Skip empty lines
-     * @return 
      */
     private void skipEmptyLines() {
-    	while (getSourceLineRemainderLength() == 0) {
+    	// Skip empty lines for as long as we have a non-null 
+    	// source file and the current line contains 0 characters
+    	while (sourceFile != null && getSourceLineRemainderLength() == 0) {
     		readNextLine();
     	}
     }
@@ -342,7 +343,7 @@ public class Scanner {
         skipComments();
 
         // If we get here and the line is empty, repeat to check for more stuff to skip
-        if (getSourceLineRemainderLength() == 0) {
+        if (sourceFile != null && getSourceLineRemainderLength() == 0) {
         	skipNonTokens();
         }
     }
