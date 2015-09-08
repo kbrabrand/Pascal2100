@@ -120,7 +120,7 @@ public class Scanner {
         	);
         }
         
-        skipWhitespace();
+        skipNonTokens();
         
         // Read next line if we're at the end of the current one
         if (getSourceLineRemainderLength() == 0) {
@@ -223,10 +223,10 @@ public class Scanner {
         // Create token from matched string
         switch (tokenKind) {
 	        case stringValToken:
-	    		tok = new Token("", matcher.group(), getFileLineNum());
+	    		tok = new Token("", matcher.group(1), getFileLineNum());
 	    		break;
         	case nameToken:
-        		tok = new Token(matcher.group().toLowerCase(), getFileLineNum());
+        		tok = new Token(matcher.group(), getFileLineNum());
         		break;
         	case intValToken:
         		tok = new Token(Integer.parseInt(matcher.group()), getFileLineNum());
