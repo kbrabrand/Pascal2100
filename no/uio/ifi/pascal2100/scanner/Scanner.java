@@ -53,14 +53,10 @@ public class Scanner {
     }
 
     public void readNextToken() {
-        System.out.println("On line " + curLineNum() + ", col " + sourcePos);
-    	
     	Token tok;
     	
     	// Note end of token marker if we're at the end of the file
         if (sourceFile == null) {
-            System.out.println("Found e-o-f marker");
-        	
         	// Create end of file token
         	tok = new Token(eofToken, getFileLineNum());
         	nextToken = tok;
@@ -213,7 +209,7 @@ public class Scanner {
     private boolean testRegexp(Pattern pattern, TokenKind tokenKind) {
     	// Try the pattern against the remainder of the source line
         Matcher matcher = pattern.matcher(getSourceLineRemainder());
-	        
+        
         // No match
         if (!matcher.lookingAt()) {
         	return false;
