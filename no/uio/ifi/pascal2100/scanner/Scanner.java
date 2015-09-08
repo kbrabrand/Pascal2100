@@ -108,9 +108,9 @@ public class Scanner {
 		    testPrefix("var", varToken) ||
 		    testPrefix("while", whileToken) ||
 		    
-		    testRegexp(nameRegexp, nameToken) ||
+		    testRegexp(stringLiteralRegexp, stringValToken) ||
 		    testRegexp(numericLiteralRegexp, intValToken) ||
-		    testRegexp(stringLiteralRegexp, stringValToken);
+		    testRegexp(nameRegexp, nameToken);
 	    
         if (!ok) {
         	error(
@@ -217,9 +217,24 @@ public class Scanner {
     	
         // "Consume" the part of the input that was matched
         consumeSource(matcher.end());
-	        
+	    
+        Token tok;
+        
         // Create token from matched string
-        Token tok = new Token(tokenKind, getFileLineNum());
+        switch (tokenKind) {
+	        case stringValToken:
+	    		tok = new Token("", matcher.group(), getFileLineNum());
+	    		break;
+        	case nameToken:
+        		tok = new Token(matcher.group().toLowerCase(), getFileLineNum());
+        		break;
+        	case intValToken:
+        		tok = new Token(Integer.parseInt(matcher.group()), getFileLineNum());
+        		break;
+        	default:
+        		tok = new Token(tokenKind, getFileLineNum());
+        		break;
+        }
         
         Main.log.noteToken(tok);
         setToken(tok);
