@@ -10,7 +10,6 @@ public abstract class PascalDecl extends PascalSyntax {
         name = id;
     }
 
-
     /**
      * checkWhetherAssignable: Utility method to check whether this PascalDecl is
      * assignable, i.e., may be used to the left of a :=.

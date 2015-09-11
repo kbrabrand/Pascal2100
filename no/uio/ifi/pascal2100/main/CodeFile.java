@@ -69,7 +69,6 @@ public class CodeFile {
         code.println();
     }
 
-
     public void genString(String name, String s, String comment) {
         genDirective(".data", "");
         printLabel(name, false);

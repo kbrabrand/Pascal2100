@@ -6,6 +6,6 @@ public class PascalError extends RuntimeException {
     private static final long serialVersionUID = 20150629L;
 
     PascalError(String message) {
-	   super(message);
+       super(message);
     }
 }

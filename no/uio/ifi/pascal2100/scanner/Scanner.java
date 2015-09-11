@@ -16,14 +16,14 @@ public class Scanner {
 
     // Regular expression for matching one-line comment
     private static Pattern oneLineCommentRegexp = Pattern.compile("^(?:\\/\\*(.*)\\*\\/|\\{.*\\})");
-    
+
     // Regular expression for finding start of comment over multiple lines
     private static Pattern multilineCommentStartRegexp = Pattern.compile("^\\{|\\/\\*");
-    
+
     private static Pattern nameRegexp = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_]*");
-    
+
     private static Pattern numericLiteralRegexp = Pattern.compile("^\\d+");
-    
+
     private static Pattern stringLiteralRegexp = Pattern.compile("^'((?:\\.|[^\\'])*)'");
 
     public Scanner(String fileName) {
@@ -53,25 +53,25 @@ public class Scanner {
     }
 
     public void readNextToken() {
-    	Token tok;
-    	
-    	// Note end of token marker if we're at the end of the file
+        Token tok;
+
+        // Note end of token marker if we're at the end of the file
         if (sourceFile == null) {
-        	// Create end of file token
-        	tok = new Token(eofToken, getFileLineNum());
-        	nextToken = tok;
-        	
-        	// Note the token
+            // Create end of file token
+            tok = new Token(eofToken, getFileLineNum());
+            nextToken = tok;
+
+            // Note the token
             Main.log.noteToken(tok);
-        	
+
             return;
         }
-	    
+
         // Skip non-tokens
         skipNonTokens();
-        
-        boolean ok = 
-        	testPrefix("+", addToken) || 
+
+        boolean ok =
+            testPrefix("+", addToken) ||
             testPrefix(":=", assignToken) ||
             testPrefix(":", colonToken) ||
             testPrefix(",", commaToken) ||
@@ -92,39 +92,39 @@ public class Scanner {
             testPrefix("begin", beginToken) ||
             testPrefix("const", constToken) ||
             testPrefix("div", divToken) ||
-		    testPrefix("do", doToken) ||
-		    testPrefix("else", elseToken) ||
-		    testPrefix("end", endToken) ||
-		    testPrefix("function", functionToken) ||
-		    testPrefix("if", ifToken) ||
-		    testPrefix("mod", modToken) ||
-		    testPrefix("not", notToken) ||
-		    testPrefix("of", ofToken) ||
-		    testPrefix("or", orToken) ||
-		    testPrefix("procedure", procedureToken) ||
-		    testPrefix("program", programToken) ||
-		    testPrefix("then", thenToken) ||
-		    testPrefix("type", typeToken) ||
-		    testPrefix("var", varToken) ||
-		    testPrefix("while", whileToken) ||
-		    
-		    testRegexp(stringLiteralRegexp, stringValToken) ||
-		    testRegexp(numericLiteralRegexp, intValToken) ||
-		    testRegexp(nameRegexp, nameToken);
-	    
+            testPrefix("do", doToken) ||
+            testPrefix("else", elseToken) ||
+            testPrefix("end", endToken) ||
+            testPrefix("function", functionToken) ||
+            testPrefix("if", ifToken) ||
+            testPrefix("mod", modToken) ||
+            testPrefix("not", notToken) ||
+            testPrefix("of", ofToken) ||
+            testPrefix("or", orToken) ||
+            testPrefix("procedure", procedureToken) ||
+            testPrefix("program", programToken) ||
+            testPrefix("then", thenToken) ||
+            testPrefix("type", typeToken) ||
+            testPrefix("var", varToken) ||
+            testPrefix("while", whileToken) ||
+
+            testRegexp(stringLiteralRegexp, stringValToken) ||
+            testRegexp(numericLiteralRegexp, intValToken) ||
+            testRegexp(nameRegexp, nameToken);
+
         if (!ok) {
-        	error(
-        		"Tokenization failed at line " + getFileLineNum() + ", col " + sourcePos + ":\n" +
-        		sourceLine + "\n" +
-        		new String(new char[sourcePos]).replace('\0', ' ') + "^"
-        	);
+            error(
+                "Tokenization failed at line " + getFileLineNum() + ", col " + sourcePos + ":\n" +
+                sourceLine + "\n" +
+                new String(new char[sourcePos]).replace('\0', ' ') + "^"
+            );
         }
-        
+
         skipNonTokens();
-        
+
         // Read next line if we're at the end of the current one
         if (getSourceLineRemainderLength() == 0) {
-        	readNextLine();
+            readNextLine();
         }
     }
 
@@ -155,27 +155,26 @@ public class Scanner {
     private int getFileLineNum() {
         return (sourceFile!=null ? sourceFile.getLineNumber() : 0);
     }
-    
-    
+
     /**
-	 * Update curToken and nextToken after finding a new token.
-     * 
+     * Update curToken and nextToken after finding a new token.
+     *
      * @param Token tok The discovered token
      */
     private void setToken(Token tok) {
-    	if (curToken == null) {
-        	curToken = tok;
+        if (curToken == null) {
+            curToken = tok;
         } else if (curToken != null && nextToken == null) {
-        	nextToken = tok;
+            nextToken = tok;
         } else {
-        	curToken = nextToken;
-        	nextToken = tok;
+            curToken = nextToken;
+            nextToken = tok;
         }
     }
 
     // Source test utilities:
 
-	/**
+    /**
      * Test if the remainder of the sourceLine starts with a given prefix
      *
      * @param String prefix The prefix to test
@@ -183,65 +182,65 @@ public class Scanner {
 	 * @return boolean Whether or not the prefix was found
      */
     private boolean testPrefix(String prefix, TokenKind tokenKind) {
-		if (!getSourceLineRemainder().startsWith(prefix)) {
-			return false;
-		}
-		
-		// "Consume" the part of the input that was matched
+        if (!getSourceLineRemainder().startsWith(prefix)) {
+            return false;
+        }
+
+        // "Consume" the part of the input that was matched
         consumeSource(prefix.length());
-	        
+
         // Create token from matched string
         Token tok = new Token(tokenKind, getFileLineNum());
-        
+
         Main.log.noteToken(tok);
         setToken(tok);
-        
+
         return true;
     }
 
     /**
      * Test a regular expression against the sourceLine
-     * 
+     *
      * @param Pattern pattern The pattern to match
      * @param TokenKind the type of token to note if we have a match
      * @return boolean Whether or not the pattern match
      */
     private boolean testRegexp(Pattern pattern, TokenKind tokenKind) {
-    	// Try the pattern against the remainder of the source line
+        // Try the pattern against the remainder of the source line
         Matcher matcher = pattern.matcher(getSourceLineRemainder());
-        
+
         // No match
         if (!matcher.lookingAt()) {
-        	return false;
+            return false;
         }
-    	
+
         // "Consume" the part of the input that was matched
         consumeSource(matcher.end());
-	    
+
         Token tok;
-        
+
         // Create token from matched string
         switch (tokenKind) {
-	        case stringValToken:
-	    		tok = new Token("", matcher.group(1), getFileLineNum());
-	    		break;
-        	case nameToken:
-        		tok = new Token(matcher.group(), getFileLineNum());
-        		break;
-        	case intValToken:
-        		tok = new Token(Integer.parseInt(matcher.group()), getFileLineNum());
-        		break;
-        	default:
-        		tok = new Token(tokenKind, getFileLineNum());
-        		break;
+            case stringValToken:
+                tok = new Token("", matcher.group(1), getFileLineNum());
+                break;
+            case nameToken:
+                tok = new Token(matcher.group(), getFileLineNum());
+                break;
+            case intValToken:
+                tok = new Token(Integer.parseInt(matcher.group()), getFileLineNum());
+                break;
+            default:
+                tok = new Token(tokenKind, getFileLineNum());
+                break;
         }
-        
+
         Main.log.noteToken(tok);
         setToken(tok);
-        
+
         return true;
     }
-    
+
     /**
      * Consume the source by cutting off a given number of characters from the start of
      * the sourceRemainder string. If the string is emptied, a new line is read.
@@ -250,8 +249,8 @@ public class Scanner {
      */
     private void consumeSource(int n) {
         int remainingChars = getSourceLineRemainder().length();
-        
-    	if (remainingChars < n) {
+
+        if (remainingChars < n) {
             Main.error(curLineNum(),
                 "Trying to consume " + n +
                 " characters from sourceLine, but only " +
@@ -269,8 +268,8 @@ public class Scanner {
     private void skipWhitespace() {
         String remainder = getSourceLineRemainder();
         int remainderLength = remainder.length();
-        
-    	int i = 0;
+
+        int i = 0;
 
         while (i < remainderLength && Character.isWhitespace(remainder.charAt(i))) {
             i++;
@@ -283,90 +282,90 @@ public class Scanner {
      * Skip comments from the start of the current line
      */
     private void skipComments() {
-    	// Check if this is a one line comment
-    	Matcher commentMatcher = oneLineCommentRegexp.matcher(getSourceLineRemainder());
-    	
-    	if (commentMatcher.lookingAt()) {
-    		consumeSource(commentMatcher.end());
-    		
-    		readNextLine();
-    		return;
-    	}
-    	
-    	// Check if this is the start of a comment over multiple lines
-    	Matcher multilineCommentMatcher = multilineCommentStartRegexp.matcher(getSourceLineRemainder());
-    	
-    	if (multilineCommentMatcher.lookingAt()) {
-    		// Prepare the termination pattern based on what opening symbol we found 
-    		Pattern commentTerminationRegexp = 
-				multilineCommentMatcher.group() == "{" ? 
-				Pattern.compile(".*\\}") :
-				Pattern.compile(".*\\*\\/");
-    		
-    		readNextLine();
-    		
-    		boolean foundCommentTerminationSymbol = false;
-    		
-    		// Get lines for as long as it takes to find the termination marker 
-    		do {
-    			readNextLine();
-    			Matcher multilineEndMatcher = commentTerminationRegexp.matcher(getSourceLineRemainder());
-    			
-    			// Check if we found the end
-    			foundCommentTerminationSymbol = multilineEndMatcher.lookingAt();
-    		} while (!foundCommentTerminationSymbol);
-    		
-    		// We found the termination symbol, read the next line so we're ready
-    		if (foundCommentTerminationSymbol) {
-    			readNextLine();
-    		}
-    	}
+        // Check if this is a one line comment
+        Matcher commentMatcher = oneLineCommentRegexp.matcher(getSourceLineRemainder());
+
+        if (commentMatcher.lookingAt()) {
+            consumeSource(commentMatcher.end());
+
+            readNextLine();
+            return;
+        }
+
+        // Check if this is the start of a comment over multiple lines
+        Matcher multilineCommentMatcher = multilineCommentStartRegexp.matcher(getSourceLineRemainder());
+
+        if (multilineCommentMatcher.lookingAt()) {
+            // Prepare the termination pattern based on what opening symbol we found
+            Pattern commentTerminationRegexp =
+                multilineCommentMatcher.group() == "{" ?
+                Pattern.compile(".*\\}") :
+                Pattern.compile(".*\\*\\/");
+
+            readNextLine();
+
+            boolean foundCommentTerminationSymbol = false;
+
+            // Get lines for as long as it takes to find the termination marker
+            do {
+                readNextLine();
+                Matcher multilineEndMatcher = commentTerminationRegexp.matcher(getSourceLineRemainder());
+
+                // Check if we found the end
+                foundCommentTerminationSymbol = multilineEndMatcher.lookingAt();
+            } while (!foundCommentTerminationSymbol);
+
+            // We found the termination symbol, read the next line so we're ready
+            if (foundCommentTerminationSymbol) {
+                readNextLine();
+            }
+        }
     }
-    
+
     /**
      * Skip empty lines
      */
     private void skipEmptyLines() {
-    	// Skip empty lines for as long as we have a non-null 
-    	// source file and the current line contains 0 characters
-    	while (sourceFile != null && getSourceLineRemainderLength() == 0) {
-    		readNextLine();
-    	}
+        // Skip empty lines for as long as we have a non-null
+        // source file and the current line contains 0 characters
+        while (sourceFile != null && getSourceLineRemainderLength() == 0) {
+            readNextLine();
+        }
     }
-    
+
     /**
      * Skip non-tokens, like whitespace, comments and empty newlines
      */
     private void skipNonTokens() {
-    	skipEmptyLines();
+        skipEmptyLines();
         skipWhitespace();
         skipComments();
 
         // If we get here and the line is empty, repeat to check for more stuff to skip
         if (sourceFile != null && getSourceLineRemainderLength() == 0) {
-        	skipNonTokens();
+            skipNonTokens();
         }
     }
-    
+
     /**
      * Get the remaining part of the sourceLine based on the current sourcePos offset
-     * 
+     *
      * @return String The remainder of the source line
      */
     private String getSourceLineRemainder() {
-    	return sourceLine.substring(sourcePos);
+        return sourceLine.substring(sourcePos);
     }
-    
+
     /**
      * Get the number of characters left on the current line based on the sourcePos offset
-     * 
+     *
      * @return integer Numbers of characters left on the source line
      */
     private int getSourceLineRemainderLength() {
-    	return getSourceLineRemainder().length();
+        return getSourceLineRemainder().length();
     }
-    
-    
+
+
     // Parser tests:
 
     public void test(TokenKind t) {

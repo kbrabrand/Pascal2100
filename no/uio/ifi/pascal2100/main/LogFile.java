@@ -65,7 +65,6 @@ public class LogFile {
         }
     }
 
-
     /**
      * Make a note in the log file that an error has occured.
      * (If the log file is not in use, request is ignored.)
@@ -77,7 +76,6 @@ public class LogFile {
             writeLogLine(message);
         }
     }
-
 
     /**
      * Make a note in the log file that a source line has been read.
@@ -163,7 +161,6 @@ public class LogFile {
 
         writeLogLine(logLine + "<" + name + ">");
     }
-
 
     public void prettyPrint(String s) {
         if (prettyLine.equals("")) {

@@ -23,7 +23,7 @@
         </jar>
     </target>
 
-    <target name="zip" description="Create a ZIP file">
+    <target name="zip" depends="clean" description="Create a ZIP file">
         <zip destfile="inf2100-oblig.zip" basedir="."/>
     </target>
 </project>

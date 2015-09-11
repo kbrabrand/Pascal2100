@@ -86,7 +86,6 @@ public class Main {
         }
     }
 
-
     /* Del 2:
     private static void doTestParser(Scanner s) {
     Program prog = Program.parse(s);
@@ -163,7 +162,6 @@ public class Main {
             error("Assembly errors detected.");
         }
     }
-
 
     // Error message utilities:
 
