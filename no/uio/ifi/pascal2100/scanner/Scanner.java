@@ -117,8 +117,11 @@ public class Scanner {
             testRegexp(nameRegexp, nameToken);
 
         if (!ok) {
-            error(
-                "Tokenization failed at line " + getFileLineNum() + ", col " + sourcePos + ":\n" +
+            char unexpectedCharacter = getSourceLineRemainder().charAt(0);
+        	
+        	error(
+                "Unexpected character '" + unexpectedCharacter + "' " + 
+                "on line " + getFileLineNum() + ", col " + (sourcePos + 1) + ":\n" +
                 sourceLine + "\n" +
                 new String(new char[sourcePos]).replace('\0', ' ') + "^"
             );
