@@ -279,15 +279,17 @@ public class Scanner {
                 remainingChars + " characters remain."
             );
         }
-
+        
         // Cut off characters from the start of the remainder
         sourcePos += n;
     }
 
     /**
      * Skips whitespace characters from the start of the current line
+     * 
+     * @return boolean Whether something was skipped or not
      */
-    private void skipWhitespace() {
+    private boolean skipWhitespace() {
         String remainder = getSourceLineRemainder();
         int remainderLength = remainder.length();
 
@@ -341,32 +343,44 @@ public class Scanner {
             if (foundCommentTerminationSymbol) {
                 readNextLine();
             }
+            
+            return true;
         }
+        
+        return false;
     }
 
     /**
      * Skip empty lines
+     * 
+     * @return boolean Whether something was skipped or not
      */
-    private void skipEmptyLines() {
-        // Skip empty lines for as long as we have a non-null
+    private boolean skipEmptyLines() {
+        boolean result = false;
+    	
+    	// Skip empty lines for as long as we have a non-null
         // source file and the current line contains 0 characters
         while (sourceFile != null && getSourceLineRemainderLength() == 0) {
-            readNextLine();
+            result = true;
+        	
+        	readNextLine();
         }
+        
+        return result;
     }
 
     /**
      * Skip non-tokens, like whitespace, comments and empty newlines
      */
     private void skipNonTokens() {
-        skipEmptyLines();
-        skipWhitespace();
-        skipComments();
-
-        // If we get here and the line is empty, repeat to check for more stuff to skip
-        if (sourceFile != null && getSourceLineRemainderLength() == 0) {
-            skipNonTokens();
-        }
+        boolean skippedSomething;
+        
+        do { 
+        	skippedSomething = 
+        		skipEmptyLines() ||
+        		skipWhitespace() ||
+        		skipComments();
+        } while (skippedSomething);
     }
 
     /**
