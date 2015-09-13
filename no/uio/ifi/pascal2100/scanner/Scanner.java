@@ -48,7 +48,7 @@ public class Scanner {
     }
 
     public int curLineNum() {
-        return getFileLineNum();
+    	return getFileLineNum();
     }
 
     private void error(String message) {
@@ -154,6 +154,7 @@ public class Scanner {
                 Main.error("Scanner error: unspecified I/O error!");
             }
         }
+    	
         if (sourceFile != null) {
             Main.log.noteSourceLine(getFileLineNum(), sourceLine);
         }
@@ -300,39 +301,47 @@ public class Scanner {
         }
 
         consumeSource(i);
+        
+        return i > 0;
     }
 
     /**
      * Skip comments from the start of the current line
+     * 
+     * @result boolean Whether something was skipped or not
      */
-    private void skipComments() {
-        // Check if this is a one line comment
+    private boolean skipComments() {
+    	// Check if this is a one line comment
         Matcher commentMatcher = oneLineCommentRegexp.matcher(getSourceLineRemainder());
 
         if (commentMatcher.lookingAt()) {
             consumeSource(commentMatcher.end());
 
-            readNextLine();
-            return;
+            return true;
         }
 
         // Check if this is the start of a comment over multiple lines
         Matcher multilineCommentMatcher = multilineCommentStartRegexp.matcher(getSourceLineRemainder());
 
         if (multilineCommentMatcher.lookingAt()) {
-            // Prepare the termination pattern based on what opening symbol we found
+        	int commentStartLineNumber = getFileLineNum();
+        	boolean foundCommentTerminationSymbol;
+        	
+        	// Prepare the termination pattern based on what opening symbol we found
             Pattern commentTerminationRegexp =
                 multilineCommentMatcher.group() == "{" ?
                 Pattern.compile(".*\\}") :
                 Pattern.compile(".*\\*\\/");
-
-            readNextLine();
-
-            boolean foundCommentTerminationSymbol = false;
-
+                
             // Get lines for as long as it takes to find the termination marker
             do {
-                readNextLine();
+            	if (sourceFile == null) {
+            		Main.error(curLineNum() + 1, "Comment block started on line " + commentStartLineNumber + " has no end");
+                }
+            	
+            	// Read next line
+            	readNextLine();
+            	
                 Matcher multilineEndMatcher = commentTerminationRegexp.matcher(getSourceLineRemainder());
 
                 // Check if we found the end
