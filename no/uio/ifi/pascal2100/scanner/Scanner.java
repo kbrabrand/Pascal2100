@@ -365,7 +365,6 @@ public class Scanner {
         return getSourceLineRemainder().length();
     }
 
-
     // Parser tests:
 
     public void test(TokenKind t) {
