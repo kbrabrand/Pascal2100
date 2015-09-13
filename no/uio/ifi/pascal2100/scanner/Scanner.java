@@ -25,6 +25,9 @@ public class Scanner {
     private static Pattern numericLiteralRegexp = Pattern.compile("^\\d+");
 
     private static Pattern stringLiteralRegexp = Pattern.compile("^'((?:\\.|[^\\'])*)'");
+    
+    // Regular expression matching an unterminated string literal
+    private static Pattern untermStringLiteralRegexp = Pattern.compile("^'((?:\\.|[^\\'])*)$");
 
     public Scanner(String fileName) {
         sourceFileName = fileName;
@@ -108,6 +111,7 @@ public class Scanner {
             testPrefix("var", varToken) ||
             testPrefix("while", whileToken) ||
 
+            testUnterminatedString() ||
             testRegexp(stringLiteralRegexp, stringValToken) ||
             testRegexp(numericLiteralRegexp, intValToken) ||
             testRegexp(nameRegexp, nameToken);
@@ -241,6 +245,21 @@ public class Scanner {
         return true;
     }
 
+    /**
+     * Test if the next token is an unterminated string
+     * 
+     * @return boolean
+     */
+    private boolean testUnterminatedString() {
+    	Matcher matcher = untermStringLiteralRegexp.matcher(getSourceLineRemainder());
+    	
+    	if (matcher.lookingAt()) {
+    		error("Unterminated string literal");
+    	}
+    	
+    	return false;
+    }
+    
     /**
      * Consume the source by cutting off a given number of characters from the start of
      * the sourceRemainder string. If the string is emptied, a new line is read.
