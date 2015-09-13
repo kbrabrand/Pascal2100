@@ -20,7 +20,7 @@ public class Scanner {
     // Regular expression for finding start of comment over multiple lines
     private static Pattern multilineCommentStartRegexp = Pattern.compile("^\\{|\\/\\*");
 
-    private static Pattern nameRegexp = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_]*");
+    private static Pattern nameRegexp = Pattern.compile("^[a-zA-Z][a-zA-Z0-9]*");
 
     private static Pattern numericLiteralRegexp = Pattern.compile("^\\d+");
 
