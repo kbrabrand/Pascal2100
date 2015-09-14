@@ -14,6 +14,7 @@
 	<target name="clean" description="Remove generated files">
         <delete dir="classes"/>
         <delete file="pascal2100.jar"/>
+		<delete file="inf2100-oblig.zip"/>
 		<delete>
 		    <fileset dir="./test_files" includes="**/*.log"/>
 		</delete>
