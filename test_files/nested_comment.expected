@@ -1,0 +1,11 @@
+   1: /* Det er lov å ha kommentarer utenpå hverandre, 
+   2:    om de er av ulik type, 
+   3:    for eksempel slik: {indre kommentar}. 
+   4:  
+   5:    Men det er ikke lov når de er av samme type, 
+   6:    for eksempel slik: /*indre kommentar*/ 
+   7:    som _ikke_ er lov. 
+Scanner: name token on line 7: som
+Scanner error on line 7: Unexpected character '_' on line 7, col 8:
+   som _ikke_ er lov. 
+       ^

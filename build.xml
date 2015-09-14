@@ -1,8 +1,25 @@
 <?xml version="1.0"?>
 <project name="pascal2100" default="jar">
-    <target name="clean" description="Remove generated files">
+	<property name="junit.results" value="test-results"/>
+	
+	<path id="classpath.test">
+        <path refid="classpath"/>
+        <pathelement location="classes"/>
+    </path>
+	
+	<path id="classpath">
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+	</path>
+	
+	<target name="clean" description="Remove generated files">
         <delete dir="classes"/>
         <delete file="pascal2100.jar"/>
+		<delete>
+		    <fileset dir="./test_files" includes="**/*.log"/>
+		</delete>
+		<delete>
+		    <fileset dir="./test_files" includes="**/*.pas~"/>
+		</delete>
     </target>
 
     <target name="compile" description="Compile the application">
@@ -25,5 +42,20 @@
 
     <target name="zip" depends="clean" description="Create a ZIP file">
         <zip destfile="inf2100-oblig.zip" basedir="."/>
+    </target>
+	
+    <target name="test" depends="compile" description="Run unit tests">
+        <delete dir="${junit.results}"/>
+        <mkdir dir="${junit.results}"/>
+        <junit fork="no" errorProperty="test.failed" failureProperty="test.failed" >
+            <classpath refid="classpath.test" />
+            <formatter type="plain" usefile="false"/>
+            <formatter type="xml"/>
+
+            <batchtest todir="${junit.results}">
+                <fileset dir="." includes="**/*Test.class"/>
+            </batchtest>
+        </junit>
+        <fail message="Tests failed. Please see test reports" if="test.failed" />
     </target>
 </project>

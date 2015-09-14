@@ -1,0 +1,105 @@
+   1: program GCD; 
+Scanner: program token on line 1
+Scanner: name token on line 1: GCD
+Scanner: ; token on line 1
+   2: /* A program to compute the greatest common of two numbers, 
+   3:    i.e., the biggest numbers by which the two original 
+   4:    numbers can be divide without a remainder. */ 
+   5:  
+   6: const v1 = 1071; v2 = 462; 
+Scanner: const token on line 6
+Scanner: name token on line 6: v1
+Scanner: = token on line 6
+Scanner: number token on line 6: 1071
+Scanner: ; token on line 6
+Scanner: name token on line 6: v2
+Scanner: = token on line 6
+Scanner: number token on line 6: 462
+Scanner: ; token on line 6
+   7:  
+   8: var res: integer; 
+Scanner: var token on line 8
+Scanner: name token on line 8: res
+Scanner: : token on line 8
+Scanner: name token on line 8: integer
+Scanner: ; token on line 8
+   9:  
+  10: function GCD (m: integer; n: integer): integer; 
+Scanner: function token on line 10
+Scanner: name token on line 10: GCD
+Scanner: ( token on line 10
+Scanner: name token on line 10: m
+Scanner: : token on line 10
+Scanner: name token on line 10: integer
+Scanner: ; token on line 10
+Scanner: name token on line 10: n
+Scanner: : token on line 10
+Scanner: name token on line 10: integer
+Scanner: ) token on line 10
+Scanner: : token on line 10
+Scanner: name token on line 10: integer
+Scanner: ; token on line 10
+  11: begin 
+Scanner: begin token on line 11
+  12:     if n = 0 then 
+Scanner: if token on line 12
+Scanner: name token on line 12: n
+Scanner: = token on line 12
+Scanner: number token on line 12: 0
+Scanner: then token on line 12
+  13:         GCD := m 
+Scanner: name token on line 13: GCD
+Scanner: := token on line 13
+Scanner: name token on line 13: m
+  14:     else 
+Scanner: else token on line 14
+  15:         GCD := GCD(n, m mod n) 
+Scanner: name token on line 15: GCD
+Scanner: := token on line 15
+Scanner: name token on line 15: GCD
+Scanner: ( token on line 15
+Scanner: name token on line 15: n
+Scanner: , token on line 15
+Scanner: name token on line 15: m
+Scanner: mod token on line 15
+Scanner: name token on line 15: n
+Scanner: ) token on line 15
+  16: end; { GCD } 
+Scanner: end token on line 16
+Scanner: ; token on line 16
+  17:  
+  18: begin 
+Scanner: begin token on line 18
+  19:     res := GCD(v1,v2); 
+Scanner: name token on line 19: res
+Scanner: := token on line 19
+Scanner: name token on line 19: GCD
+Scanner: ( token on line 19
+Scanner: name token on line 19: v1
+Scanner: , token on line 19
+Scanner: name token on line 19: v2
+Scanner: ) token on line 19
+Scanner: ; token on line 19
+  20:     write('GCD(', v1, ',', v2, ') = ', res, eol); 
+Scanner: name token on line 20: write
+Scanner: ( token on line 20
+Scanner: text string token on line 20: 'GCD('
+Scanner: , token on line 20
+Scanner: name token on line 20: v1
+Scanner: , token on line 20
+Scanner: text string token on line 20: ','
+Scanner: , token on line 20
+Scanner: name token on line 20: v2
+Scanner: , token on line 20
+Scanner: text string token on line 20: ') = '
+Scanner: , token on line 20
+Scanner: name token on line 20: res
+Scanner: , token on line 20
+Scanner: name token on line 20: eol
+Scanner: ) token on line 20
+Scanner: ; token on line 20
+  21: end. 
+Scanner: end token on line 21
+Scanner: . token on line 21
+  22:  
+Scanner: e-o-f token

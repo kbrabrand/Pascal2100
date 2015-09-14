@@ -1,0 +1,18 @@
+   1:  
+   2: /* Et minimalt Pascal-program */ 
+   3: program Mini; 
+Scanner: program token on line 3
+Scanner: name token on line 3: Mini
+Scanner: ; token on line 3
+   4: begin 
+Scanner: begin token on line 4
+   5:     write('x'); 
+Scanner: name token on line 5: write
+Scanner: ( token on line 5
+Scanner: text string token on line 5: 'x'
+Scanner: ) token on line 5
+Scanner: ; token on line 5
+   6: end. 
+Scanner: end token on line 6
+Scanner: . token on line 6
+Scanner: e-o-f token

@@ -1,0 +1,14 @@
+   1: /* 
+   2: Dette programmet inneholder en tekstliteral uten avslutning. 
+   3: */ 
+   4:  
+   5: program UendeligTekst; 
+Scanner: program token on line 5
+Scanner: name token on line 5: UendeligTekst
+Scanner: ; token on line 5
+   6: begin 
+Scanner: begin token on line 6
+   7:    write('Tekst uten ende..., eol); 
+Scanner: name token on line 7: write
+Scanner: ( token on line 7
+Scanner error on line 7: Unterminated string literal

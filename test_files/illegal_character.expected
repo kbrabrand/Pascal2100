@@ -1,0 +1,33 @@
+   1: /* Det er lov aa ha alle mulige rare ASCII-tegn i kommentarer: 
+   2:    !"#%&/?". */ 
+   3:  
+   4: program UlovligTegn; 
+Scanner: program token on line 4
+Scanner: name token on line 4: UlovligTegn
+Scanner: ; token on line 4
+   5: var x : integer; 
+Scanner: var token on line 5
+Scanner: name token on line 5: x
+Scanner: : token on line 5
+Scanner: name token on line 5: integer
+Scanner: ; token on line 5
+   6: begin 
+Scanner: begin token on line 6
+   7:    { Det er ogsaa lov i tekstliteraler: } 
+   8:    write('!#%&/?', eol); 
+Scanner: name token on line 8: write
+Scanner: ( token on line 8
+Scanner: text string token on line 8: '!#%&/?'
+Scanner: , token on line 8
+Scanner: name token on line 8: eol
+Scanner: ) token on line 8
+Scanner: ; token on line 8
+   9:  
+  10:    { Men ikke ellers: } 
+  11:    x := 127 % 4; 
+Scanner: name token on line 11: x
+Scanner: := token on line 11
+Scanner: number token on line 11: 127
+Scanner error on line 11: Unexpected character '%' on line 11, col 13:
+   x := 127 % 4; 
+            ^

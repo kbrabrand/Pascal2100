@@ -2,6 +2,10 @@
 classes/
 .project
 .classpath
+inf2100-oblig.zip
+
+test_files/*.log
+test_files/*.pas~
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
