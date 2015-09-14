@@ -16,10 +16,10 @@
         <delete file="pascal2100.jar"/>
 		<delete file="inf2100-oblig.zip"/>
 		<delete>
-		    <fileset dir="./test_files" includes="**/*.log"/>
+		    <fileset dir="./tests/fixtures" includes="**/*.log"/>
 		</delete>
 		<delete>
-		    <fileset dir="./test_files" includes="**/*.pas~"/>
+		    <fileset dir="./tests/fixtures" includes="**/*.pas~"/>
 		</delete>
     </target>
 
