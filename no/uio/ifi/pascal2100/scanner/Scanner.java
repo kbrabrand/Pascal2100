@@ -24,7 +24,7 @@ public class Scanner {
 
     private static Pattern numericLiteralRegexp = Pattern.compile("^\\d+");
 
-    private static Pattern stringLiteralRegexp = Pattern.compile("^'((?:\\.|[^\\'])*)'");
+    private static Pattern stringLiteralRegexp = Pattern.compile("^'((?:''|[^'])*)'");
     
     // Regular expression matching an unterminated string literal
     private static Pattern untermStringLiteralRegexp = Pattern.compile("^'((?:\\.|[^\\'])*)$");
