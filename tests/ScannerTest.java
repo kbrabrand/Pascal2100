@@ -11,13 +11,13 @@ import org.junit.Test;
 
 public class ScannerTest {
 	private static final String testFiles[] = {
-		"10star",
-		"mini", 
-		"gcd",
-		"nested_comment",
-		"endless_comment",
-		"endless_string_literal",
-		"illegal_character"
+        "10star",
+        "mini",
+        "gcd",
+        "nested_comment",
+        "endless_comment",
+        "endless_string_literal",
+        "illegal_character"
 	};
 
 	private void processFile(String name) {

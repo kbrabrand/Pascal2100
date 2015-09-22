@@ -74,12 +74,12 @@ public class Scanner {
         skipNonTokens();
 
         boolean ok =
-        	testPrefix("<=", lessEqualToken) || testPrefix(">=", greaterEqualToken) ||
-        	testPrefix("<>", notEqualToken) ||
+            testPrefix("<=", lessEqualToken) || testPrefix(">=", greaterEqualToken) ||
+            testPrefix("<>", notEqualToken) ||
             testPrefix("..", rangeToken) ||
             testPrefix(":=", assignToken) ||
             
-        	testPrefix("+", addToken) ||
+            testPrefix("+", addToken) ||
             testPrefix(":", colonToken) ||
             testPrefix(",", commaToken) ||
             testPrefix(".", dotToken) ||
