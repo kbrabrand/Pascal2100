@@ -11,6 +11,7 @@ import org.junit.Test;
 
 public class ScannerTest {
 	private static final String testFiles[] = {
+		"10star",
 		"mini", 
 		"gcd",
 		"nested_comment",
