@@ -62,7 +62,7 @@ public class Scanner {
         if (sourceFile == null) {
             // Create end of file token
             tok = new Token(eofToken, getFileLineNum());
-            nextToken = tok;
+            setToken(tok);
 
             // Note the token
             Main.log.noteToken(tok);
