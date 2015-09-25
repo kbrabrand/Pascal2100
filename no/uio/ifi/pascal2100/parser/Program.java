@@ -1,5 +1,6 @@
 package no.uio.ifi.pascal2100.parser;
 
+import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.*;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.*;
 
@@ -8,9 +9,11 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.*;
 public class Program extends PascalDecl {
     public Block progBlock;
     public PascalDecl context;
+    public String name;
 
     Program(String id, int num) {
         super(id, num);
+        name = id;
     }
 
     @Override
@@ -39,7 +42,13 @@ public class Program extends PascalDecl {
         return p;
     }
 
-    void prettyPrint() {
-        // TODO Auto-generated method stub
+    public void prettyPrint() {
+        Main.log.prettyPrintLn("program " + name + ";");
+        Main.log.prettyIndent();
+        
+        progBlock.prettyPrint();
+        
+        Main.log.prettyOutdent();
+        Main.log.prettyPrintLn(".");
     }
 }

@@ -8,6 +8,7 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.procedureToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.beginToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.endToken;
 
+import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class Block extends PascalSyntax {
@@ -49,16 +50,22 @@ public class Block extends PascalSyntax {
         
         s.skip(beginToken);
 
-        b.stmtList = StatmList.parse(s);
+        //b.stmtList = StatmList.parse(s);
 
         s.skip(endToken);
-
+        
         leaveParser("block");
 
         return b;
     }
 
-    void prettyPrint() {
-        // TODO Auto-generated method stub
+    public void prettyPrint() {
+        Main.log.prettyPrintLn("begin");
+        Main.log.prettyIndent();
+        
+        //stmtList.prettyPrint();
+        
+        Main.log.prettyOutdent();
+        Main.log.prettyPrintLn("end");
     }
 }
