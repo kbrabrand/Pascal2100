@@ -3,12 +3,12 @@ package no.uio.ifi.pascal2100.parser;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.nameToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.assignToken;
 
+import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
-
 
 public class AssignStatm extends Statement {
     public String name;
-    public Expression expression;
+    public Expression expr;
 
     AssignStatm(String id, int lNum) {
         super(lNum);
@@ -25,19 +25,19 @@ public class AssignStatm extends Statement {
 
         s.test(nameToken);
 
-        AssignStatm a = new AssignStatm(s.curToken.id, s.curLineNum());
+        AssignStatm as = new AssignStatm(s.curToken.id, s.curLineNum());
         s.readNextToken();
         
         s.skip(assignToken);
         
-        a.expression = Expression.parse(s);
+        as.expr = Expression.parse(s);
         
         leaveParser("assign-statm");
         
-        return a;
+        return as;
     }
 
     void prettyPrint() {
-        // TODO Auto-generated method stub
+        Main.log.prettyPrint(name + " := "); expr.prettyPrint();
     }
 }

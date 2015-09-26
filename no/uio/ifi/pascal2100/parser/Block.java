@@ -50,7 +50,7 @@ public class Block extends PascalSyntax {
         
         s.skip(beginToken);
 
-        //b.stmtList = StatmList.parse(s);
+        b.stmtList = StatmList.parse(s);
 
         s.skip(endToken);
         
@@ -63,7 +63,7 @@ public class Block extends PascalSyntax {
         Main.log.prettyPrintLn("begin");
         Main.log.prettyIndent();
         
-        //stmtList.prettyPrint();
+        stmtList.prettyPrint();
         
         Main.log.prettyOutdent();
         Main.log.prettyPrintLn("end");
