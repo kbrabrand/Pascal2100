@@ -24,7 +24,7 @@ public class TermOperator extends Operator {
 
         return t;
     }
-    
+
     @Override
     public String identify() {
         return "<term operator> " + name + " on line " + lineNum;

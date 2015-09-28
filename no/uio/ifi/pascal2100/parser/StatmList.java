@@ -2,15 +2,14 @@ package no.uio.ifi.pascal2100.parser;
 
 import static no.uio.ifi.pascal2100.scanner.TokenKind.semicolonToken;
 
-import java.util.Iterator;
-import java.util.Stack;
+import java.util.LinkedList;
 
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class StatmList extends PascalSyntax {
-    public Stack<Statement> statements;
-	
+    public LinkedList<Statement> statements = new LinkedList<Statement>();
+
     StatmList(int lNum) {
         super(lNum);
     }
@@ -27,29 +26,29 @@ public class StatmList extends PascalSyntax {
         
         while(true) {
             sl.statements.push(Statement.parse(s));
-            
+
             // Skip semicolon if we have one, break the loop if not
             if (s.curToken.kind == semicolonToken) {
-            	s.skip(semicolonToken);
+                s.skip(semicolonToken);
             } else {
-            	break;
+                break;
             }
         }
-        
+
         leaveParser("statm-list");
 
         return sl;
     }
-    
+
     void prettyPrint() {
-    	Iterator<Statement> statmIter = statements.iterator();
-    	
-    	while (statmIter.hasNext()) {
-    		statmIter.next().prettyPrint();
-    		
-    		if (statmIter.hasNext()) {
-    			Main.log.prettyPrint(";");
-    		}
-    	}
+        int i = 0;
+        for (Statement s : statements) {
+           if (i++ > 0) {
+                Main.log.prettyPrint(";");
+                Main.log.prettyPrintLn();
+            }
+
+            s.prettyPrint();
+        }
     }
 }

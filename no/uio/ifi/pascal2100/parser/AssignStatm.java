@@ -27,13 +27,13 @@ public class AssignStatm extends Statement {
 
         AssignStatm as = new AssignStatm(s.curToken.id, s.curLineNum());
         s.readNextToken();
-        
+
         s.skip(assignToken);
-        
+
         as.expr = Expression.parse(s);
-        
+
         leaveParser("assign-statm");
-        
+
         return as;
     }
 

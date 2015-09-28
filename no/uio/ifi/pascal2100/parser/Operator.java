@@ -8,11 +8,11 @@ public abstract class Operator extends PascalSyntax {
     Operator(int lNum) {
         super(lNum);
     }
-    
+
     public static boolean checkWhetherPrefixOperator(Token t) {
         return (t.kind == addToken || t.kind == subtractToken);
     }
-    
+
     public static boolean checkWhetherRelOperator(Token t) {
         return (
             t.kind == equalToken ||
@@ -23,7 +23,7 @@ public abstract class Operator extends PascalSyntax {
             t.kind == greaterEqualToken
         );
     }
-    
+
     public static boolean checkWhetherTermOperator(Token t) {
         return (
             t.kind == addToken ||
@@ -31,7 +31,7 @@ public abstract class Operator extends PascalSyntax {
             t.kind == orToken
         );
     }
-    
+
     public static boolean checkWhetherFactorOperator(Token t) {
         return (
             t.kind == multiplyToken ||

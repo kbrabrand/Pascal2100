@@ -9,12 +9,12 @@ import no.uio.ifi.pascal2100.main.Main;
 public class WhileStatm extends Statement {	
     Expression expr;
     Statement body;
-	
-	WhileStatm(int lNum) {
+
+    WhileStatm(int lNum) {
         super(lNum);
     }
 
-	public static WhileStatm parse(Scanner s) {
+    public static WhileStatm parse(Scanner s) {
         enterParser("while-statm");
 
         WhileStatm ws = new WhileStatm(s.curLineNum());
@@ -28,11 +28,11 @@ public class WhileStatm extends Statement {
 
         return ws;
     }
-	
-	@Override
-	public String identify() {
-		return "<while-statm> on line " + lineNum;
-	}
+
+    @Override
+    public String identify() {
+        return "<while-statm> on line " + lineNum;
+    }
 
     @Override
     void prettyPrint() {

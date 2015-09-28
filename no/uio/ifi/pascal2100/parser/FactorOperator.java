@@ -23,10 +23,10 @@ public class FactorOperator extends Operator {
         leaveParser("factor-operator");
 
         s.readNextToken();
-        
+
         return fo;
     }
-    
+
     @Override
     public String identify() {
         return "<factor operator> " + name + " on line " + lineNum;

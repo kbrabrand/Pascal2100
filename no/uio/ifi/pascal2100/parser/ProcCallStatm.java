@@ -30,11 +30,11 @@ public class ProcCallStatm extends Statement {
         s.readNextToken();
 
         if (s.curToken.kind == leftParToken) {
-        	s.skip(leftParToken);
+            s.skip(leftParToken);
 
-        	pcs.expr = Expression.parse(s);
-        	
-        	s.skip(rightParToken);
+            pcs.expr = Expression.parse(s);
+
+            s.skip(rightParToken);
         }
 
         leaveParser("proc-call-statm");

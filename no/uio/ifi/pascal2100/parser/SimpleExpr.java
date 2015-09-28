@@ -8,8 +8,8 @@ import java.util.Stack;
 
 public class SimpleExpr extends PascalSyntax {
     public PrefixOperator prefOper = null;
-    public Stack<Term> terms;
-    public Stack<TermOperator> termOpers;
+    public Stack<Term> terms = new Stack<Term>();
+    public Stack<TermOperator> termOpers = new Stack<TermOperator>();
 
     SimpleExpr(int n) {
         super(n);
@@ -25,18 +25,18 @@ public class SimpleExpr extends PascalSyntax {
         }
 
         while(true) {
-        	se.terms.push(Term.parse(s));
+            se.terms.push(Term.parse(s));
 
-        	// Stop iteration if the token after the term is not a term operator
+            // Stop iteration if the token after the term is not a term operator
             if(!Operator.checkWhetherTermOperator(s.curToken)) {
                 break;
             }
 
-        	se.termOpers.push(TermOperator.parse(s));
+            se.termOpers.push(TermOperator.parse(s));
         }
-        
+
         leaveParser("simple-expr");
-        
+
         return se;
     }
 
@@ -60,9 +60,9 @@ public class SimpleExpr extends PascalSyntax {
             Main.log.prettyPrint(" ");
             
             if (termOpersIter.hasNext()) {
-            	termOpersIter.next().prettyPrint();
-            	Main.log.prettyPrint(" ");
+                termOpersIter.next().prettyPrint();
+                Main.log.prettyPrint(" ");
             }
-    	}
+        }
     }
 }

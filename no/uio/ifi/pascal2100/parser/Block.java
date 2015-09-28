@@ -13,8 +13,8 @@ import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class Block extends PascalSyntax {
     public PascalDecl context;
-	
-	// public ConstDeclPart constDeclPart;
+
+    // public ConstDeclPart constDeclPart;
     // public TypeDeclPart typeDeclPart;
     // public VarDeclPart varDeclPart;
     // public FuncDecl[] funcDeclList;
@@ -35,25 +35,25 @@ public class Block extends PascalSyntax {
         enterParser("block");
 
         Block b = new Block(s.curLineNum());
-        
+
         // Test for ConstDeclPart
         if (s.curToken.kind == constToken) {}
-        
+
         // Test for TypeDeclPart
         if (s.curToken.kind == typeToken) {}
-        
+
         // Test for VarDeclPart
         if (s.curToken.kind == varToken) {}
-        
+
         // Test for function or procedure token
         while (s.curToken.kind == functionToken || s.curToken.kind == procedureToken) {}
-        
+
         s.skip(beginToken);
 
         b.stmtList = StatmList.parse(s);
 
         s.skip(endToken);
-        
+
         leaveParser("block");
 
         return b;
@@ -62,9 +62,9 @@ public class Block extends PascalSyntax {
     public void prettyPrint() {
         Main.log.prettyPrintLn("begin");
         Main.log.prettyIndent();
-        
+
         stmtList.prettyPrint();
-        
+
         Main.log.prettyOutdent();
         Main.log.prettyPrintLn("end");
     }

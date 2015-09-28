@@ -23,10 +23,10 @@ public class RelOperator extends Operator {
         leaveParser("rel-operator");
 
         s.readNextToken();
-        
+
         return r;
     }
-    
+
     @Override
     public String identify() {
         return "<rel operator> " + name + " on line " + lineNum;

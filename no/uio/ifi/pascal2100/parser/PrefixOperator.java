@@ -21,12 +21,12 @@ public class PrefixOperator extends Operator {
         PrefixOperator t = new PrefixOperator(s.curToken.id, s.curLineNum());
 
         leaveParser("prefix operator");
-        
+
         s.readNextToken();
 
         return t;
     }
-    
+
     @Override
     public String identify() {
         return "<prefix operator> " + name + " on line " + lineNum;
