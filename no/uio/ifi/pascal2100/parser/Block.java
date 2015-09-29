@@ -14,7 +14,7 @@ import no.uio.ifi.pascal2100.scanner.Scanner;
 public class Block extends PascalSyntax {
     public PascalDecl context;
 
-    // public ConstDeclPart constDeclPart;
+    public ConstDeclPart constDeclPart;
     // public TypeDeclPart typeDeclPart;
     // public VarDeclPart varDeclPart;
     // public FuncDecl[] funcDeclList;
@@ -37,7 +37,9 @@ public class Block extends PascalSyntax {
         Block b = new Block(s.curLineNum());
 
         // Test for ConstDeclPart
-        if (s.curToken.kind == constToken) {}
+        if (s.curToken.kind == constToken) {
+            b.constDeclPart = ConstDeclPart.parse(s);
+        }
 
         // Test for TypeDeclPart
         if (s.curToken.kind == typeToken) {}
