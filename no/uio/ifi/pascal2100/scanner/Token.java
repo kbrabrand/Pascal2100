@@ -89,6 +89,8 @@ public class Token {
             case stringValToken:
                 t += ": '" + strVal + "'";
                 break;
+            default:
+                break;
         }
 
         return t;
