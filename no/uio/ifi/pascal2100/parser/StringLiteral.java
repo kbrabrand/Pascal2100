@@ -14,7 +14,7 @@ public class StringLiteral extends Constant {
     public static StringLiteral parse(Scanner s) {
         enterParser("string-literal");
 
-        StringLiteral sl = new StringLiteral(s.curToken.id, s.curLineNum());
+        StringLiteral sl = new StringLiteral(s.curToken.strVal, s.curLineNum());
 
         leaveParser("string-literal");
 

@@ -32,7 +32,7 @@ public class FuncCall extends Factor {
             s.skip(leftParToken);
             
             while (true) {
-                fc.exprs.push(Expression.parse(s));
+                fc.exprs.add(Expression.parse(s));
 
                 if (s.curToken.kind != commaToken) {
                     break;

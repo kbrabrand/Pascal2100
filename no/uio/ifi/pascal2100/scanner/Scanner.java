@@ -231,7 +231,7 @@ public class Scanner {
         // Create token from matched string
         switch (tokenKind) {
             case stringValToken:
-                tok = new Token("", matcher.group(1), getFileLineNum());
+                tok = new Token("", matcher.group(), getFileLineNum());
                 break;
             case nameToken:
                 tok = new Token(matcher.group(), getFileLineNum());

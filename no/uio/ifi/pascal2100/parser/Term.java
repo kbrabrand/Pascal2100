@@ -1,14 +1,14 @@
 package no.uio.ifi.pascal2100.parser;
 
 import java.util.Iterator;
-import java.util.Stack;
+import java.util.LinkedList;
 
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class Term extends Operator {
-    Stack<Factor> factors = new Stack<Factor>();
-    Stack<FactorOperator> factorOpers = new Stack<FactorOperator>();
+    LinkedList<Factor> factors = new LinkedList<Factor>();
+    LinkedList<FactorOperator> factorOpers = new LinkedList<FactorOperator>();
 
     Term(int lNum) {
         super(lNum);
@@ -22,7 +22,7 @@ public class Term extends Operator {
         while(true) {
             Factor f = Factor.parse(s);
 
-            t.factors.push(f);
+            t.factors.add(f);
 
             // Break the loop if the current token after parsing the
             // factor is not a factor operator
@@ -30,7 +30,7 @@ public class Term extends Operator {
                break;
             }
 
-            t.factorOpers.push(FactorOperator.parse(s));
+            t.factorOpers.add(FactorOperator.parse(s));
         }
 
         leaveParser("term");
@@ -45,16 +45,19 @@ public class Term extends Operator {
 
     @Override
     void prettyPrint() {
-        Iterator<Factor> factorsIter = factors.iterator();
         Iterator<FactorOperator> factorOpersIter = factorOpers.iterator();
 
-        while (factorsIter.hasNext()) {
-            factorsIter.next().prettyPrint();
-            Main.log.prettyPrint(" ");
-
-            if (factorOpersIter.hasNext()) {
-                factorOpersIter.next().prettyPrint();
+        int counter = 0;
+        for (Factor f : factors) {
+            if (counter++  > 0) {
                 Main.log.prettyPrint(" ");
+            }
+            
+            f.prettyPrint();
+            
+            if (factorOpersIter.hasNext()) {
+            	Main.log.prettyPrint(" ");
+            	factorOpersIter.next().prettyPrint();
             }
         }
     }

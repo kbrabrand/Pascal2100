@@ -4,7 +4,6 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.semicolonToken;
 
 import java.util.LinkedList;
 
-import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class StatmList extends PascalSyntax {
@@ -25,12 +24,10 @@ public class StatmList extends PascalSyntax {
         StatmList sl = new StatmList(s.curLineNum());
         
         while(true) {
-            sl.statements.push(Statement.parse(s));
+            sl.statements.add(Statement.parse(s));
 
             // Skip semicolon if we have one, break the loop if not
-            if (s.curToken.kind == semicolonToken) {
-                s.skip(semicolonToken);
-            } else {
+            if (s.curToken.kind != semicolonToken) {
                 break;
             }
         }
@@ -41,14 +38,8 @@ public class StatmList extends PascalSyntax {
     }
 
     void prettyPrint() {
-        int i = 0;
         for (Statement s : statements) {
-           if (i++ > 0) {
-                Main.log.prettyPrint(";");
-                Main.log.prettyPrintLn();
-            }
-
-            s.prettyPrint();
+           s.prettyPrint();
         }
     }
 }

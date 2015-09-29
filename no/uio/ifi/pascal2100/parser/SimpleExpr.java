@@ -21,18 +21,18 @@ public class SimpleExpr extends PascalSyntax {
         SimpleExpr se = new SimpleExpr(s.curLineNum());
 
         if (Operator.checkWhetherPrefixOperator(s.curToken)) {
-        	se.prefOper = PrefixOperator.parse(s);
+            se.prefOper = PrefixOperator.parse(s);
         }
 
         while(true) {
-            se.terms.push(Term.parse(s));
+            se.terms.add(Term.parse(s));
 
             // Stop iteration if the token after the term is not a term operator
             if(!Operator.checkWhetherTermOperator(s.curToken)) {
                 break;
             }
 
-            se.termOpers.push(TermOperator.parse(s));
+            se.termOpers.add(TermOperator.parse(s));
         }
 
         leaveParser("simple-expr");
@@ -47,7 +47,6 @@ public class SimpleExpr extends PascalSyntax {
 
     @Override
     void prettyPrint() {
-        Iterator<Term> termsIter = terms.iterator();
         Iterator<TermOperator> termOpersIter = termOpers.iterator();
 
         if (prefOper != null) {
@@ -55,13 +54,17 @@ public class SimpleExpr extends PascalSyntax {
             Main.log.prettyPrint(" ");
         }
 
-        while (termsIter.hasNext()) {
-            termsIter.next().prettyPrint();
-            Main.log.prettyPrint(" ");
-            
-            if (termOpersIter.hasNext()) {
-                termOpersIter.next().prettyPrint();
+        int counter = 0;
+        for (Term t : terms) {
+            if (counter++ > 0) {
                 Main.log.prettyPrint(" ");
+            }
+
+            t.prettyPrint();
+
+            if (termOpersIter.hasNext()) {
+                Main.log.prettyPrint(" ");
+                termOpersIter.next().prettyPrint();
             }
         }
     }
