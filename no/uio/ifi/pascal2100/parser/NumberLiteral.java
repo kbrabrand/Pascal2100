@@ -7,9 +7,9 @@ import no.uio.ifi.pascal2100.scanner.Scanner;
 public class NumberLiteral extends Constant {
     public int val;
 
-    NumberLiteral(String id, int lNum) {
+    NumberLiteral(int val, int lNum) {
         super(lNum);
-        val = Integer.parseInt(id);
+        this.val = val;
     }
     
     public static NumberLiteral parse(Scanner s) {
@@ -17,7 +17,7 @@ public class NumberLiteral extends Constant {
 
         s.test(intValToken);
         
-        NumberLiteral nl = new NumberLiteral(s.curToken.id, s.curLineNum());
+        NumberLiteral nl = new NumberLiteral(s.curToken.intVal, s.curLineNum());
 
         leaveParser("number-literal");
 

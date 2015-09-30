@@ -8,6 +8,8 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.procedureToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.beginToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.endToken;
 
+import java.util.LinkedList;
+
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -16,9 +18,9 @@ public class Block extends PascalSyntax {
 
     public ConstDeclPart constDeclPart;
     public TypeDeclPart typeDeclPart;
-    // public VarDeclPart varDeclPart;
-    // public FuncDecl[] funcDeclList;
-    // public ProcDecl[] procDeclList;
+    public VarDeclPart varDeclPart;
+    public LinkedList<FuncDecl> funcDeclList = new LinkedList<FuncDecl>();
+    public LinkedList<ProcDecl> procDeclList = new LinkedList<ProcDecl>();
 
     public StatmList stmtList;
 
@@ -47,10 +49,18 @@ public class Block extends PascalSyntax {
         }
 
         // Test for VarDeclPart
-        if (s.curToken.kind == varToken) {}
+        if (s.curToken.kind == varToken) {
+            b.varDeclPart = VarDeclPart.parse(s);
+        }
 
         // Test for function or procedure token
-        while (s.curToken.kind == functionToken || s.curToken.kind == procedureToken) {}
+        while (s.curToken.kind == functionToken || s.curToken.kind == procedureToken) {
+            if (s.curToken.kind == functionToken) {
+                b.funcDeclList.add(FuncDecl.parse(s));
+            } else {
+                b.procDeclList.add(ProcDecl.parse(s));
+            }
+        }
 
         s.skip(beginToken);
 
