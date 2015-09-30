@@ -1,17 +1,17 @@
 package no.uio.ifi.pascal2100.parser;
 
-import static no.uio.ifi.pascal2100.scanner.TokenKind.nameToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.equalToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.semicolonToken;
 
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
-public class ConstDecl extends PascalDecl {
-    public Constant constant;
+public class TypeDecl extends PascalDecl {
+    public TypeName name;
+    public Type type;
 
-    ConstDecl(String id, int lNum) {
-        super(id, lNum);
+    TypeDecl(int lNum) {
+        super(null, lNum);
     }
 
     @Override
@@ -19,23 +19,25 @@ public class ConstDecl extends PascalDecl {
         return "<const-decl> on line " + lineNum;
     }
 
-    public static ConstDecl parse(Scanner s) {
-        enterParser("const-decl");
+    public static TypeDecl parse(Scanner s) {
+        enterParser("type-decl");
 
-        s.test(nameToken);
-        ConstDecl cd = new ConstDecl(s.curToken.id, s.curLineNum());
+        TypeDecl td = new TypeDecl(s.curLineNum());
+
+        td.name = TypeName.parse(s); 
         s.skip(equalToken);
-        cd.constant = Constant.parse(s);
+        td.type= Type.parse(s);
         s.skip(semicolonToken);
 
         leaveParser("const-decl");
 
-        return cd;
+        return td;
     }
 
     public void prettyPrint() {
-        Main.log.prettyPrint(name + " = ");
-        constant.prettyPrint();
+        name.prettyPrint();
+        Main.log.prettyPrint(" = ");
+        type.prettyPrint();
         Main.log.prettyPrint(";");
     }
 }

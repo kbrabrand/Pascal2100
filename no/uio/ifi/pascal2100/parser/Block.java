@@ -15,7 +15,7 @@ public class Block extends PascalSyntax {
     public PascalDecl context;
 
     public ConstDeclPart constDeclPart;
-    // public TypeDeclPart typeDeclPart;
+    public TypeDeclPart typeDeclPart;
     // public VarDeclPart varDeclPart;
     // public FuncDecl[] funcDeclList;
     // public ProcDecl[] procDeclList;
@@ -42,7 +42,9 @@ public class Block extends PascalSyntax {
         }
 
         // Test for TypeDeclPart
-        if (s.curToken.kind == typeToken) {}
+        if (s.curToken.kind == typeToken) {
+            b.typeDeclPart = TypeDeclPart.parse(s);
+        }
 
         // Test for VarDeclPart
         if (s.curToken.kind == varToken) {}
