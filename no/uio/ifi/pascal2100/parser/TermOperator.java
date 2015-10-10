@@ -2,13 +2,14 @@ package no.uio.ifi.pascal2100.parser;
 
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
+import no.uio.ifi.pascal2100.scanner.TokenKind;
 
 public class TermOperator extends Operator {
-    public String name;
+    public TokenKind kind;
 
-    TermOperator(String id, int lNum) {
+    TermOperator(TokenKind kind, int lNum) {
         super(lNum);
-        name = id;
+        this.kind = kind;
     }
 
     public static TermOperator parse(Scanner s) {
@@ -18,7 +19,9 @@ public class TermOperator extends Operator {
             s.testError("term operator");
         }
 
-        TermOperator t = new TermOperator(s.curToken.id, s.curLineNum());
+        TermOperator t = new TermOperator(s.curToken.kind, s.curLineNum());
+
+        s.readNextToken();
 
         leaveParser("term operator");
 
@@ -27,11 +30,25 @@ public class TermOperator extends Operator {
 
     @Override
     public String identify() {
-        return "<term operator> " + name + " on line " + lineNum;
+        return "<term operator> " + kind.identify() + " on line " + lineNum;
     }
 
-    @Override
+	@Override
     void prettyPrint() {
-        Main.log.prettyPrint(name);
+        String symbol;
+        
+        switch (kind) {
+            case addToken:
+                symbol = "+";
+                break;
+            case subtractToken:
+                symbol = "-";
+                break;
+            default:
+                symbol = "or";
+                break;
+        }
+
+        Main.log.prettyPrint(symbol);
     }
 }

@@ -17,7 +17,11 @@ abstract class Constant extends Factor {
                 c = NumberLiteral.parse(s);
                 break;
             case stringValToken:
-                c = StringLiteral.parse(s);
+                if (s.curToken.strVal.length() == 1) {
+                    c = CharLiteral.parse(s);
+                } else {
+                    c = StringLiteral.parse(s);
+                }
                 break;
             default:
                 c = NamedConst.parse(s);

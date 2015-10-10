@@ -16,9 +16,9 @@ import no.uio.ifi.pascal2100.scanner.Scanner;
 public class Block extends PascalSyntax {
     public PascalDecl context;
 
-    public ConstDeclPart constDeclPart;
-    public TypeDeclPart typeDeclPart;
-    public VarDeclPart varDeclPart;
+    public ConstDeclPart constDeclPart = null;
+    public TypeDeclPart typeDeclPart = null;
+    public VarDeclPart varDeclPart = null;
     public LinkedList<FuncDecl> funcDeclList = new LinkedList<FuncDecl>();
     public LinkedList<ProcDecl> procDeclList = new LinkedList<ProcDecl>();
 
@@ -74,13 +74,26 @@ public class Block extends PascalSyntax {
     }
 
     public void prettyPrint() {
+        if (constDeclPart != null) {
+            constDeclPart.prettyPrint();
+        }
+
+        if (typeDeclPart != null) {
+            typeDeclPart.prettyPrint();
+        }
+
+        if (varDeclPart != null) {
+            varDeclPart.prettyPrint();
+        }
+
+        Main.log.prettyPrintLn();
+        Main.log.prettyPrintLn();
         Main.log.prettyPrintLn("begin");
         Main.log.prettyIndent();
-
+        
         stmtList.prettyPrint();
-
+        
         Main.log.prettyOutdent();
-        Main.log.prettyPrintLn();
         Main.log.prettyPrint("end");
     }
 }

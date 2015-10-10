@@ -38,10 +38,16 @@ public class WhileStatm extends Statement {
     void prettyPrint() {
         Main.log.prettyPrint("while ");
         expr.prettyPrint();
-        Main.log.prettyPrintLn(" do");
-        Main.log.prettyIndent();
-        body.prettyPrint();
-        Main.log.prettyOutdent();
+
+        if (body instanceof CompoundStatm) {
+            Main.log.prettyPrint(" do ");
+            body.prettyPrint();
+        } else {
+            Main.log.prettyPrintLn(" do");
+            Main.log.prettyIndent();
+            body.prettyPrint();
+            Main.log.prettyOutdent();
+        }
     }
 
 }

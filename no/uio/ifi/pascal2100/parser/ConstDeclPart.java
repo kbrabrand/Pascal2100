@@ -37,9 +37,15 @@ public class ConstDeclPart extends PascalSyntax {
     }
 
     public void prettyPrint() {
-        Main.log.prettyPrintLn("const ");
+        Main.log.prettyPrintLn();
+        Main.log.prettyPrint("const ");
 
+        int i = 0;
         for (ConstDecl cd : decls) {
+            if (i++ > 0) {
+                Main.log.prettyPrint(" ");
+            }
+
             cd.prettyPrint();
         }
     }

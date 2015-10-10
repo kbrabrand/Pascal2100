@@ -3,13 +3,16 @@ package no.uio.ifi.pascal2100.parser;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.leftParToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.rightParToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.nameToken;
+import static no.uio.ifi.pascal2100.scanner.TokenKind.commaToken;
+
+import java.util.Stack;
 
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class ProcCallStatm extends Statement {
     public String name;
-    public Expression expr = null;
+    public Stack<Expression> exprs = new Stack<Expression>();
 
     ProcCallStatm(String id, int lNum) {
         super(lNum);
@@ -32,8 +35,16 @@ public class ProcCallStatm extends Statement {
         if (s.curToken.kind == leftParToken) {
             s.skip(leftParToken);
 
-            pcs.expr = Expression.parse(s);
+            while(true) {
+                pcs.exprs.add(Expression.parse(s));
 
+                if (s.curToken.kind != commaToken) {
+                    break;
+                }
+
+                s.skip(commaToken);
+            }
+            
             s.skip(rightParToken);
         }
 
@@ -44,10 +55,19 @@ public class ProcCallStatm extends Statement {
 
     void prettyPrint() {
         Main.log.prettyPrint(name);
-        
-        if (expr != null) {
+
+        if (!exprs.empty()) {
             Main.log.prettyPrint("(");
-            expr.prettyPrint();
+
+            int i = 0;
+            for (Expression e : exprs) {
+                if (i++ > 0) {
+                    Main.log.prettyPrint(", ");
+                }
+
+                e.prettyPrint();
+            }
+
             Main.log.prettyPrint(")");
         }
     }

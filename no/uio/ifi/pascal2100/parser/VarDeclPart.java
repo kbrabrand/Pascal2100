@@ -37,9 +37,15 @@ public class VarDeclPart extends PascalSyntax {
     }
 
     public void prettyPrint() {
-        Main.log.prettyPrintLn("var ");
-        
+        Main.log.prettyPrintLn();
+        Main.log.prettyPrint("var ");
+
+        int i = 0;
         for (VarDecl vd : decls) {
+            if (i++ > 0) {
+                Main.log.prettyPrint(" ");
+            }
+
             vd.prettyPrint();
         }
     }

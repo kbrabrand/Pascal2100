@@ -1,5 +1,6 @@
 package no.uio.ifi.pascal2100.parser;
 
+import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class Expression extends PascalSyntax {
@@ -38,7 +39,9 @@ public class Expression extends PascalSyntax {
         leading.prettyPrint();
 
         if (relOperator != null) {
+            Main.log.prettyPrint(" ");
             relOperator.prettyPrint();
+            Main.log.prettyPrint(" ");
             trailing.prettyPrint();
         }
     }

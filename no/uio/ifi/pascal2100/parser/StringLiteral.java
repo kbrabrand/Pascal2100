@@ -30,6 +30,6 @@ public class StringLiteral extends Constant {
 
     @Override
     void prettyPrint() {
-        Main.log.prettyPrint(val);
+        Main.log.prettyPrint("'" + val + "'");
     }
 }

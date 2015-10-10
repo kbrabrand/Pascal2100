@@ -52,12 +52,12 @@ public class Term extends Operator {
             if (counter++  > 0) {
                 Main.log.prettyPrint(" ");
             }
-            
+
             f.prettyPrint();
-            
+
             if (factorOpersIter.hasNext()) {
-            	Main.log.prettyPrint(" ");
-            	factorOpersIter.next().prettyPrint();
+                Main.log.prettyPrint(" ");
+                factorOpersIter.next().prettyPrint();
             }
         }
     }
