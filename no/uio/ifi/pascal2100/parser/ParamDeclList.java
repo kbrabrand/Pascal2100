@@ -25,7 +25,7 @@ public class ParamDeclList extends PascalSyntax {
         enterParser("param-decl-list");
 
         s.skip(leftParToken);
-        
+
         ParamDeclList pdl = new ParamDeclList(s.curLineNum());
 
         while(true) {
@@ -34,7 +34,7 @@ public class ParamDeclList extends PascalSyntax {
             if (s.curToken.kind != semicolonToken) {
                 break;
             }
-            
+
             s.skip(semicolonToken);
         }
 
@@ -47,16 +47,16 @@ public class ParamDeclList extends PascalSyntax {
 
     public void prettyPrint() {
         Main.log.prettyPrintLn("(");
-        
+
         int i = 0;
         for (ParamDecl pd : decls) {
             if (i++ > 0) {
                 Main.log.prettyPrint("; ");
             }
-            
+
             pd.prettyPrint();
         }
-        
+
         Main.log.prettyPrintLn(")");
     }
 }

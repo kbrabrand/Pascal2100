@@ -9,7 +9,7 @@ import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class Variable extends Factor {
     public String name;
-	public Expression expr = null;
+    public Expression expr = null;
     
 
     Variable(String id, int lNum) {
@@ -41,7 +41,7 @@ public class Variable extends Factor {
 
     @Override
     public String identify() {
-    	return "<variable> on line " + lineNum;
+        return "<variable> on line " + lineNum;
     }
 
     @Override

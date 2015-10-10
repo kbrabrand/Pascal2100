@@ -24,7 +24,7 @@ public class ConstDeclPart extends PascalSyntax {
         enterParser("const-decl-part");
 
         s.skip(constToken);
-        
+
         ConstDeclPart cdp = new ConstDeclPart(s.curLineNum());
 
         do {

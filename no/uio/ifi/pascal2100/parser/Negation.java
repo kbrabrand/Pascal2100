@@ -7,7 +7,6 @@ import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class Negation extends Factor {
     public Factor factor;;
-    
 
     Negation(int lNum) {
         super(lNum);
@@ -21,15 +20,15 @@ public class Negation extends Factor {
         Negation n = new Negation(s.curLineNum());
 
         n.factor = Factor.parse(s);
-        
+
         leaveParser("negation");
-        
+
         return n;
     }
 
     @Override
     public String identify() {
-    	return "<negation> on line " + lineNum;
+        return "<negation> on line " + lineNum;
     }
 
     @Override

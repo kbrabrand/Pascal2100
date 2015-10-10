@@ -19,7 +19,6 @@ public class Block extends PascalSyntax {
     public ConstDeclPart constDeclPart = null;
     public TypeDeclPart typeDeclPart = null;
     public VarDeclPart varDeclPart = null;
-    public LinkedList<FuncDecl> funcDeclList = new LinkedList<FuncDecl>();
     public LinkedList<ProcDecl> procDeclList = new LinkedList<ProcDecl>();
 
     public StatmList stmtList;
@@ -56,7 +55,7 @@ public class Block extends PascalSyntax {
         // Test for function or procedure token
         while (s.curToken.kind == functionToken || s.curToken.kind == procedureToken) {
             if (s.curToken.kind == functionToken) {
-                b.funcDeclList.add(FuncDecl.parse(s));
+                b.procDeclList.add(FuncDecl.parse(s));
             } else {
                 b.procDeclList.add(ProcDecl.parse(s));
             }
@@ -86,13 +85,24 @@ public class Block extends PascalSyntax {
             varDeclPart.prettyPrint();
         }
 
+        if (!procDeclList.isEmpty()) {
+            int i = 0;
+            for (ProcDecl p : procDeclList) {
+                if (i++ > 0) {
+                    Main.log.prettyPrintLn();
+                }
+
+                p.prettyPrint();
+            }
+        }
+
         Main.log.prettyPrintLn();
         Main.log.prettyPrintLn();
         Main.log.prettyPrintLn("begin");
         Main.log.prettyIndent();
-        
+
         stmtList.prettyPrint();
-        
+
         Main.log.prettyOutdent();
         Main.log.prettyPrint("end");
     }

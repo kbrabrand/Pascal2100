@@ -25,11 +25,11 @@ public class IfStatm extends Statement {
         is.expr = Expression.parse(s);
         s.skip(thenToken);
         is.thenStatm = Statement.parse(s);
-        
+
         // Get the else part if the current token is an else token
         if (s.curToken.kind == elseToken) {
-        	s.skip(elseToken);
-        	is.elseStatm = Statement.parse(s);
+            s.skip(elseToken);
+            is.elseStatm = Statement.parse(s);
         }
 
         leaveParser("if-statm");
@@ -39,7 +39,7 @@ public class IfStatm extends Statement {
 
     @Override
     public String identify() {
-    	return "<if-statm> on line " + lineNum;
+        return "<if-statm> on line " + lineNum;
     }
 
     @Override
@@ -49,14 +49,14 @@ public class IfStatm extends Statement {
         Main.log.prettyPrintLn(" then");
         Main.log.prettyIndent();
         thenStatm.prettyPrint();
-        
+
         if (elseStatm != null) {
-        	Main.log.prettyOutdent();
-        	Main.log.prettyPrintLn("else");
-        	Main.log.prettyIndent();
-        	elseStatm.prettyPrint();
+            Main.log.prettyOutdent();
+            Main.log.prettyPrintLn("else");
+            Main.log.prettyIndent();
+            elseStatm.prettyPrint();
         }
-        
+
         Main.log.prettyOutdent();
     }
 }

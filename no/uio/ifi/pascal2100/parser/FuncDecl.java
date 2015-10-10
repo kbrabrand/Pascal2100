@@ -11,8 +11,8 @@ import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class FuncDecl extends ProcDecl {
     public TypeName typeName;
-	
-	FuncDecl(String id, int lNum) {
+
+    FuncDecl(String id, int lNum) {
         super(id, lNum);
     }
 
@@ -31,18 +31,18 @@ public class FuncDecl extends ProcDecl {
         s.readNextToken();
 
         if (s.curToken.kind == leftParToken) {
-        	fd.paramDeclList = ParamDeclList.parse(s);
+            fd.paramDeclList = ParamDeclList.parse(s);
         }
 
         s.skip(colonToken);
-        
+
         fd.typeName = TypeName.parse(s);
 
         s.skip(semicolonToken);
 
         fd.block = Block.parse(s);
         fd.block.context = fd;
-        
+
         s.skip(semicolonToken);
 
         leaveParser("func-decl");
@@ -52,7 +52,7 @@ public class FuncDecl extends ProcDecl {
 
     public void prettyPrint() {
         Main.log.prettyPrint("function " + name + " ");
-        
+
         if (paramDeclList != null) {
             paramDeclList.prettyPrint();
         }
@@ -62,7 +62,7 @@ public class FuncDecl extends ProcDecl {
 
         Main.log.prettyPrint("; ");
         block.prettyPrint();
-        
+
         Main.log.prettyPrint(";");
     }
 }

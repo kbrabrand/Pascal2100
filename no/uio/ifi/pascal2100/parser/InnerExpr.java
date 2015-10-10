@@ -21,17 +21,17 @@ public class InnerExpr extends Factor {
         InnerExpr ie = new InnerExpr(s.curLineNum());
 
         ie.expr = Expression.parse(s);
-        
+
         s.skip(rightParToken);
-        
+
         leaveParser("inner-expr");
-        
+
         return ie;
     }
 
     @Override
     public String identify() {
-    	return "<inner-expr> on line " + lineNum;
+        return "<inner-expr> on line " + lineNum;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class InnerExpr extends Factor {
         Main.log.prettyPrint("(");
 
         expr.prettyPrint();
-        
+
         Main.log.prettyPrint(")");
     }
 }

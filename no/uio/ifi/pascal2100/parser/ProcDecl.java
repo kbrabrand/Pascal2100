@@ -11,8 +11,8 @@ import no.uio.ifi.pascal2100.scanner.Scanner;
 public class ProcDecl extends PascalDecl {
     public ParamDeclList paramDeclList = null;
     public Block block;
-	
-	ProcDecl(String id, int lNum) {
+
+    ProcDecl(String id, int lNum) {
         super(id, lNum);
     }
 

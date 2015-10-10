@@ -8,7 +8,7 @@ import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class ParamDecl extends PascalDecl {
     public TypeName typeName;
-    
+
     ParamDecl(String id, int lNum) {
         super(id, lNum);
     }

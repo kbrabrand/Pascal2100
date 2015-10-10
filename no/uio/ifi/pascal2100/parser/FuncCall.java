@@ -30,7 +30,7 @@ public class FuncCall extends Factor {
 
         if (s.curToken.kind == leftParToken) {
             s.skip(leftParToken);
-            
+
             while (true) {
                 fc.exprs.add(Expression.parse(s));
 
@@ -45,13 +45,13 @@ public class FuncCall extends Factor {
         }
 
         leaveParser("func-call");
-        
+
         return fc;
     }
 
     @Override
     public String identify() {
-    	return "<func-call> on line " + lineNum;
+        return "<func-call> on line " + lineNum;
     }
 
     @Override

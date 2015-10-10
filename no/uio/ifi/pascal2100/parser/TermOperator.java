@@ -33,7 +33,7 @@ public class TermOperator extends Operator {
         return "<term operator> " + kind.identify() + " on line " + lineNum;
     }
 
-	@Override
+    @Override
     void prettyPrint() {
         String symbol;
         

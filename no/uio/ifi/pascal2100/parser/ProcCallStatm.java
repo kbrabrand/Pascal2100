@@ -5,14 +5,14 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.rightParToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.nameToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.commaToken;
 
-import java.util.Stack;
+import java.util.LinkedList;
 
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class ProcCallStatm extends Statement {
     public String name;
-    public Stack<Expression> exprs = new Stack<Expression>();
+    public LinkedList<Expression> exprs = new LinkedList<Expression>();
 
     ProcCallStatm(String id, int lNum) {
         super(lNum);
@@ -56,7 +56,7 @@ public class ProcCallStatm extends Statement {
     void prettyPrint() {
         Main.log.prettyPrint(name);
 
-        if (!exprs.empty()) {
+        if (!exprs.isEmpty()) {
             Main.log.prettyPrint("(");
 
             int i = 0;

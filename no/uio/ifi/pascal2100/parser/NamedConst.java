@@ -16,7 +16,7 @@ public class NamedConst extends Constant {
         enterParser("named-const");
 
         s.test(nameToken);
-        
+
         NamedConst nc = new NamedConst(s.curToken.id, s.curLineNum());
 
         leaveParser("named-const");

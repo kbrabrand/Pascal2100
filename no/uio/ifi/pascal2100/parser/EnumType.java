@@ -45,8 +45,8 @@ public class EnumType extends Type {
             if (i++ > 0) {
                 Main.log.prettyPrint(", ");
             }
-        	
-        	el.prettyPrint();
+
+            el.prettyPrint();
         }
 
         Main.log.prettyPrint(")");

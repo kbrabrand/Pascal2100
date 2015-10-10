@@ -11,7 +11,7 @@ public class NumberLiteral extends Constant {
         super(lNum);
         this.val = val;
     }
-    
+
     public static NumberLiteral parse(Scanner s) {
         enterParser("number-literal");
 
@@ -28,7 +28,7 @@ public class NumberLiteral extends Constant {
 
     @Override
     public String identify() {
-    	return "<number-literal> " + val + " on line " + lineNum;
+        return "<number-literal> " + val + " on line " + lineNum;
     }
 
     @Override

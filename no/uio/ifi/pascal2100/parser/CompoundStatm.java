@@ -36,9 +36,9 @@ public class CompoundStatm extends Statement {
     void prettyPrint() {
         Main.log.prettyPrintLn("begin");
         Main.log.prettyIndent();
-        
+
         stmtList.prettyPrint();
-        
+
         Main.log.prettyOutdent();
         Main.log.prettyPrint("end");
     }
