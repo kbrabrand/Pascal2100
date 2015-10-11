@@ -2,13 +2,14 @@ package no.uio.ifi.pascal2100.parser;
 
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
+import no.uio.ifi.pascal2100.scanner.TokenKind;
 
 public class PrefixOperator extends Operator {
-    public String name;
+    public TokenKind kind;
 
-    PrefixOperator(String id, int lNum) {
+    PrefixOperator(TokenKind kind, int lNum) {
         super(lNum);
-        name = id;
+        this.kind = kind;
     }
 
     public static PrefixOperator parse(Scanner s) {
@@ -18,7 +19,7 @@ public class PrefixOperator extends Operator {
             s.testError("prefix operator");
         }
 
-        PrefixOperator t = new PrefixOperator(s.curToken.id, s.curLineNum());
+        PrefixOperator t = new PrefixOperator(s.curToken.kind, s.curLineNum());
 
         leaveParser("prefix operator");
 
@@ -29,11 +30,22 @@ public class PrefixOperator extends Operator {
 
     @Override
     public String identify() {
-        return "<prefix operator> " + name + " on line " + lineNum;
+        return "<prefix operator> " + kind.identify() + " on line " + lineNum;
     }
 
     @Override
     void prettyPrint() {
-        Main.log.prettyPrint(name);
+        String symbol;
+
+        switch (kind) {
+            case addToken:
+                symbol = "+";
+                break;
+            default:
+                symbol = "-";
+                break;
+        }
+
+        Main.log.prettyPrint(symbol);
     }
 }
