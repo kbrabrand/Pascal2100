@@ -1,5 +1,5 @@
 program TenStars;
-const N	=  10;
+const N = 10;
 var i : integer;
 begin
     i := 1;

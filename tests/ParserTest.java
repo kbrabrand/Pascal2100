@@ -7,22 +7,18 @@ import java.util.Scanner;
 
 import org.junit.Test;
 
-public class ScannerTest {
+public class ParserTest {
     private static final String testFiles[] = {
         "10star",
         "mini",
-        "gcd",
-        "nested_comment",
-        "endless_comment",
-        "endless_string_literal",
-        "illegal_character"
+        "gcd"
     };
 
     private void processFile(String name) {
         Runtime r = Runtime.getRuntime();
 
         try {
-            Process p = r.exec("java -jar pascal2100.jar -testscanner tests/fixtures/" + name + ".pas");
+            Process p = r.exec("java -jar pascal2100.jar -testparser tests/fixtures/" + name + ".pas");
             p.waitFor();
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,10 +36,10 @@ public class ScannerTest {
         processFile(name);
 
         String actual = getTestFileContents(name + ".log");
-        String expected = getTestFileContents(name + ".expected.scanner");
+        String expected = getTestFileContents(name + ".expected.parser");
 
         assertEquals(expected, actual);
-        System.out.println("[Scanner] " + name + ": OK");
+        System.out.println("[Parser]  " + name + ": OK");
     }
 
     @Test
