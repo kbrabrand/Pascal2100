@@ -14,11 +14,11 @@ public class RangeType extends Type {
 
     @Override
     public String identify() {
-        return "<range-type> on line " + lineNum;
+        return "<range type> on line " + lineNum;
     }
 
     public static RangeType parse(Scanner s) {
-        enterParser("range-type");
+        enterParser("range type");
 
         RangeType rt = new RangeType(s.curLineNum());
 
@@ -28,7 +28,7 @@ public class RangeType extends Type {
 
         rt.to = Constant.parse(s);
 
-        leaveParser("range-type");
+        leaveParser("range type");
 
         return rt;
     }

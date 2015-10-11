@@ -12,25 +12,25 @@ public class TermOperator extends Operator {
         this.kind = kind;
     }
 
+    @Override
+    public String identify() {
+        return "<term oper> " + kind.identify() + " on line " + lineNum;
+    }
+
     public static TermOperator parse(Scanner s) {
-        enterParser("term operator");
+        enterParser("term oper");
 
         if (!Operator.checkWhetherTermOperator(s.curToken)) {
-            s.testError("term operator");
+            s.testError("term oper");
         }
 
         TermOperator t = new TermOperator(s.curToken.kind, s.curLineNum());
 
         s.readNextToken();
 
-        leaveParser("term operator");
+        leaveParser("term oper");
 
         return t;
-    }
-
-    @Override
-    public String identify() {
-        return "<term operator> " + kind.identify() + " on line " + lineNum;
     }
 
     @Override

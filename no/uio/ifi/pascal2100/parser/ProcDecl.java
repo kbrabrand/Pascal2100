@@ -18,11 +18,11 @@ public class ProcDecl extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<proc-decl> on line " + lineNum;
+        return "<proc decl> on line " + lineNum;
     }
 
     public static ProcDecl parse(Scanner s) {
-        enterParser("proc-decl");
+        enterParser("proc decl");
 
         s.skip(procedureToken);
 
@@ -41,7 +41,7 @@ public class ProcDecl extends PascalDecl {
         
         s.skip(semicolonToken);
 
-        leaveParser("proc-decl");
+        leaveParser("proc decl");
 
         return pd;
     }

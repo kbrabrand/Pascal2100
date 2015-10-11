@@ -12,6 +12,11 @@ public class Negation extends Factor {
         super(lNum);
     }
 
+    @Override
+    public String identify() {
+        return "<negation> on line " + lineNum;
+    }
+
     public static Negation parse(Scanner s) {
         enterParser("negation");
 
@@ -24,11 +29,6 @@ public class Negation extends Factor {
         leaveParser("negation");
 
         return n;
-    }
-
-    @Override
-    public String identify() {
-        return "<negation> on line " + lineNum;
     }
 
     @Override

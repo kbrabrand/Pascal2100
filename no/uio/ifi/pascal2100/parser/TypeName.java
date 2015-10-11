@@ -15,18 +15,18 @@ public class TypeName extends Type {
 
     @Override
     public String identify() {
-        return "<type-name> " + name + " on line " + lineNum;
+        return "<type name> " + name + " on line " + lineNum;
     }
 
     public static TypeName parse(Scanner s) {
-        enterParser("type-name");
+        enterParser("type name");
 
         s.test(nameToken);
 
         TypeName tn = new TypeName(s.curToken.id, s.curLineNum());
         s.readNextToken();
 
-        leaveParser("type-name");
+        leaveParser("type name");
 
         return tn;
     }

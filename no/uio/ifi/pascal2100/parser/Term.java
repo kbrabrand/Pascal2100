@@ -14,6 +14,11 @@ public class Term extends Operator {
         super(lNum);
     }
 
+    @Override
+    public String identify() {
+        return "<term> on line " + lineNum;
+    }
+
     static Term parse(Scanner s) {
         enterParser("term");
 
@@ -36,11 +41,6 @@ public class Term extends Operator {
         leaveParser("term");
 
         return t;
-    }
-
-    @Override
-    public String identify() {
-        return "<term> on line " + lineNum;
     }
 
     @Override

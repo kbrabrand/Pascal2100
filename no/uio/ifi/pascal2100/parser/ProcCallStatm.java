@@ -21,11 +21,11 @@ public class ProcCallStatm extends Statement {
 
     @Override
     public String identify() {
-        return "<proc-call-statm> on line " + lineNum;
+        return "<proc call statm> on line " + lineNum;
     }
 
     public static ProcCallStatm parse(Scanner s) {
-        enterParser("proc-call-statm");
+        enterParser("proc call statm");
 
         s.test(nameToken);
 
@@ -48,7 +48,7 @@ public class ProcCallStatm extends Statement {
             s.skip(rightParToken);
         }
 
-        leaveParser("proc-call-statm");
+        leaveParser("proc call statm");
 
         return pcs;
     }

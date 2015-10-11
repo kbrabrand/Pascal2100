@@ -12,8 +12,13 @@ public class RelOperator extends Operator {
         this.kind = kind;
     }
 
+    @Override
+    public String identify() {
+        return "<rel oper> " + kind.identify() + " on line " + lineNum;
+    }
+
     public static RelOperator parse(Scanner s) {
-        enterParser("rel-operator");
+        enterParser("rel oper");
 
         if (!Operator.checkWhetherRelOperator(s.curToken)) {
             s.testError("relation operator");
@@ -21,16 +26,11 @@ public class RelOperator extends Operator {
 
         RelOperator r = new RelOperator(s.curToken.kind, s.curLineNum());
 
-        leaveParser("rel-operator");
+        leaveParser("rel oper");
 
         s.readNextToken();
 
         return r;
-    }
-
-    @Override
-    public String identify() {
-        return "<rel operator> " + kind.identify() + " on line " + lineNum;
     }
 
     @Override

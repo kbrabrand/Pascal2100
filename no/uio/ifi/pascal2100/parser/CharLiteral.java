@@ -11,21 +11,21 @@ public class CharLiteral extends Constant {
         val = id;
     }
 
+    @Override
+    public String identify() {
+        return "<char literal> " + val + " on line " + lineNum;
+    }
+
     public static CharLiteral parse(Scanner s) {
-        enterParser("char-literal");
+        enterParser("char literal");
 
         CharLiteral sl = new CharLiteral(s.curToken.strVal.charAt(0), s.curLineNum());
 
-        leaveParser("char-literal");
+        leaveParser("char literal");
 
         s.readNextToken();
 
         return sl;
-    }
-
-    @Override
-    public String identify() {
-        return "<char-literal> " + val + " on line " + lineNum;
     }
 
     @Override

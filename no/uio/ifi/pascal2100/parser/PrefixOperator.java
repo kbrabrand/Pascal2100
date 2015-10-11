@@ -12,25 +12,25 @@ public class PrefixOperator extends Operator {
         this.kind = kind;
     }
 
+    @Override
+    public String identify() {
+        return "<prefix oper> " + kind.identify() + " on line " + lineNum;
+    }
+
     public static PrefixOperator parse(Scanner s) {
-        enterParser("prefix operator");
+        enterParser("prefix oper");
 
         if (!Operator.checkWhetherPrefixOperator(s.curToken)) {
-            s.testError("prefix operator");
+            s.testError("prefix oper");
         }
 
         PrefixOperator t = new PrefixOperator(s.curToken.kind, s.curLineNum());
 
-        leaveParser("prefix operator");
+        leaveParser("prefix oper");
 
         s.readNextToken();
 
         return t;
-    }
-
-    @Override
-    public String identify() {
-        return "<prefix operator> " + kind.identify() + " on line " + lineNum;
     }
 
     @Override

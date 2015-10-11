@@ -12,25 +12,25 @@ public class FactorOperator extends Operator {
         this.kind = kind;
     }
 
+    @Override
+    public String identify() {
+        return "<factor oper> " + kind.identify() + " on line " + lineNum;
+    }
+
     public static FactorOperator parse(Scanner s) {
-        enterParser("factor-operator");
+        enterParser("factor oper");
 
         if (!Operator.checkWhetherFactorOperator(s.curToken)) {
-            s.testError("factor-operator");
+            s.testError("factor oper");
         }
 
         FactorOperator fo = new FactorOperator(s.curToken.kind, s.curLineNum());
 
-        leaveParser("factor-operator");
+        leaveParser("factor oper");
 
         s.readNextToken();
 
         return fo;
-    }
-
-    @Override
-    public String identify() {
-        return "<factor operator> " + kind.identify() + " on line " + lineNum;
     }
 
     @Override

@@ -16,11 +16,11 @@ public class TypeDecl extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<const-decl> on line " + lineNum;
+        return "<type decl> on line " + lineNum;
     }
 
     public static TypeDecl parse(Scanner s) {
-        enterParser("type-decl");
+        enterParser("type decl");
 
         TypeDecl td = new TypeDecl(s.curLineNum());
 
@@ -29,7 +29,7 @@ public class TypeDecl extends PascalDecl {
         td.type= Type.parse(s);
         s.skip(semicolonToken);
 
-        leaveParser("const-decl");
+        leaveParser("type decl");
 
         return td;
     }

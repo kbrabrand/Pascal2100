@@ -12,6 +12,11 @@ public class Expression extends PascalSyntax {
         super(n);
     }
 
+    @Override
+    public String identify() {
+        return "<expression> on line " + lineNum;
+    }
+
     public static Expression parse(Scanner s) {
         enterParser("expression");
 
@@ -27,11 +32,6 @@ public class Expression extends PascalSyntax {
         leaveParser("expression");
 
         return e;
-    }
-
-    @Override
-    public String identify() {
-        return "<expression> on line " + lineNum;
     }
 
     @Override

@@ -17,6 +17,11 @@ public class Variable extends Factor {
         name = id;
     }
 
+    @Override
+    public String identify() {
+        return "<variable> on line " + lineNum;
+    }
+
     public static Variable parse(Scanner s) {
         enterParser("variable");
 
@@ -37,11 +42,6 @@ public class Variable extends Factor {
         leaveParser("variable");
 
         return v;
-    }
-
-    @Override
-    public String identify() {
-        return "<variable> on line " + lineNum;
     }
 
     @Override

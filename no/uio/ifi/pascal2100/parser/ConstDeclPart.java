@@ -17,11 +17,11 @@ public class ConstDeclPart extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<const-decl-part> on line " + lineNum;
+        return "<const decl part> on line " + lineNum;
     }
 
     public static ConstDeclPart parse(Scanner s) {
-        enterParser("const-decl-part");
+        enterParser("const decl part");
 
         s.skip(constToken);
 
@@ -31,7 +31,7 @@ public class ConstDeclPart extends PascalSyntax {
             cdp.decls.add(ConstDecl.parse(s));
         } while (s.curToken.kind == nameToken);
 
-        leaveParser("const-decl-part");
+        leaveParser("const decl part");
 
         return cdp;
     }

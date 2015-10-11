@@ -16,11 +16,11 @@ public class VarDecl extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<var-decl> on line " + lineNum;
+        return "<var decl> on line " + lineNum;
     }
 
     public static VarDecl parse(Scanner s) {
-        enterParser("var-decl");
+        enterParser("var decl");
 
         s.test(nameToken);
         VarDecl vd = new VarDecl(s.curToken.id, s.curLineNum());
@@ -30,7 +30,7 @@ public class VarDecl extends PascalDecl {
         vd.type = Type.parse(s);
         s.skip(semicolonToken);
 
-        leaveParser("var-decl");
+        leaveParser("var decl");
 
         return vd;
     }

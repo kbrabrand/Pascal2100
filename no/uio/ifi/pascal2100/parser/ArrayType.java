@@ -18,11 +18,11 @@ public class ArrayType extends Type {
 
     @Override
     public String identify() {
-        return "<array-type> on line " + lineNum;
+        return "<array type> on line " + lineNum;
     }
 
     public static ArrayType parse(Scanner s) {
-        enterParser("array-type");
+        enterParser("array type");
 
         s.skip(arrayToken);
 
@@ -37,7 +37,7 @@ public class ArrayType extends Type {
         
         at.ofType = Type.parse(s);
 
-        leaveParser("array-type");
+        leaveParser("array type");
 
         return at;
     }

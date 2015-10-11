@@ -12,23 +12,23 @@ public class NamedConst extends Constant {
         name = id;
     }
 
+    @Override
+    public String identify() {
+        return "<named const> " + name + " on line " + lineNum;
+    }
+
     public static NamedConst parse(Scanner s) {
-        enterParser("named-const");
+        enterParser("named const");
 
         s.test(nameToken);
 
         NamedConst nc = new NamedConst(s.curToken.id, s.curLineNum());
 
-        leaveParser("named-const");
+        leaveParser("named const");
 
         s.readNextToken();
 
         return nc;
-    }
-
-    @Override
-    public String identify() {
-        return "<named-const> " + name + " on line " + lineNum;
     }
 
     @Override

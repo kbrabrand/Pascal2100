@@ -12,23 +12,23 @@ public class NumberLiteral extends Constant {
         this.val = val;
     }
 
+    @Override
+    public String identify() {
+        return "<number literal> " + val + " on line " + lineNum;
+    }
+
     public static NumberLiteral parse(Scanner s) {
-        enterParser("number-literal");
+        enterParser("number literal");
 
         s.test(intValToken);
         
         NumberLiteral nl = new NumberLiteral(s.curToken.intVal, s.curLineNum());
 
-        leaveParser("number-literal");
+        leaveParser("number literal");
 
         s.readNextToken();
 
         return nl;
-    }
-
-    @Override
-    public String identify() {
-        return "<number-literal> " + val + " on line " + lineNum;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package no.uio.ifi.pascal2100.parser;
 
-import static no.uio.ifi.pascal2100.scanner.TokenKind.nameToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.assignToken;
 
 import no.uio.ifi.pascal2100.main.Main;
@@ -20,7 +19,7 @@ public class AssignStatm extends Statement {
     }
 
     public static AssignStatm parse(Scanner s) {
-        enterParser("assign-statm");
+        enterParser("assign statm");
 
         AssignStatm as = new AssignStatm(s.curToken.id, s.curLineNum());
 
@@ -28,7 +27,7 @@ public class AssignStatm extends Statement {
         s.skip(assignToken);
         as.expr = Expression.parse(s);
 
-        leaveParser("assign-statm");
+        leaveParser("assign statm");
 
         return as;
     }

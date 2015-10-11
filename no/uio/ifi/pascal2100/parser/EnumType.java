@@ -16,11 +16,11 @@ public class EnumType extends Type {
 
     @Override
     public String identify() {
-        return "<enum-type> on line " + lineNum;
+        return "<enum type> on line " + lineNum;
     }
 
     public static EnumType parse(Scanner s) {
-        enterParser("enum-type");
+        enterParser("enum type");
 
         EnumType et = new EnumType(s.curLineNum());
 
@@ -32,7 +32,7 @@ public class EnumType extends Type {
 
         s.skip(leftParToken);
 
-        leaveParser("enum-type");
+        leaveParser("enum type");
 
         return et;
     }

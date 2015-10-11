@@ -15,11 +15,11 @@ public class ParamDecl extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<param-decl> on line " + lineNum;
+        return "<param decl> on line " + lineNum;
     }
 
     public static ParamDecl parse(Scanner s) {
-        enterParser("param-decl");
+        enterParser("param decl");
 
         s.test(nameToken);
         ParamDecl pd = new ParamDecl(s.curToken.id, s.curLineNum());
@@ -28,7 +28,7 @@ public class ParamDecl extends PascalDecl {
         s.skip(colonToken);
         pd.typeName = TypeName.parse(s);
 
-        leaveParser("param-decl");
+        leaveParser("param decl");
 
         return pd;
     }

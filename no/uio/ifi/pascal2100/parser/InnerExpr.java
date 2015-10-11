@@ -13,8 +13,13 @@ public class InnerExpr extends Factor {
         super(lNum);
     }
 
+    @Override
+    public String identify() {
+        return "<inner expr> on line " + lineNum;
+    }
+
     public static InnerExpr parse(Scanner s) {
-        enterParser("inner-expr");
+        enterParser("inner expr");
 
         s.skip(leftParToken);
 
@@ -24,14 +29,9 @@ public class InnerExpr extends Factor {
 
         s.skip(rightParToken);
 
-        leaveParser("inner-expr");
+        leaveParser("inner expr");
 
         return ie;
-    }
-
-    @Override
-    public String identify() {
-        return "<inner-expr> on line " + lineNum;
     }
 
     @Override

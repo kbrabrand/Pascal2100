@@ -15,8 +15,13 @@ public class SimpleExpr extends PascalSyntax {
         super(n);
     }
 
+    @Override
+    public String identify() {
+        return "<simple expr> on line " + lineNum;
+    }
+
     public static SimpleExpr parse(Scanner s) {
-        enterParser("simple-expr");
+        enterParser("simple expr");
 
         SimpleExpr se = new SimpleExpr(s.curLineNum());
 
@@ -35,14 +40,9 @@ public class SimpleExpr extends PascalSyntax {
             se.termOpers.add(TermOperator.parse(s));
         }
 
-        leaveParser("simple-expr");
+        leaveParser("simple expr");
 
         return se;
-    }
-
-    @Override
-    public String identify() {
-        return "<simple-expr> on line " + lineNum;
     }
 
     @Override

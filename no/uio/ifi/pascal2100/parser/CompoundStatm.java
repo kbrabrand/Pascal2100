@@ -13,8 +13,13 @@ public class CompoundStatm extends Statement {
         super(lNum);
     }
 
+    @Override
+    public String identify() {
+        return "<compound statm> on line " + lineNum;
+    }
+
     public static CompoundStatm parse(Scanner s) {
-        enterParser("compound-statm");
+        enterParser("compound statm");
 
         CompoundStatm c = new CompoundStatm(s.curLineNum());
 
@@ -22,14 +27,9 @@ public class CompoundStatm extends Statement {
         c.stmtList = StatmList.parse(s);
         s.skip(endToken);
 
-        leaveParser("compound-statm");
+        leaveParser("compound statm");
 
         return c;
-    }
-
-    @Override
-    public String identify() {
-        return "<compound-statm> on line " + lineNum;
     }
 
     @Override

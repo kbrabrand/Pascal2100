@@ -17,11 +17,11 @@ public class TypeDeclPart extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<const-decl-part> on line " + lineNum;
+        return "<type decl part> on line " + lineNum;
     }
 
     public static TypeDeclPart parse(Scanner s) {
-        enterParser("type-decl-part");
+        enterParser("type decl part");
 
         s.skip(typeToken);
 
@@ -31,7 +31,7 @@ public class TypeDeclPart extends PascalSyntax {
             tdp.decls.add(TypeDecl.parse(s));
         } while (s.curToken.kind == nameToken);
 
-        leaveParser("type-decl-part");
+        leaveParser("type decl part");
 
         return tdp;
     }

@@ -18,11 +18,11 @@ public class FuncDecl extends ProcDecl {
 
     @Override
     public String identify() {
-        return "<func-decl> on line " + lineNum;
+        return "<func decl> on line " + lineNum;
     }
 
     public static FuncDecl parse(Scanner s) {
-        enterParser("func-decl");
+        enterParser("func decl");
 
         s.skip(functionToken);
 
@@ -45,7 +45,7 @@ public class FuncDecl extends ProcDecl {
 
         s.skip(semicolonToken);
 
-        leaveParser("func-decl");
+        leaveParser("func decl");
 
         return fd;
     }

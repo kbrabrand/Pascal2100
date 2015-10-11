@@ -16,8 +16,13 @@ public class IfStatm extends Statement {
         super(lNum);
     }
 
+    @Override
+    public String identify() {
+        return "<if statm> on line " + lineNum;
+    }
+
     public static IfStatm parse(Scanner s) {
-        enterParser("if-statm");
+        enterParser("if statm");
 
         IfStatm is = new IfStatm(s.curLineNum());
 
@@ -32,14 +37,9 @@ public class IfStatm extends Statement {
             is.elseStatm = Statement.parse(s);
         }
 
-        leaveParser("if-statm");
+        leaveParser("if statm");
 
         return is;
-    }
-
-    @Override
-    public String identify() {
-        return "<if-statm> on line " + lineNum;
     }
 
     @Override

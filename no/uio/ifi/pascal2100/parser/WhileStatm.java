@@ -14,8 +14,13 @@ public class WhileStatm extends Statement {
         super(lNum);
     }
 
+    @Override
+    public String identify() {
+        return "<while statm> on line " + lineNum;
+    }
+
     public static WhileStatm parse(Scanner s) {
-        enterParser("while-statm");
+        enterParser("while statm");
 
         WhileStatm ws = new WhileStatm(s.curLineNum());
 
@@ -24,14 +29,9 @@ public class WhileStatm extends Statement {
         s.skip(doToken);
         ws.body = Statement.parse(s);
 
-        leaveParser("while-statm");
+        leaveParser("while statm");
 
         return ws;
-    }
-
-    @Override
-    public String identify() {
-        return "<while-statm> on line " + lineNum;
     }
 
     @Override

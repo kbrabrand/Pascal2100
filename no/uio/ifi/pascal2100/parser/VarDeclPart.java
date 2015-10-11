@@ -17,11 +17,11 @@ public class VarDeclPart extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<var-decl-part> on line " + lineNum;
+        return "<var decl part> on line " + lineNum;
     }
 
     public static VarDeclPart parse(Scanner s) {
-        enterParser("var-decl-part");
+        enterParser("var decl part");
 
         s.skip(varToken);
         
@@ -31,7 +31,7 @@ public class VarDeclPart extends PascalSyntax {
             vdp.decls.add(VarDecl.parse(s));
         } while (s.curToken.kind == nameToken);
 
-        leaveParser("var-decl-part");
+        leaveParser("var decl part");
 
         return vdp;
     }

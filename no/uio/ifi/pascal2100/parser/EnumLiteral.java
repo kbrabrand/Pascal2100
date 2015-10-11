@@ -14,16 +14,16 @@ public class EnumLiteral extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<enum-literal> on line " + lineNum;
+        return "<enum literal> on line " + lineNum;
     }
 
     public static EnumLiteral parse(Scanner s) {
-        enterParser("enum-decl");
+        enterParser("enum decl");
 
         s.test(nameToken);
         EnumLiteral cd = new EnumLiteral(s.curToken.id, s.curLineNum());
 
-        leaveParser("enum-decl");
+        leaveParser("enum decl");
 
         s.readNextToken();
 

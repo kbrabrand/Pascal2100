@@ -17,11 +17,11 @@ public class StatmList extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<stmt-list> on line " + lineNum;
+        return "<stmt list> on line " + lineNum;
     }
 
     public static StatmList parse(Scanner s) {
-        enterParser("statm-list");
+        enterParser("statm list");
 
         StatmList sl = new StatmList(s.curLineNum());
 
@@ -42,7 +42,7 @@ public class StatmList extends PascalSyntax {
             s.skip(semicolonToken);
         }
         
-        leaveParser("statm-list");
+        leaveParser("statm list");
 
         return sl;
     }
