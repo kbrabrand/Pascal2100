@@ -52,9 +52,10 @@ public class FuncDecl extends ProcDecl {
 
     public void prettyPrint() {
         Main.log.prettyPrintLn();
-        Main.log.prettyPrint("function " + name + " ");
+        Main.log.prettyPrint("function " + name);
 
         if (paramDeclList != null) {
+            Main.log.prettyPrint(" ");
             paramDeclList.prettyPrint();
         }
 
