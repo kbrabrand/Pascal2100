@@ -7,12 +7,11 @@ import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class AssignStatm extends Statement {
-    public String name;
+    public Variable var;
     public Expression expr;
 
     AssignStatm(String id, int lNum) {
         super(lNum);
-        name = id;
     }
 
     @Override
@@ -23,13 +22,10 @@ public class AssignStatm extends Statement {
     public static AssignStatm parse(Scanner s) {
         enterParser("assign-statm");
 
-        s.test(nameToken);
-
         AssignStatm as = new AssignStatm(s.curToken.id, s.curLineNum());
-        s.readNextToken();
 
+        as.var = Variable.parse(s);
         s.skip(assignToken);
-
         as.expr = Expression.parse(s);
 
         leaveParser("assign-statm");
@@ -38,6 +34,8 @@ public class AssignStatm extends Statement {
     }
 
     void prettyPrint() {
-        Main.log.prettyPrint(name + " := "); expr.prettyPrint();
+        var.prettyPrint();
+        Main.log.prettyPrint(" := ");
+        expr.prettyPrint();
     }
 }
