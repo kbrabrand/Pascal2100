@@ -16,7 +16,7 @@ public abstract class PascalSyntax {
     //Del 3: abstract void check(Block curScope, Library lib);
     //Del 4: abstract void genCode(CodeFile f);
     abstract public String identify();
-    //Del 2: abstract void prettyPrint();
+    abstract void prettyPrint();
 
     void error(String message) {
         Main.error("Error at line " + lineNum + ": " + message);

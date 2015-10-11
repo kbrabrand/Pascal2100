@@ -1,0 +1,38 @@
+   1:  
+   2: /* Et minimalt Pascal-program */ 
+   3: program Mini; 
+Parser:   <program>
+   4: begin 
+   5:     write('x'); 
+Parser:     <block>
+Parser:       <statm list>
+Parser:         <statement>
+Parser:           <proc call>
+Parser:             <expression>
+Parser:               <simple expr>
+Parser:                 <term>
+Parser:                   <factor>
+Parser:                     <constant>
+Parser:                       <char literal>
+Parser:                       </char literal>
+   6: end. 
+Parser:                     </constant>
+Parser:                   </factor>
+Parser:                 </term>
+Parser:               </simple expr>
+Parser:             </expression>
+Parser:           </proc call>
+Parser:         </statement>
+Parser:         <statement>
+Parser:           <empty statm>
+Parser:           </empty statm>
+Parser:         </statement>
+Parser:       </statm list>
+Parser:     </block>
+Parser:   </program>
+program Mini;
+
+
+begin
+  write('x');
+end.

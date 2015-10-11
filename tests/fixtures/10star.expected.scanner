@@ -2,7 +2,7 @@
 Scanner: program token on line 1
 Scanner: name token on line 1: TenStars
 Scanner: ; token on line 1
-   2: const N	=  10; 
+   2: const N = 10; 
 Scanner: const token on line 2
 Scanner: name token on line 2: N
 Scanner: = token on line 2
@@ -16,39 +16,40 @@ Scanner: name token on line 3: integer
 Scanner: ; token on line 3
    4: begin 
 Scanner: begin token on line 4
-   5:    i := 1; 
+   5:     i := 1; 
 Scanner: name token on line 5: i
 Scanner: := token on line 5
 Scanner: number token on line 5: 1
 Scanner: ; token on line 5
-   6:    while i <= N do begin 
+   6:     while i <= N do begin 
 Scanner: while token on line 6
 Scanner: name token on line 6: i
 Scanner: <= token on line 6
 Scanner: name token on line 6: N
 Scanner: do token on line 6
 Scanner: begin token on line 6
-   7:       write('*');  i := i + 1 
+   7:         write('*'); 
 Scanner: name token on line 7: write
 Scanner: ( token on line 7
 Scanner: text string token on line 7: '*'
 Scanner: ) token on line 7
 Scanner: ; token on line 7
-Scanner: name token on line 7: i
-Scanner: := token on line 7
-Scanner: name token on line 7: i
-Scanner: + token on line 7
-Scanner: number token on line 7: 1
-   8:    end; 
-Scanner: end token on line 8
-Scanner: ; token on line 8
-   9:    write(eol); 
-Scanner: name token on line 9: write
-Scanner: ( token on line 9
-Scanner: name token on line 9: eol
-Scanner: ) token on line 9
+   8:         i := i + 1 
+Scanner: name token on line 8: i
+Scanner: := token on line 8
+Scanner: name token on line 8: i
+Scanner: + token on line 8
+Scanner: number token on line 8: 1
+   9:     end; 
+Scanner: end token on line 9
 Scanner: ; token on line 9
-  10: end. 
-Scanner: end token on line 10
-Scanner: . token on line 10
+  10:     write(eol); 
+Scanner: name token on line 10: write
+Scanner: ( token on line 10
+Scanner: name token on line 10: eol
+Scanner: ) token on line 10
+Scanner: ; token on line 10
+  11: end. 
+Scanner: end token on line 11
+Scanner: . token on line 11
 Scanner: e-o-f token

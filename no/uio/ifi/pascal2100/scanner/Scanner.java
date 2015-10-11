@@ -3,6 +3,8 @@ package no.uio.ifi.pascal2100.scanner;
 import no.uio.ifi.pascal2100.main.*;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.io.*;
@@ -62,7 +64,7 @@ public class Scanner {
         if (sourceFile == null) {
             // Create end of file token
             tok = new Token(eofToken, getFileLineNum());
-            nextToken = tok;
+            setToken(tok);
 
             // Note the token
             Main.log.noteToken(tok);
@@ -119,8 +121,8 @@ public class Scanner {
 
         if (!ok) {
             char unexpectedCharacter = getSourceLineRemainder().charAt(0);
-        	
-        	error(
+
+            error(
                 "Unexpected character '" + unexpectedCharacter + "' " + 
                 "on line " + getFileLineNum() + ", col " + (sourcePos + 1) + ":\n" +
                 sourceLine + "\n" +
@@ -411,6 +413,37 @@ public class Scanner {
         return getSourceLineRemainder().length();
     }
 
+    private String getStackTrace() {
+        return getStackTrace(1);
+    }
+    
+    private String getStackTrace(int skipStackLevels) {
+        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+        String result = "";
+
+        int indentStepLength = 2;
+        
+        int level = 0;
+        for (StackTraceElement s : stack) {
+            if (level++ <= skipStackLevels) {
+                continue;
+            }
+        	
+        	for (int i = 0; i < ((level - skipStackLevels - 2) * indentStepLength); i++) {
+                result += " ";
+            }
+            
+            if (level - skipStackLevels > 1) {
+                result += "˪ ";
+            }
+            
+            result += s.toString();
+            result += "\n";
+        }
+        
+        return result;
+    }
+    
     // Parser tests:
 
     public void test(TokenKind t) {
@@ -420,9 +453,12 @@ public class Scanner {
     }
 
     public void testError(String message) {
+        Arrays.toString(Thread.currentThread().getStackTrace());
+        
         Main.error(curLineNum(),
             "Expected a " + message +
-            " but found a " + curToken.kind + "!");
+            " but found a " + curToken.kind + "!\n\n" +
+            getStackTrace(1));
     }
 
     public void skip(TokenKind t) {
