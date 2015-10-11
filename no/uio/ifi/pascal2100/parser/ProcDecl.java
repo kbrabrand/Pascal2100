@@ -47,14 +47,15 @@ public class ProcDecl extends PascalDecl {
     }
 
     public void prettyPrint() {
+        Main.log.prettyPrintLn();
         Main.log.prettyPrint("procedure " + name + " ");
-        
+
         if (paramDeclList != null) {
             paramDeclList.prettyPrint();
         }
 
         Main.log.prettyPrint("; ");
         block.prettyPrint();
-        Main.log.prettyPrint(";");
+        Main.log.prettyPrintLn(";");
     }
 }

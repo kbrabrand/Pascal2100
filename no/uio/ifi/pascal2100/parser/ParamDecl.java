@@ -34,7 +34,7 @@ public class ParamDecl extends PascalDecl {
     }
 
     public void prettyPrint() {
-        Main.log.prettyPrint(name + " : ");
+        Main.log.prettyPrint(name + ": ");
         typeName.prettyPrint();
     }
 }

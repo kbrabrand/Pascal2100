@@ -36,7 +36,7 @@ public class TermOperator extends Operator {
     @Override
     void prettyPrint() {
         String symbol;
-        
+
         switch (kind) {
             case addToken:
                 symbol = "+";

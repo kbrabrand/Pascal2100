@@ -46,7 +46,7 @@ public class ParamDeclList extends PascalSyntax {
     }
 
     public void prettyPrint() {
-        Main.log.prettyPrintLn("(");
+        Main.log.prettyPrint("(");
 
         int i = 0;
         for (ParamDecl pd : decls) {
@@ -57,6 +57,6 @@ public class ParamDeclList extends PascalSyntax {
             pd.prettyPrint();
         }
 
-        Main.log.prettyPrintLn(")");
+        Main.log.prettyPrint(")");
     }
 }
