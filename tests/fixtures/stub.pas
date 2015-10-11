@@ -1,4 +1,0 @@
-program Mini;
-begin
-
-end.
