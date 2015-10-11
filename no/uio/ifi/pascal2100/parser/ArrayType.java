@@ -24,9 +24,10 @@ public class ArrayType extends Type {
     public static ArrayType parse(Scanner s) {
         enterParser("array-type");
 
+        s.skip(arrayToken);
+
         ArrayType at = new ArrayType(s.curLineNum());
 
-        s.skip(arrayToken);
         s.skip(leftBracketToken);
 
         at.type = Type.parse(s);

@@ -51,7 +51,6 @@ public class SimpleExpr extends PascalSyntax {
 
         if (prefOper != null) {
             prefOper.prettyPrint();
-            Main.log.prettyPrint(" ");
         }
 
         int counter = 0;

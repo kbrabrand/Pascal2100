@@ -2,7 +2,7 @@ package no.uio.ifi.pascal2100.parser;
 
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
-import static no.uio.ifi.pascal2100.scanner.TokenKind.dotToken;
+import static no.uio.ifi.pascal2100.scanner.TokenKind.rangeToken;
 
 public class RangeType extends Type {
     public Constant from;
@@ -24,8 +24,7 @@ public class RangeType extends Type {
 
         rt.from = Constant.parse(s);
 
-        s.skip(dotToken);
-        s.skip(dotToken);
+        s.skip(rangeToken);
 
         rt.to = Constant.parse(s);
 

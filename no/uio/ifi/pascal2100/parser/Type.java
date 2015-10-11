@@ -12,18 +12,22 @@ abstract class Type extends PascalSyntax {
 
         Type t;
         
-        switch (s.curToken.kind) {
-            case nameToken:
-                t = TypeName.parse(s);
-                break;
-            case constToken:
+        switch (s.nextToken.kind) {
+            case rangeToken:
                 t = RangeType.parse(s);
                 break;
-            case leftParToken:
-                t = EnumType.parse(s);
-                break;
             default:
-                t = ArrayType.parse(s);
+                switch (s.curToken.kind) {
+                    case nameToken:
+                        t = TypeName.parse(s);
+                        break;
+                    case leftParToken:
+                        t = EnumType.parse(s);
+                        break;
+                    default:
+                        t = ArrayType.parse(s);
+                        break;
+                }
                 break;
         }
 
