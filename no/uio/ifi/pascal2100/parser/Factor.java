@@ -20,16 +20,16 @@ abstract class Factor extends PascalSyntax {
             case intValToken:
                 f = Constant.parse(s);
                 break;
+            case notToken:
+                f = Negation.parse(s);
+                break;
             case nameToken:
                 switch (s.nextToken.kind) {
                     case leftParToken:
                         f = FuncCall.parse(s);
                         break;
-                    case leftBracketToken:
-                        f = Variable.parse(s);
-                        break;
                     default:
-                        f = Constant.parse(s);
+                        f = Variable.parse(s);
                         break;
                 }
                 break;
