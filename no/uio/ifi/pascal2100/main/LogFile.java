@@ -122,8 +122,10 @@ public class LogFile {
 
     public void noteBinding(String id, PascalSyntax where, PascalDecl decl) {
         if (doLogBinding) {
-            writeLogLine("Binding on line " + where.lineNum + ": " + id +
-                " was declared in " + decl.identify());
+            writeLogLine(
+                "Binding on line " + where.lineNum + ": " + id +
+                " was declared in " + (decl.lineNum < 0 ? "the library" : decl.identify())
+            );
         }
     }
 

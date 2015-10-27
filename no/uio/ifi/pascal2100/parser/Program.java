@@ -42,6 +42,11 @@ public class Program extends PascalDecl {
         return p;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) {
+        progBlock.check(curScope, progBlock, lib);
+    }
+
     public void prettyPrint() {
         Main.log.prettyPrintLn("program " + name + ";");
         progBlock.prettyPrint();
