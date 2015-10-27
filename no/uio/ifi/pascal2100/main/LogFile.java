@@ -10,7 +10,8 @@ public class LogFile {
             doLogParser = false,
             doLogPrettyPrint = false,
             doLogScanner = false,
-            doLogTypeChecks = false;
+            doLogTypeChecks = false,
+            doLogSourceLines = false;
 
     private String logFileName = null;
     private int nLogLines = 0;
@@ -85,7 +86,7 @@ public class LogFile {
      * @param line     The actual line
      */
     public void noteSourceLine(int lineNum, String line) {
-        if (doLogParser || doLogScanner) {
+        if (doLogParser || doLogScanner || doLogSourceLines) {
             writeLogLine(String.format("%4d: %s",lineNum,line));
         }
     }

@@ -49,6 +49,8 @@ public class Main {
 
             if (a.equals("-logB")) {
                 log.doLogBinding = true;
+            } else if (a.equals("-logL")) {
+                log.doLogSourceLines = true;
             } else if (a.equals("-logP")) {
                 log.doLogParser = true;
             } else if (a.equals("-logS")) {
@@ -175,7 +177,7 @@ public class Main {
     }
 
     private static void usage() {
-        error("Usage: java -jar pascal2100.jar [-log{B|P|S|T|Y}] [-test{parser|scanner}] file");
+        error("Usage: java -jar pascal2100.jar [-log{L|B|P|S|T|Y}] [-test{parser|scanner}] file");
     }
 
     public void panic(String where) {
