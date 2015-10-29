@@ -6,8 +6,6 @@ import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class EnumLiteral extends PascalDecl {
-    public Constant constant;
-
     EnumLiteral(String id, int lNum) {
         super(id, lNum);
     }
@@ -18,17 +16,20 @@ public class EnumLiteral extends PascalDecl {
     }
 
     public static EnumLiteral parse(Scanner s) {
-        enterParser("enum decl");
+        enterParser("enum literal");
 
         s.test(nameToken);
         EnumLiteral cd = new EnumLiteral(s.curToken.id, s.curLineNum());
 
-        leaveParser("enum decl");
+        leaveParser("enum literal");
 
         s.readNextToken();
 
         return cd;
     }
+
+    @Override
+    public void check(Block curScope, Library lib) { }
 
     public void prettyPrint() {
         Main.log.prettyPrint(name);

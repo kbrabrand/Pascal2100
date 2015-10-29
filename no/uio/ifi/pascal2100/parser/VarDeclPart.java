@@ -36,6 +36,13 @@ public class VarDeclPart extends PascalSyntax {
         return vdp;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) {
+        for (VarDecl vd : decls) {
+            vd.check(curScope, lib);
+        }
+    }
+
     public void prettyPrint() {
         Main.log.prettyPrintLn();
         Main.log.prettyPrint("var ");

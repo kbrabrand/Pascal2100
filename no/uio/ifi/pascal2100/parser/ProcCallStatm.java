@@ -53,6 +53,15 @@ public class ProcCallStatm extends Statement {
         return pcs;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) {
+        curScope.findDecl(name, this);
+
+        for (Expression e : exprs) {
+            e.check(curScope, lib);
+        }
+    }
+
     void prettyPrint() {
         Main.log.prettyPrint(name);
 

@@ -32,6 +32,9 @@ public class NumberLiteral extends Constant {
     }
 
     @Override
+    public void check(Block curScope, Library lib) { }
+
+    @Override
     void prettyPrint() {
         Main.log.prettyPrint(Integer.toString(val));
     }

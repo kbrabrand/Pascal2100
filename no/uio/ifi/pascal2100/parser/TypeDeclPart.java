@@ -36,6 +36,13 @@ public class TypeDeclPart extends PascalSyntax {
         return tdp;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) {
+        for (TypeDecl td : decls) {
+            td.check(curScope, lib);
+        }
+    }
+
     public void prettyPrint() {
         Main.log.prettyPrintLn();
         Main.log.prettyPrint("type ");

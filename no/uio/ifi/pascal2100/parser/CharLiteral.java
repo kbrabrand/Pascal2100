@@ -29,6 +29,9 @@ public class CharLiteral extends Constant {
     }
 
     @Override
+    public void check(Block curScope, Library lib) { }
+
+    @Override
     void prettyPrint() {
         Main.log.prettyPrint("'" + String.valueOf(val) + "'");
     }

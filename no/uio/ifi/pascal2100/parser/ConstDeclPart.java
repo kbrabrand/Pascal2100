@@ -36,6 +36,13 @@ public class ConstDeclPart extends PascalSyntax {
         return cdp;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) {
+        for (ConstDecl cd : decls) {
+            cd.check(curScope, lib);
+        }
+    }
+
     public void prettyPrint() {
         Main.log.prettyPrintLn();
         Main.log.prettyPrint("const ");

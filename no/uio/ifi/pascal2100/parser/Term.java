@@ -44,6 +44,13 @@ public class Term extends Operator {
     }
 
     @Override
+    public void check(Block curScope, Library lib) {
+        for (Factor f : factors) {
+            f.check(curScope, lib);
+        }
+    }
+
+    @Override
     void prettyPrint() {
         Iterator<FactorOperator> factorOpersIter = factorOpers.iterator();
 

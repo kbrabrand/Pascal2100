@@ -35,6 +35,12 @@ public class WhileStatm extends Statement {
     }
 
     @Override
+    public void check(Block curScope, Library lib) {
+        expr.check(curScope, lib);
+        body.check(curScope, lib);
+    }
+
+    @Override
     void prettyPrint() {
         Main.log.prettyPrint("while ");
         expr.prettyPrint();

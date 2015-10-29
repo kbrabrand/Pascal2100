@@ -42,6 +42,12 @@ public class ArrayType extends Type {
         return at;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) {
+        type.check(curScope, lib);
+        ofType.check(curScope, lib);
+    }
+
     void prettyPrint() {
         Main.log.prettyPrint("array [");
         type.prettyPrint();

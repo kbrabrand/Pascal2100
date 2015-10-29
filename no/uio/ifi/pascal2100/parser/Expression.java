@@ -35,6 +35,16 @@ public class Expression extends PascalSyntax {
     }
 
     @Override
+    public void check(Block curScope, Library lib) {
+        leading.check(curScope, lib);
+
+        if (relOperator != null) {
+            relOperator.check(curScope, lib);
+            trailing.check(curScope, lib);
+        }
+    }
+
+    @Override
     void prettyPrint() {
         leading.prettyPrint();
 

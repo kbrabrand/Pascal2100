@@ -32,6 +32,12 @@ public class AssignStatm extends Statement {
         return as;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) {
+        var.check(curScope, lib);
+        expr.check(curScope, lib);
+    }
+
     void prettyPrint() {
         var.prettyPrint();
         Main.log.prettyPrint(" := ");

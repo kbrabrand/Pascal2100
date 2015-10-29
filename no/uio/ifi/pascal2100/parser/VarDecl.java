@@ -35,6 +35,15 @@ public class VarDecl extends PascalDecl {
         return vd;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) {
+        type.check(curScope, lib);
+
+        if (type instanceof TypeName) {
+             curScope.findDecl(((TypeName) type).name, this);
+        }
+    }
+
     public void prettyPrint() {
         Main.log.prettyPrint(name + " : ");
         type.prettyPrint();

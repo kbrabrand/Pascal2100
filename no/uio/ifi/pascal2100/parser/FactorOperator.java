@@ -34,6 +34,9 @@ public class FactorOperator extends Operator {
     }
 
     @Override
+    public void check(Block curScope, Library lib) { }
+
+    @Override
     void prettyPrint() {
         String symbol;
 

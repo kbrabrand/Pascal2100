@@ -46,6 +46,13 @@ public class SimpleExpr extends PascalSyntax {
     }
 
     @Override
+    public void check(Block curScope, Library lib) {
+        for (Term t : terms) {
+            t.check(curScope, lib);
+        }
+    }
+
+    @Override
     void prettyPrint() {
         Iterator<TermOperator> termOpersIter = termOpers.iterator();
 

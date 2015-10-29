@@ -50,6 +50,13 @@ public class FuncDecl extends ProcDecl {
         return fd;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) {
+        curScope.findDecl(typeName.name, this);
+
+        super.check(curScope, lib);
+    }
+
     public void prettyPrint() {
         Main.log.prettyPrintLn();
         Main.log.prettyPrint("function " + name);

@@ -55,6 +55,15 @@ public class FuncCall extends Factor {
     }
 
     @Override
+    public void check(Block curScope, Library lib) {
+        curScope.findDecl(name, this);
+
+        for (Expression e : exprs) {
+            e.check(curScope, lib);
+        }
+    }
+
+    @Override
     void prettyPrint() {
         Main.log.prettyPrint(name);
 

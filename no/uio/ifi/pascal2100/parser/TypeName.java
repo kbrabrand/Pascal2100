@@ -31,6 +31,9 @@ public class TypeName extends Type {
         return tn;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) { }
+
     void prettyPrint() {
         Main.log.prettyPrint(name);
     }

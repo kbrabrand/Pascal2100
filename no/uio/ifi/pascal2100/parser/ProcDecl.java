@@ -46,6 +46,18 @@ public class ProcDecl extends PascalDecl {
         return pd;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) {
+        paramDeclList.check(curScope, lib);
+        curScope.addDecl(name, this);
+
+        for (ParamDecl pd: paramDeclList.decls) {
+            block.addDecl(pd.name, pd);
+        }
+
+        block.check(curScope, block, lib);
+    }
+
     public void prettyPrint() {
         Main.log.prettyPrintLn();
         Main.log.prettyPrint("procedure " + name);

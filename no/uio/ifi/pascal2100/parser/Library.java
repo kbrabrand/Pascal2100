@@ -48,7 +48,7 @@ public class Library extends Block {
         integer.to = new NumberLiteral(2147483647, -1);
 
         TypeDecl integerType = new TypeDecl(-1);
-        integerType.name = new TypeName("integer", -1);
+        integerType.name = new TypeName("Integer", -1);
         integerType.type = integer;
 
         addDecl(integerType.name.name, integerType);

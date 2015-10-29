@@ -37,6 +37,13 @@ public class EnumType extends Type {
         return et;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) {
+        for (EnumLiteral el : literals) {
+            el.check(curScope, lib);
+        }
+    }
+
     void prettyPrint() {
         Main.log.prettyPrint("(");
 

@@ -8,6 +8,7 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.procedureToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.beginToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.endToken;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import no.uio.ifi.pascal2100.main.Main;
@@ -20,6 +21,9 @@ public class Block extends PascalSyntax {
     public TypeDeclPart typeDeclPart = null;
     public VarDeclPart varDeclPart = null;
     public LinkedList<ProcDecl> procDeclList = new LinkedList<ProcDecl>();
+
+    Block outerScope = null;
+    HashMap<String, PascalDecl> decls = new HashMap<String, PascalDecl>();
 
     public StatmList stmtList;
 
@@ -70,6 +74,81 @@ public class Block extends PascalSyntax {
         leaveParser("block");
 
         return b;
+    }
+
+    public PascalDecl findDecl(String id, PascalSyntax where) {
+        PascalDecl d = decls.get(id.toLowerCase());
+
+        if (d != null) {
+            Main.log.noteBinding(id, where, d);
+            return d;
+        }
+
+        if (outerScope != null) {
+            return outerScope.findDecl(id, where);
+        }
+
+        where.error("Name " + id + " is unknown!");
+
+        return null; // Required by the Java compiler.
+    }
+
+    public void addDecl(String id, PascalDecl decl) {
+        if (decls.containsKey(id.toLowerCase())) {
+            decl.error(id + " declared twice in same block");
+        }
+
+        decls.put(id.toLowerCase(), decl);
+    }
+
+    /**
+     * Shorthand method for setting outer scope when stepping into a new scope
+     * 
+     * @param outerScope
+     * @param curScope
+     * @param lib
+     */
+    public void check(Block outerScope, Block curScope, Library lib) {
+        curScope.outerScope = outerScope;
+
+        check(curScope, lib);
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        // Constant declarations
+        if (constDeclPart != null) {
+            constDeclPart.check(this, lib);
+
+            for (ConstDecl cd: constDeclPart.decls) {
+                this.addDecl(cd.name, cd);
+            }
+        }
+
+        // Type declarations
+        if (typeDeclPart != null) {
+            typeDeclPart.check(this, lib);
+
+            for (TypeDecl td: typeDeclPart.decls) {
+                this.addDecl(td.name.name, td);
+            }
+        }
+
+        // Variable declarations
+        if (varDeclPart != null) {
+            varDeclPart.check(this, lib);
+
+            for (VarDecl vd: varDeclPart.decls) {
+                this.addDecl(vd.name, vd);
+            }
+        }
+
+        // Procedure declarations
+        for (ProcDecl pd : procDeclList) {
+            pd.check(curScope, lib);
+        }
+
+        stmtList.check(this, lib);
     }
 
     public void prettyPrint() {

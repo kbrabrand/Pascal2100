@@ -35,6 +35,11 @@ public class ConstDecl extends PascalDecl {
         return cd;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) {
+        constant.check(curScope, lib);
+    }
+
     public void prettyPrint() {
         Main.log.prettyPrint(name + " = ");
         constant.prettyPrint();

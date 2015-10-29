@@ -33,6 +33,12 @@ public class ParamDecl extends PascalDecl {
         return pd;
     }
 
+    @Override
+    public void check(Block curScope, Library lib) {
+        curScope.findDecl(typeName.name, this);
+        typeName.check(curScope, lib);
+    }
+
     public void prettyPrint() {
         Main.log.prettyPrint(name + ": ");
         typeName.prettyPrint();

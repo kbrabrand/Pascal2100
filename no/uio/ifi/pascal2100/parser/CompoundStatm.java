@@ -33,6 +33,11 @@ public class CompoundStatm extends Statement {
     }
 
     @Override
+    public void check(Block curScope, Library lib) {
+        stmtList.check(curScope, lib);
+    }
+
+    @Override
     void prettyPrint() {
         Main.log.prettyPrintLn("begin");
         Main.log.prettyIndent();
