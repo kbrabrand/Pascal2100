@@ -21,7 +21,7 @@ public class ProcCallStatm extends Statement {
 
     @Override
     public String identify() {
-        return "<proc call> on line " + lineNum;
+        return "<proc call> " + this.getSourceLocation();
     }
 
     public static ProcCallStatm parse(Scanner s) {
@@ -51,6 +51,15 @@ public class ProcCallStatm extends Statement {
         leaveParser("proc call");
 
         return pcs;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        curScope.findDecl(name, this);
+
+        for (Expression e : exprs) {
+            e.check(curScope, lib);
+        }
     }
 
     void prettyPrint() {

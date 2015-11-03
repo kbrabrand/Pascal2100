@@ -18,7 +18,7 @@ public class IfStatm extends Statement {
 
     @Override
     public String identify() {
-        return "<if statm> on line " + lineNum;
+        return "<if statm> " + this.getSourceLocation();
     }
 
     public static IfStatm parse(Scanner s) {
@@ -40,6 +40,16 @@ public class IfStatm extends Statement {
         leaveParser("if statm");
 
         return is;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        expr.check(curScope, lib);
+        thenStatm.check(curScope, lib);
+
+        if (elseStatm != null) {
+            elseStatm.check(curScope, lib);
+        }
     }
 
     @Override

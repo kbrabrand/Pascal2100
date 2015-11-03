@@ -14,7 +14,7 @@ public class NumberLiteral extends Constant {
 
     @Override
     public String identify() {
-        return "<number literal> " + val + " on line " + lineNum;
+        return "<number literal> " + val + " " + this.getSourceLocation();
     }
 
     public static NumberLiteral parse(Scanner s) {
@@ -30,6 +30,9 @@ public class NumberLiteral extends Constant {
 
         return nl;
     }
+
+    @Override
+    public void check(Block curScope, Library lib) { }
 
     @Override
     void prettyPrint() {

@@ -15,7 +15,7 @@ public class InnerExpr extends Factor {
 
     @Override
     public String identify() {
-        return "<inner expr> on line " + lineNum;
+        return "<inner expr> " + this.getSourceLocation();
     }
 
     public static InnerExpr parse(Scanner s) {
@@ -32,6 +32,11 @@ public class InnerExpr extends Factor {
         leaveParser("inner expr");
 
         return ie;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        expr.check(curScope, lib);
     }
 
     @Override

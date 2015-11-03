@@ -14,7 +14,7 @@ public class RelOperator extends Operator {
 
     @Override
     public String identify() {
-        return "<rel oper> " + kind.identify() + " on line " + lineNum;
+        return "<rel oper> " + kind.identify() + " " + this.getSourceLocation();
     }
 
     public static RelOperator parse(Scanner s) {
@@ -32,6 +32,9 @@ public class RelOperator extends Operator {
 
         return r;
     }
+
+    @Override
+    public void check(Block curScope, Library lib) { }
 
     @Override
     void prettyPrint() {

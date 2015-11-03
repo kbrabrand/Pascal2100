@@ -17,7 +17,7 @@ public class TypeDeclPart extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<type decl part> on line " + lineNum;
+        return "<type decl part> " + this.getSourceLocation();
     }
 
     public static TypeDeclPart parse(Scanner s) {
@@ -34,6 +34,13 @@ public class TypeDeclPart extends PascalSyntax {
         leaveParser("type decl part");
 
         return tdp;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        for (TypeDecl td : decls) {
+            td.check(curScope, lib);
+        }
     }
 
     public void prettyPrint() {

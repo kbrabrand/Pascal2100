@@ -18,7 +18,7 @@ public class ArrayType extends Type {
 
     @Override
     public String identify() {
-        return "<array type> on line " + lineNum;
+        return "<array type> " + this.getSourceLocation();
     }
 
     public static ArrayType parse(Scanner s) {
@@ -40,6 +40,12 @@ public class ArrayType extends Type {
         leaveParser("array type");
 
         return at;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        type.check(curScope, lib);
+        ofType.check(curScope, lib);
     }
 
     void prettyPrint() {

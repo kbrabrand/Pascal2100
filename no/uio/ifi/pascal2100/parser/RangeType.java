@@ -14,7 +14,7 @@ public class RangeType extends Type {
 
     @Override
     public String identify() {
-        return "<range type> on line " + lineNum;
+        return "<range type> " + this.getSourceLocation();
     }
 
     public static RangeType parse(Scanner s) {
@@ -31,6 +31,12 @@ public class RangeType extends Type {
         leaveParser("range type");
 
         return rt;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        from.check(curScope, lib);
+        to.check(curScope, lib);
     }
 
     void prettyPrint() {

@@ -18,7 +18,7 @@ public class ProcDecl extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<proc decl> on line " + lineNum;
+        return "<proc decl> " + this.getSourceLocation();
     }
 
     public static ProcDecl parse(Scanner s) {
@@ -44,6 +44,18 @@ public class ProcDecl extends PascalDecl {
         leaveParser("proc decl");
 
         return pd;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        paramDeclList.check(curScope, lib);
+        curScope.addDecl(name, this);
+
+        for (ParamDecl pd: paramDeclList.decls) {
+            block.addDecl(pd.name, pd);
+        }
+
+        block.check(curScope, block, lib);
     }
 
     public void prettyPrint() {

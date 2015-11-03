@@ -17,7 +17,7 @@ public class SimpleExpr extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<simple expr> on line " + lineNum;
+        return "<simple expr> " + this.getSourceLocation();
     }
 
     public static SimpleExpr parse(Scanner s) {
@@ -43,6 +43,13 @@ public class SimpleExpr extends PascalSyntax {
         leaveParser("simple expr");
 
         return se;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        for (Term t : terms) {
+            t.check(curScope, lib);
+        }
     }
 
     @Override

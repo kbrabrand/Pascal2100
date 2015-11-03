@@ -17,7 +17,7 @@ public class StatmList extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<stmt list> on line " + lineNum;
+        return "<stmt list> " + this.getSourceLocation();
     }
 
     public static StatmList parse(Scanner s) {
@@ -45,6 +45,13 @@ public class StatmList extends PascalSyntax {
         leaveParser("statm list");
 
         return sl;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        for (Statement s : statements) {
+            s.check(curScope, lib);
+        }
     }
 
     void prettyPrint() {

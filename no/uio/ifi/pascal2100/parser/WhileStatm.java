@@ -16,7 +16,7 @@ public class WhileStatm extends Statement {
 
     @Override
     public String identify() {
-        return "<while statm> on line " + lineNum;
+        return "<while statm> " + this.getSourceLocation();
     }
 
     public static WhileStatm parse(Scanner s) {
@@ -32,6 +32,12 @@ public class WhileStatm extends Statement {
         leaveParser("while statm");
 
         return ws;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        expr.check(curScope, lib);
+        body.check(curScope, lib);
     }
 
     @Override

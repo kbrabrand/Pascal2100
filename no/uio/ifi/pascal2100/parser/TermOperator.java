@@ -14,7 +14,7 @@ public class TermOperator extends Operator {
 
     @Override
     public String identify() {
-        return "<term oper> " + kind.identify() + " on line " + lineNum;
+        return "<term oper> " + kind.identify() + " " + this.getSourceLocation();
     }
 
     public static TermOperator parse(Scanner s) {
@@ -32,6 +32,9 @@ public class TermOperator extends Operator {
 
         return t;
     }
+
+    @Override
+    public void check(Block curScope, Library lib) { }
 
     @Override
     void prettyPrint() {

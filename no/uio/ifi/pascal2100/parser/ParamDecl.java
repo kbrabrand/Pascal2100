@@ -15,7 +15,7 @@ public class ParamDecl extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<param decl> on line " + lineNum;
+        return "<param decl> " + this.getSourceLocation();
     }
 
     public static ParamDecl parse(Scanner s) {
@@ -31,6 +31,12 @@ public class ParamDecl extends PascalDecl {
         leaveParser("param decl");
 
         return pd;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        curScope.findDecl(typeName.name, this);
+        typeName.check(curScope, lib);
     }
 
     public void prettyPrint() {

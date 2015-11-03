@@ -14,7 +14,7 @@ public class PrefixOperator extends Operator {
 
     @Override
     public String identify() {
-        return "<prefix oper> " + kind.identify() + " on line " + lineNum;
+        return "<prefix oper> " + kind.identify() + " " + this.getSourceLocation();
     }
 
     public static PrefixOperator parse(Scanner s) {
@@ -32,6 +32,9 @@ public class PrefixOperator extends Operator {
 
         return t;
     }
+
+    @Override
+    public void check(Block curScope, Library lib) { }
 
     @Override
     void prettyPrint() {

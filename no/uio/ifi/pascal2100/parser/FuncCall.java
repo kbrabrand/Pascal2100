@@ -21,7 +21,7 @@ public class FuncCall extends Factor {
 
     @Override
     public String identify() {
-        return "<func call> on line " + lineNum;
+        return "<func call> " + this.getSourceLocation();
     }
 
     public static FuncCall parse(Scanner s) {
@@ -52,6 +52,15 @@ public class FuncCall extends Factor {
         leaveParser("func call");
 
         return fc;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        curScope.findDecl(name, this);
+
+        for (Expression e : exprs) {
+            e.check(curScope, lib);
+        }
     }
 
     @Override

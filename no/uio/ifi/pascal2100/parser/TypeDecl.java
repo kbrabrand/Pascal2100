@@ -16,7 +16,7 @@ public class TypeDecl extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<type decl> on line " + lineNum;
+        return "<type decl> " + this.getSourceLocation();
     }
 
     public static TypeDecl parse(Scanner s) {
@@ -32,6 +32,15 @@ public class TypeDecl extends PascalDecl {
         leaveParser("type decl");
 
         return td;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        type.check(curScope, lib);
+
+        if (type instanceof TypeName) {
+            curScope.findDecl(((TypeName) type).name, this);
+       }
     }
 
     public void prettyPrint() {

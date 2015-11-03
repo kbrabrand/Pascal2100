@@ -16,7 +16,7 @@ public class Term extends Operator {
 
     @Override
     public String identify() {
-        return "<term> on line " + lineNum;
+        return "<term> " + this.getSourceLocation();
     }
 
     static Term parse(Scanner s) {
@@ -41,6 +41,13 @@ public class Term extends Operator {
         leaveParser("term");
 
         return t;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        for (Factor f : factors) {
+            f.check(curScope, lib);
+        }
     }
 
     @Override

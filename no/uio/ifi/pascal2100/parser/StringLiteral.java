@@ -13,7 +13,7 @@ public class StringLiteral extends Constant {
 
     @Override
     public String identify() {
-        return "<string literal> " + val + " on line " + lineNum;
+        return "<string literal> " + val + " " + this.getSourceLocation();
     }
 
     public static StringLiteral parse(Scanner s) {
@@ -27,6 +27,9 @@ public class StringLiteral extends Constant {
 
         return sl;
     }
+
+    @Override
+    public void check(Block curScope, Library lib) { }
 
     @Override
     void prettyPrint() {

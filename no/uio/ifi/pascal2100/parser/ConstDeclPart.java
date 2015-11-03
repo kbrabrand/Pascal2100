@@ -17,7 +17,7 @@ public class ConstDeclPart extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<const decl part> on line " + lineNum;
+        return "<const decl part> " + this.getSourceLocation();
     }
 
     public static ConstDeclPart parse(Scanner s) {
@@ -34,6 +34,13 @@ public class ConstDeclPart extends PascalSyntax {
         leaveParser("const decl part");
 
         return cdp;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        for (ConstDecl cd : decls) {
+            cd.check(curScope, lib);
+        }
     }
 
     public void prettyPrint() {

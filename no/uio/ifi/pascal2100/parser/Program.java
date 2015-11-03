@@ -18,7 +18,7 @@ public class Program extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<program> " + name + " on line " + lineNum;
+        return "<program> " + name + " " + this.getSourceLocation();
     }
 
     public static Program parse(Scanner s) {
@@ -40,6 +40,11 @@ public class Program extends PascalDecl {
         leaveParser("program");
 
         return p;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        progBlock.check(curScope, progBlock, lib);
     }
 
     public void prettyPrint() {

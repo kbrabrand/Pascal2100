@@ -14,7 +14,7 @@ public class Negation extends Factor {
 
     @Override
     public String identify() {
-        return "<negation> on line " + lineNum;
+        return "<negation> " + this.getSourceLocation();
     }
 
     public static Negation parse(Scanner s) {
@@ -29,6 +29,11 @@ public class Negation extends Factor {
         leaveParser("negation");
 
         return n;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        factor.check(curScope, lib);
     }
 
     @Override

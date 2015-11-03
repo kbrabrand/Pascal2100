@@ -18,7 +18,7 @@ public class FuncDecl extends ProcDecl {
 
     @Override
     public String identify() {
-        return "<func decl> on line " + lineNum;
+        return "<func decl> " + this.getSourceLocation();
     }
 
     public static FuncDecl parse(Scanner s) {
@@ -48,6 +48,13 @@ public class FuncDecl extends ProcDecl {
         leaveParser("func decl");
 
         return fd;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        curScope.findDecl(typeName.name, this);
+
+        super.check(curScope, lib);
     }
 
     public void prettyPrint() {

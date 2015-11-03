@@ -18,7 +18,7 @@ public class ParamDeclList extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<param decl list> on line " + lineNum;
+        return "<param decl list> " + this.getSourceLocation();
     }
 
     public static ParamDeclList parse(Scanner s) {
@@ -43,6 +43,13 @@ public class ParamDeclList extends PascalSyntax {
         leaveParser("param decl list");
 
         return pdl;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        for (ParamDecl pd : decls) {
+            pd.check(curScope, lib);
+        }
     }
 
     public void prettyPrint() {

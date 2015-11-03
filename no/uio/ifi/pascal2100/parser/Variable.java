@@ -19,7 +19,7 @@ public class Variable extends Factor {
 
     @Override
     public String identify() {
-        return "<variable> on line " + lineNum;
+        return "<variable> " + this.getSourceLocation();
     }
 
     public static Variable parse(Scanner s) {
@@ -42,6 +42,15 @@ public class Variable extends Factor {
         leaveParser("variable");
 
         return v;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        curScope.findDecl(name, this);
+
+        if (expr != null) {
+            expr.check(curScope, lib);
+        }
     }
 
     @Override

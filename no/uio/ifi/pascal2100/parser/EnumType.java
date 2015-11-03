@@ -16,7 +16,7 @@ public class EnumType extends Type {
 
     @Override
     public String identify() {
-        return "<enum type> on line " + lineNum;
+        return "<enum type> " + this.getSourceLocation();
     }
 
     public static EnumType parse(Scanner s) {
@@ -35,6 +35,13 @@ public class EnumType extends Type {
         leaveParser("enum type");
 
         return et;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        for (EnumLiteral el : literals) {
+            el.check(curScope, lib);
+        }
     }
 
     void prettyPrint() {

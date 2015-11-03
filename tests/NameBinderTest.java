@@ -7,9 +7,8 @@ import java.util.Scanner;
 
 import org.junit.Test;
 
-public class ParserTest {
+public class NameBinderTest {
     private static final String testFiles[] = {
-        "10star",
         "mini",
         "gcd"
     };
@@ -18,7 +17,7 @@ public class ParserTest {
         Runtime r = Runtime.getRuntime();
 
         try {
-            Process p = r.exec("java -jar pascal2100.jar -testparser tests/fixtures/" + name + ".pas");
+            Process p = r.exec("java -jar pascal2100.jar -logB tests/fixtures/" + name + ".pas");
             p.waitFor();
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,10 +35,10 @@ public class ParserTest {
         processFile(name);
 
         String actual = getTestFileContents(name + ".log");
-        String expected = getTestFileContents(name + ".expected.parser");
+        String expected = getTestFileContents(name + ".expected.binding");
 
         assertEquals(expected, actual);
-        System.out.println("[Parser]         " + name + ": OK");
+        System.out.println("[Name binding]   " + name + ": OK");
     }
 
     @Test

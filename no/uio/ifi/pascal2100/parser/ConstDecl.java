@@ -16,7 +16,7 @@ public class ConstDecl extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<const decl> on line " + lineNum;
+        return "<const decl> " + this.getSourceLocation();
     }
 
     public static ConstDecl parse(Scanner s) {
@@ -33,6 +33,11 @@ public class ConstDecl extends PascalDecl {
         leaveParser("const decl");
 
         return cd;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        constant.check(curScope, lib);
     }
 
     public void prettyPrint() {

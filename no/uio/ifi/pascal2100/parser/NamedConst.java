@@ -14,7 +14,7 @@ public class NamedConst extends Constant {
 
     @Override
     public String identify() {
-        return "<named const> " + name + " on line " + lineNum;
+        return "<named const> " + name + " " + this.getSourceLocation();
     }
 
     public static NamedConst parse(Scanner s) {
@@ -29,6 +29,11 @@ public class NamedConst extends Constant {
         s.readNextToken();
 
         return nc;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        curScope.findDecl(name, this);
     }
 
     @Override

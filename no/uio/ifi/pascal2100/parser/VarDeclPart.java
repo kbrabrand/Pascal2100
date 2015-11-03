@@ -17,7 +17,7 @@ public class VarDeclPart extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<var decl part> on line " + lineNum;
+        return "<var decl part> " + this.getSourceLocation();
     }
 
     public static VarDeclPart parse(Scanner s) {
@@ -34,6 +34,13 @@ public class VarDeclPart extends PascalSyntax {
         leaveParser("var decl part");
 
         return vdp;
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        for (VarDecl vd : decls) {
+            vd.check(curScope, lib);
+        }
     }
 
     public void prettyPrint() {
