@@ -43,7 +43,7 @@ public class ScannerTest {
         String expected = getTestFileContents(name + ".expected.scanner");
 
         assertEquals(expected, actual);
-        System.out.println("[Scanner] " + name + ": OK");
+        System.out.println("[Scanner]        " + name + ": OK");
     }
 
     @Test
