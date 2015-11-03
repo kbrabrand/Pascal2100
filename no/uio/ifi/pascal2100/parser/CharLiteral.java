@@ -13,7 +13,7 @@ public class CharLiteral extends Constant {
 
     @Override
     public String identify() {
-        return "<char literal> " + val + " on line " + lineNum;
+        return "<char literal> " + val + " " + this.getSourceLocation();
     }
 
     public static CharLiteral parse(Scanner s) {

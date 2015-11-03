@@ -15,7 +15,7 @@ public class ParamDecl extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<param decl> on line " + lineNum;
+        return "<param decl> " + this.getSourceLocation();
     }
 
     public static ParamDecl parse(Scanner s) {

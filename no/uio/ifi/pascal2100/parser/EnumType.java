@@ -16,7 +16,7 @@ public class EnumType extends Type {
 
     @Override
     public String identify() {
-        return "<enum type> on line " + lineNum;
+        return "<enum type> " + this.getSourceLocation();
     }
 
     public static EnumType parse(Scanner s) {

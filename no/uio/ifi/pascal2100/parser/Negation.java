@@ -14,7 +14,7 @@ public class Negation extends Factor {
 
     @Override
     public String identify() {
-        return "<negation> on line " + lineNum;
+        return "<negation> " + this.getSourceLocation();
     }
 
     public static Negation parse(Scanner s) {

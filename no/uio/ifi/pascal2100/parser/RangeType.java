@@ -14,7 +14,7 @@ public class RangeType extends Type {
 
     @Override
     public String identify() {
-        return "<range type> on line " + lineNum;
+        return "<range type> " + this.getSourceLocation();
     }
 
     public static RangeType parse(Scanner s) {

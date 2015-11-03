@@ -21,7 +21,7 @@ public class ProcCallStatm extends Statement {
 
     @Override
     public String identify() {
-        return "<proc call> on line " + lineNum;
+        return "<proc call> " + this.getSourceLocation();
     }
 
     public static ProcCallStatm parse(Scanner s) {

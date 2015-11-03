@@ -17,7 +17,7 @@ public class StatmList extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<stmt list> on line " + lineNum;
+        return "<stmt list> " + this.getSourceLocation();
     }
 
     public static StatmList parse(Scanner s) {

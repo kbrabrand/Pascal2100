@@ -124,7 +124,7 @@ public class LogFile {
         if (doLogBinding) {
             writeLogLine(
                 "Binding on line " + where.lineNum + ": " + id +
-                " was declared in " + (decl.lineNum < 0 ? "the library" : decl.identify())
+                " was declared in " + decl.identify()
             );
         }
     }

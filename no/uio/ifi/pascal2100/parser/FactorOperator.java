@@ -14,7 +14,7 @@ public class FactorOperator extends Operator {
 
     @Override
     public String identify() {
-        return "<factor oper> " + kind.identify() + " on line " + lineNum;
+        return "<factor oper> " + kind.identify() + " " + this.getSourceLocation();
     }
 
     public static FactorOperator parse(Scanner s) {

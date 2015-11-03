@@ -14,7 +14,7 @@ public class TermOperator extends Operator {
 
     @Override
     public String identify() {
-        return "<term oper> " + kind.identify() + " on line " + lineNum;
+        return "<term oper> " + kind.identify() + " " + this.getSourceLocation();
     }
 
     public static TermOperator parse(Scanner s) {

@@ -18,7 +18,7 @@ public class ParamDeclList extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<param decl list> on line " + lineNum;
+        return "<param decl list> " + this.getSourceLocation();
     }
 
     public static ParamDeclList parse(Scanner s) {

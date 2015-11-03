@@ -17,7 +17,7 @@ public class SimpleExpr extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<simple expr> on line " + lineNum;
+        return "<simple expr> " + this.getSourceLocation();
     }
 
     public static SimpleExpr parse(Scanner s) {

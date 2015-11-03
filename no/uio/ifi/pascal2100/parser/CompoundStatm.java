@@ -15,7 +15,7 @@ public class CompoundStatm extends Statement {
 
     @Override
     public String identify() {
-        return "<compound statm> on line " + lineNum;
+        return "<compound statm> " + this.getSourceLocation();
     }
 
     public static CompoundStatm parse(Scanner s) {

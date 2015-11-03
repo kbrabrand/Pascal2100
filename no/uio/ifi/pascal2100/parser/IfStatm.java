@@ -18,7 +18,7 @@ public class IfStatm extends Statement {
 
     @Override
     public String identify() {
-        return "<if statm> on line " + lineNum;
+        return "<if statm> " + this.getSourceLocation();
     }
 
     public static IfStatm parse(Scanner s) {

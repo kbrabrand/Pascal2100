@@ -18,7 +18,7 @@ public class FuncDecl extends ProcDecl {
 
     @Override
     public String identify() {
-        return "<func decl> on line " + lineNum;
+        return "<func decl> " + this.getSourceLocation();
     }
 
     public static FuncDecl parse(Scanner s) {

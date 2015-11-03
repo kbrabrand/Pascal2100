@@ -15,7 +15,7 @@ public class AssignStatm extends Statement {
 
     @Override
     public String identify() {
-        return "<assign statm> on line " + lineNum;
+        return "<assign statm> " + this.getSourceLocation();
     }
 
     public static AssignStatm parse(Scanner s) {

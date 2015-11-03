@@ -33,7 +33,7 @@ public class Block extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<block> on line " + lineNum;
+        return "<block> " + this.getSourceLocation();
     }
 
     public static Block parse(Scanner s) {

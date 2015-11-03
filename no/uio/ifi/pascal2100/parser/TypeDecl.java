@@ -16,7 +16,7 @@ public class TypeDecl extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<type decl> on line " + lineNum;
+        return "<type decl> " + this.getSourceLocation();
     }
 
     public static TypeDecl parse(Scanner s) {

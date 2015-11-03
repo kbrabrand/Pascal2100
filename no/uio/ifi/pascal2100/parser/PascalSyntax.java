@@ -13,6 +13,14 @@ public abstract class PascalSyntax {
         return lineNum < 0;
     }
 
+    String getSourceLocation() {
+        if (this.isInLibrary()) {
+            return "in the library";
+        } else {
+            return "on line " + lineNum;
+        }
+    }
+
     abstract void check(Block curScope, Library lib);
 
     //Del 4: abstract void genCode(CodeFile f);

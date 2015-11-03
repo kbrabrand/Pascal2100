@@ -18,7 +18,7 @@ public class ProcDecl extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<proc decl> on line " + lineNum;
+        return "<proc decl> " + this.getSourceLocation();
     }
 
     public static ProcDecl parse(Scanner s) {

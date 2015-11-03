@@ -16,7 +16,7 @@ public class ConstDecl extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<const decl> on line " + lineNum;
+        return "<const decl> " + this.getSourceLocation();
     }
 
     public static ConstDecl parse(Scanner s) {

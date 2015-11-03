@@ -15,7 +15,7 @@ public class InnerExpr extends Factor {
 
     @Override
     public String identify() {
-        return "<inner expr> on line " + lineNum;
+        return "<inner expr> " + this.getSourceLocation();
     }
 
     public static InnerExpr parse(Scanner s) {

@@ -12,7 +12,7 @@ public class EnumLiteral extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<enum literal> on line " + lineNum;
+        return "<enum literal> " + this.getSourceLocation();
     }
 
     public static EnumLiteral parse(Scanner s) {

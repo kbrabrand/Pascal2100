@@ -14,7 +14,7 @@ public class Expression extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<expression> on line " + lineNum;
+        return "<expression> " + this.getSourceLocation();
     }
 
     public static Expression parse(Scanner s) {

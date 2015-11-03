@@ -17,7 +17,7 @@ public class TypeDeclPart extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<type decl part> on line " + lineNum;
+        return "<type decl part> " + this.getSourceLocation();
     }
 
     public static TypeDeclPart parse(Scanner s) {

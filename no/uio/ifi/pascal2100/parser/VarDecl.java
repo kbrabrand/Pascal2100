@@ -16,7 +16,7 @@ public class VarDecl extends PascalDecl {
 
     @Override
     public String identify() {
-        return "<var decl> on line " + lineNum;
+        return "<var decl> " + this.getSourceLocation();
     }
 
     public static VarDecl parse(Scanner s) {

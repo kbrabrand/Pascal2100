@@ -15,7 +15,7 @@ public class TypeName extends Type {
 
     @Override
     public String identify() {
-        return "<type name> " + name + " on line " + lineNum;
+        return "<type name> " + name + " " + this.getSourceLocation();
     }
 
     public static TypeName parse(Scanner s) {

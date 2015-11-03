@@ -18,7 +18,7 @@ public class ArrayType extends Type {
 
     @Override
     public String identify() {
-        return "<array type> on line " + lineNum;
+        return "<array type> " + this.getSourceLocation();
     }
 
     public static ArrayType parse(Scanner s) {

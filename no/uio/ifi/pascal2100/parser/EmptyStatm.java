@@ -11,7 +11,7 @@ public class EmptyStatm extends Statement {
 
     @Override
     public String identify() {
-        return "<empty statm> on line " + lineNum;
+        return "<empty statm> " + this.getSourceLocation();
     }
 
     public static EmptyStatm parse(Scanner s) {

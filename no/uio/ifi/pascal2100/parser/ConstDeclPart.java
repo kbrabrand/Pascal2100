@@ -17,7 +17,7 @@ public class ConstDeclPart extends PascalSyntax {
 
     @Override
     public String identify() {
-        return "<const decl part> on line " + lineNum;
+        return "<const decl part> " + this.getSourceLocation();
     }
 
     public static ConstDeclPart parse(Scanner s) {

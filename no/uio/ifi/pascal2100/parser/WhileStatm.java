@@ -16,7 +16,7 @@ public class WhileStatm extends Statement {
 
     @Override
     public String identify() {
-        return "<while statm> on line " + lineNum;
+        return "<while statm> " + this.getSourceLocation();
     }
 
     public static WhileStatm parse(Scanner s) {
