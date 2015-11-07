@@ -115,16 +115,15 @@ public class Main {
         library = new Library();
         prog.check(library, library);
 
-        /* Del 4
-         * System.out.print(" generating code...");
-         * CodeFile code = new CodeFile(baseFileName+".s");
-         * library.genCode(code);  prog.genCode(code);
-         * code.finish();
-         */
+        System.out.print(" generating code...");
+        CodeFile code = new CodeFile(baseFileName+".s");
+        library.genCode(code);
+        prog.genCode(code);
+        code.finish();
 
         System.out.println("OK");
 
-        // Del 4: assembleCode();
+        assembleCode();
     }
 
     private static void assembleCode() {

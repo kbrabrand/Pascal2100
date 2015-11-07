@@ -69,6 +69,14 @@ public class CodeFile {
         code.println();
     }
 
+    public void genInstr(String instr, String arg, String comment) {
+        this.genInstr("", instr, arg, comment);
+    }
+
+    public void genInstr(String instr, String arg) {
+        this.genInstr(instr, arg, "");
+    }
+
     public void genString(String name, String s, String comment) {
         genDirective(".data", "");
         printLabel(name, false);
