@@ -4,6 +4,7 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.whileToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.doToken;
 
 import no.uio.ifi.pascal2100.scanner.Scanner;
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 
 public class WhileStatm extends Statement {	
@@ -56,4 +57,17 @@ public class WhileStatm extends Statement {
         }
     }
 
+    @Override
+    void genCode(CodeFile f) {
+        String testLabel = f.getLocalLabel(),
+               endLabel = f.getLocalLabel();
+
+        f.genInstr(testLabel, "", "", "Start while-statement");
+        expr.genCode(f);
+        f.genInstr("cmpl", "$0,%eax");
+        f.genInstr("je", endLabel);
+        body.genCode(f);
+        f.genInstr("jmp", testLabel);
+        f.genInstr(endLabel, "", "", "End while-statement");
+    }
 }

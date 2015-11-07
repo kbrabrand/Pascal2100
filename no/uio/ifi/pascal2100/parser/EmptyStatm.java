@@ -1,6 +1,7 @@
 package no.uio.ifi.pascal2100.parser;
 
 import static no.uio.ifi.pascal2100.scanner.TokenKind.semicolonToken;
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -33,4 +34,7 @@ public class EmptyStatm extends Statement {
     void prettyPrint() {
         Main.log.prettyPrint(";");
     }
+
+    @Override
+    void genCode(CodeFile f) { }
 }
