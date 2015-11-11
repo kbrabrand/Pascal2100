@@ -4,6 +4,7 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.ifToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.thenToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.elseToken;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -69,5 +70,27 @@ public class IfStatm extends Statement {
         }
 
         Main.log.prettyOutdent();
+    }
+
+    void genCode(CodeFile f) {
+        String elseLabel = f.getLocalLabel(),
+               endLabel = f.getLocalLabel();
+
+        f.genInstr("", "", "Start if-statement");
+        expr.genCode(f);
+        f.genInstr("cmpl", "$0,%eax");
+
+        if (elseStatm == null) {
+            f.genInstr("je", endLabel);
+            thenStatm.genCode(f);
+        } else {
+            f.genInstr("je", elseLabel);
+            thenStatm.genCode(f);
+            f.genInstr("jmp", endLabel);
+            f.genInstr(elseLabel, "", "", "");
+            elseStatm.genCode(f);
+        }
+
+        f.genInstr(endLabel, "", "", "End if-statement");
     }
 }
