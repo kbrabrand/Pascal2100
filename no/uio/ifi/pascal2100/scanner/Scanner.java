@@ -50,7 +50,7 @@ public class Scanner {
     }
 
     public int curLineNum() {
-    	return getFileLineNum();
+        return curToken.lineNum;
     }
 
     private void error(String message) {

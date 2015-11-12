@@ -8,4 +8,4 @@ Scanner: ; token on line 3
 Scanner: begin token on line 4
    5:    write('Hei!', eol); 
    6: end. 
-Error in line 1: Comment block started on line 4 has no end
+Error in line 4: Comment block started on line 4 has no end
