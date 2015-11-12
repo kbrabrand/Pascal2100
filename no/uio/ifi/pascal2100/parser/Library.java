@@ -32,14 +32,18 @@ public class Library extends Block {
 
     void addBoolean() {
         EnumType enumType = new EnumType(-1);
-        enumType.literals.add(new EnumLiteral("true", -1));
         enumType.literals.add(new EnumLiteral("false", -1));
+        enumType.literals.add(new EnumLiteral("true", -1));
 
         TypeDecl boolType = new TypeDecl(-1);
         boolType.name = new TypeName("Boolean", -1);
         boolType.type = enumType; 
 
         addDecl(boolType.name.name, boolType);
+
+        for (EnumLiteral el : enumType.literals) {
+            addDecl(el.name, boolType);
+        }
     }
 
     void addInteger() {
