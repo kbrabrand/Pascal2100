@@ -4,12 +4,12 @@ Binding on line 10: integer was declared in <type decl> in the library
 Binding on line 10: integer was declared in <type decl> in the library
 Binding on line 12: n was declared in <param decl> on line 10
 Binding on line 13: GCD was declared in <func decl> on line 10
-Binding on line 15: m was declared in <param decl> on line 10
+Binding on line 13: m was declared in <param decl> on line 10
 Binding on line 15: GCD was declared in <func decl> on line 10
 Binding on line 15: GCD was declared in <func decl> on line 10
 Binding on line 15: n was declared in <param decl> on line 10
 Binding on line 15: m was declared in <param decl> on line 10
-Binding on line 16: n was declared in <param decl> on line 10
+Binding on line 15: n was declared in <param decl> on line 10
 Binding on line 19: res was declared in <var decl> on line 8
 Binding on line 19: GCD was declared in <func decl> on line 10
 Binding on line 19: v1 was declared in <const decl> on line 6
