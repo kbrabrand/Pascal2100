@@ -69,12 +69,12 @@ public class CodeFile {
         code.println();
     }
 
-    public void genInstr(String instr, String arg, String comment) {
-        this.genInstr("", instr, arg, comment);
+    public void genInstr(String lab, String instr, String arg) {
+        this.genInstr(lab, instr, arg, "");
     }
 
-    public void genInstr(String instr, String arg) {
-        this.genInstr(instr, arg, "");
+    public void genInstr(String lab, String instr) {
+        this.genInstr(lab, instr, "", "");
     }
 
     public void genString(String name, String s, String comment) {

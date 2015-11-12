@@ -64,10 +64,10 @@ public class WhileStatm extends Statement {
 
         f.genInstr(testLabel, "", "", "Start while-statement");
         expr.genCode(f);
-        f.genInstr("cmpl", "$0,%eax");
-        f.genInstr("je", endLabel);
+        f.genInstr("", "cmpl", "$0,%eax", "");
+        f.genInstr("", "je", endLabel, "");
         body.genCode(f);
-        f.genInstr("jmp", testLabel);
+        f.genInstr("", "jmp", testLabel, "");
         f.genInstr(endLabel, "", "", "End while-statement");
     }
 }

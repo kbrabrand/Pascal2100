@@ -76,17 +76,17 @@ public class IfStatm extends Statement {
         String elseLabel = f.getLocalLabel(),
                endLabel = f.getLocalLabel();
 
-        f.genInstr("", "", "Start if-statement");
+        f.genInstr("", "", "", "Start if-statement");
         expr.genCode(f);
-        f.genInstr("cmpl", "$0,%eax");
+        f.genInstr("", "cmpl", "$0,%eax", "");
 
         if (elseStatm == null) {
-            f.genInstr("je", endLabel);
+            f.genInstr("", "je", endLabel, "");
             thenStatm.genCode(f);
         } else {
-            f.genInstr("je", elseLabel);
+            f.genInstr("", "je", elseLabel, "");
             thenStatm.genCode(f);
-            f.genInstr("jmp", endLabel);
+            f.genInstr("", "jmp", endLabel, "");
             f.genInstr(elseLabel, "", "", "");
             elseStatm.genCode(f);
         }
