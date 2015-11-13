@@ -1,38 +1,16 @@
 <?xml version="1.0"?>
 <project name="pascal2100" default="jar">
-	<property name="junit.results" value="test-results"/>
-	
-	<path id="classpath.test">
-        <path refid="classpath"/>
-        <pathelement location="classes"/>
-    </path>
-	
-	<path id="classpath">
-        <fileset dir="${lib.dir}" includes="*.jar"/>
-	</path>
-	
-	<target name="clean" description="Remove generated files">
+    <target name="clean" description="Fjern genererte filer">
         <delete dir="classes"/>
         <delete file="pascal2100.jar"/>
-		<delete file="inf2100-oblig.zip"/>
-		<delete>
-		    <fileset dir="./tests/fixtures" includes="**/*.log"/>
-		</delete>
-		<delete>
-		    <fileset dir="./tests/fixtures" includes="**/*.pas~"/>
-		</delete>
     </target>
 
-    <target name="compile" description="Compile the application">
+    <target name="compile" description="Kompiler Java-programmet">
         <mkdir dir="classes"/>
-        <javac srcdir="."
-            destdir="classes"
-            debug="true"
-            debuglevel="lines,vars,source"
-            includeantruntime="false" />
+        <javac srcdir="no" destdir="classes" debug="true" debuglevel="lines,vars,source" includeantruntime="false"/>
     </target>
 
-    <target name="jar" depends="compile" description="Create a JAR file">
+    <target name="jar" depends="compile" description="Lag en JAR-fil">
         <jar destfile="pascal2100.jar">
             <fileset dir="classes" includes="**/*.class"/>
             <manifest>
@@ -41,22 +19,7 @@
         </jar>
     </target>
 
-    <target name="zip" depends="clean" description="Create a ZIP file">
+    <target name="zip" description="Lag en ZIP-fil">
         <zip destfile="inf2100-oblig.zip" basedir="."/>
-    </target>
-	
-    <target name="test" depends="compile" description="Run unit tests">
-        <delete dir="${junit.results}"/>
-        <mkdir dir="${junit.results}"/>
-        <junit fork="no" errorProperty="test.failed" failureProperty="test.failed" >
-            <classpath refid="classpath.test" />
-            <formatter type="plain" usefile="false"/>
-            <formatter type="xml"/>
-
-            <batchtest todir="${junit.results}">
-                <fileset dir="." includes="**/*Test.class"/>
-            </batchtest>
-        </junit>
-        <fail message="Tests failed. Please see test reports" if="test.failed" />
     </target>
 </project>
