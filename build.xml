@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <project name="pascal2100" default="jar">
+
     <target name="clean" description="Fjern genererte filer">
         <delete dir="classes"/>
         <delete file="pascal2100.jar"/>
+        <delete file="inf2100-oblig.zip"/>
     </target>
 
     <target name="compile" description="Kompiler Java-programmet">
@@ -19,7 +21,7 @@
         </jar>
     </target>
 
-    <target name="zip" description="Lag en ZIP-fil">
+    <target name="zip" depends="clean" description="Lag en ZIP-fil">
         <zip destfile="inf2100-oblig.zip" basedir="."/>
     </target>
 </project>
