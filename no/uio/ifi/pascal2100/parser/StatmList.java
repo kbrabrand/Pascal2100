@@ -5,6 +5,7 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.endToken;
 
 import java.util.LinkedList;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -63,5 +64,12 @@ public class StatmList extends PascalSyntax {
             s.prettyPrint();
         }
         Main.log.prettyPrintLn();
+    }
+
+    @Override
+    void genCode(CodeFile f) {
+        for (Statement s : statements) {
+            s.genCode(f);
+        }
     }
 }

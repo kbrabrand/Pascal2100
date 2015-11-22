@@ -3,6 +3,7 @@ package no.uio.ifi.pascal2100.parser;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
+import no.uio.ifi.pascal2100.parser.NumberLiteral;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.arrayToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.leftBracketToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.rightBracketToken;
@@ -42,6 +43,26 @@ public class ArrayType extends Type {
         return at;
     }
 
+    private RangeType getRange() {
+        Type curType = type;
+
+        while (!(curType instanceof RangeType)) {
+            curType = ((TypeName) curType).decl.type;
+        }
+        
+        return (RangeType) curType;
+    }
+
+    public int getLow() {
+        NumberLiteral low = (NumberLiteral) getRange().from;
+        return low.val;
+    }
+
+    public int getHigh() {
+        NumberLiteral high = (NumberLiteral) getRange().to;
+        return high.val;
+    }
+
     @Override
     public void check(Block curScope, Library lib) {
         type.check(curScope, lib);
@@ -53,5 +74,10 @@ public class ArrayType extends Type {
         type.prettyPrint();
         Main.log.prettyPrint("] of ");
         ofType.prettyPrint();
+    }
+
+    @Override
+    public int getSize() {
+        return (getHigh() - getLow()) * type.getSize();
     }
 }

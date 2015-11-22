@@ -10,7 +10,7 @@ import no.uio.ifi.pascal2100.scanner.Scanner;
 public class Variable extends Factor {
     public String name;
     public Expression expr = null;
-    
+    public PascalDecl nameDecl = null;
 
     Variable(String id, int lNum) {
         super(lNum);
@@ -46,7 +46,7 @@ public class Variable extends Factor {
 
     @Override
     public void check(Block curScope, Library lib) {
-        curScope.findDecl(name, this);
+        nameDecl = curScope.findDecl(name, this);
 
         if (expr != null) {
             expr.check(curScope, lib);

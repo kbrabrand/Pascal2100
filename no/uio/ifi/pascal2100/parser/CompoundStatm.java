@@ -3,6 +3,7 @@ package no.uio.ifi.pascal2100.parser;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.beginToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.endToken;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -46,5 +47,10 @@ public class CompoundStatm extends Statement {
 
         Main.log.prettyOutdent();
         Main.log.prettyPrint("end");
+    }
+
+    @Override
+    void genCode(CodeFile f) {
+        stmtList.genCode(f);
     }
 }

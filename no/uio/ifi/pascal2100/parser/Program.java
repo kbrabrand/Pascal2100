@@ -55,10 +55,9 @@ public class Program extends PascalDecl {
     }
 
     @Override
-    void genCode(CodeFile f) {
-        int level = 1;
-        String progLabel = "func$" + name + "_" + level;
-        int progBlockSize = progBlock.decls.size() * 4;
+    public void genCode(CodeFile f) {
+        String progLabel = f.getLabel("prog$" + name);
+        int progBlockSize = (32 + progBlock.getSize());
 
         f.genInstr("", ".extern", "write_char");
         f.genInstr("", ".extern", "write_int");
@@ -71,9 +70,19 @@ public class Program extends PascalDecl {
         f.genInstr("", "movl", "$0,%eax", "Set status 0");
         f.genInstr("", "ret", "", "terminate the program");
 
-        f.genInstr(progLabel, "enter", "$" + (32 + progBlockSize) + ",$" + level, "Start of " + name);
+        for (PascalDecl pd : progBlock.decls.values()) {
+            pd.genCode(f);
+        }
+
+        f.genInstr(progLabel, "");
+        f.genInstr("", "enter", "$" + progBlockSize + ",$" + progBlock.blockLevel, "Start of " + name);
         progBlock.genCode(f);
-        f.genInstr("", "leave");
+        f.genInstr("", "leave", "", "End of " + name);
         f.genInstr("", "ret");
+    }
+
+    @Override
+    public int getSize() {
+        return 0;
     }
 }

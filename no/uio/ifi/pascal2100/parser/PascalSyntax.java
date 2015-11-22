@@ -23,7 +23,7 @@ public abstract class PascalSyntax {
 
     abstract void check(Block curScope, Library lib);
 
-    abstract void genCode(CodeFile f);
+    // abstract void genCode(CodeFile f);
     abstract public String identify();
     abstract void prettyPrint();
 
@@ -38,4 +38,6 @@ public abstract class PascalSyntax {
     static void leaveParser(String nonTerm) {
         Main.log.leaveParser(nonTerm);
     }
+    
+    void genCode(CodeFile f) { }
 }

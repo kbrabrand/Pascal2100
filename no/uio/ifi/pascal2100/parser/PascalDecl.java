@@ -3,12 +3,14 @@ package no.uio.ifi.pascal2100.parser;
 public abstract class PascalDecl extends PascalSyntax {
     String name, progProcFuncName;
     int declLevel = 0, declOffset = 0;
-    //Del 3: Type type = null;
+    Type type = null;
 
     PascalDecl(String id, int lNum) {
         super(lNum);
         name = id;
     }
+    
+    abstract public int getSize();
 
     /**
      * checkWhetherAssignable: Utility method to check whether this PascalDecl is

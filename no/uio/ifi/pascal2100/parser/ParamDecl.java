@@ -43,4 +43,9 @@ public class ParamDecl extends PascalDecl {
         Main.log.prettyPrint(name + ": ");
         typeName.prettyPrint();
     }
+
+    @Override
+    public int getSize() {
+        return 0;
+    }
 }

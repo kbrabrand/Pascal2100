@@ -34,4 +34,9 @@ public class EnumLiteral extends PascalDecl {
     public void prettyPrint() {
         Main.log.prettyPrint(name);
     }
+
+    @Override
+    public int getSize() {
+        return 4;
+    }
 }

@@ -11,6 +11,7 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.endToken;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -22,6 +23,7 @@ public class Block extends PascalSyntax {
     public VarDeclPart varDeclPart = null;
     public LinkedList<ProcDecl> procDeclList = new LinkedList<ProcDecl>();
 
+    int blockLevel = 0;
     Block outerScope = null;
     HashMap<String, PascalDecl> decls = new HashMap<String, PascalDecl>();
 
@@ -98,6 +100,9 @@ public class Block extends PascalSyntax {
             decl.error(id + " declared twice in same block");
         }
 
+        decl.declLevel = blockLevel;
+        decl.declOffset = decls.size();
+
         decls.put(id.toLowerCase(), decl);
     }
 
@@ -109,6 +114,7 @@ public class Block extends PascalSyntax {
      * @param lib
      */
     public void check(Block outerScope, Block curScope, Library lib) {
+        curScope.blockLevel = outerScope.blockLevel + 1;
         curScope.outerScope = outerScope;
 
         check(curScope, lib);
@@ -184,5 +190,25 @@ public class Block extends PascalSyntax {
 
         Main.log.prettyOutdent();
         Main.log.prettyPrint("end");
+    }
+
+    /**
+     * Get number of bytes that should be allocated for this block
+     * 
+     * @return integer Number of bytes
+     */
+    int getSize() {
+        return (
+            (constDeclPart != null ? constDeclPart.getSize() : 0) +
+            (typeDeclPart != null ? typeDeclPart.getSize() : 0) +
+            (varDeclPart != null ? varDeclPart.getSize() : 0)
+        );
+    }
+
+    @Override
+    public void genCode(CodeFile f) {
+        if (stmtList != null) {
+            stmtList.genCode(f);
+        }
     }
 }

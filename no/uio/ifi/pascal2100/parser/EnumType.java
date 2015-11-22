@@ -58,4 +58,15 @@ public class EnumType extends Type {
 
         Main.log.prettyPrint(")");
     }
+
+    @Override
+    public int getSize() {
+        int size = 0;
+
+        for (EnumLiteral el : literals) {
+            size += el.getSize();
+        }
+        
+        return size;
+	}
 }

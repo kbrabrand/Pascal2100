@@ -7,6 +7,7 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.commaToken;
 
 import java.util.LinkedList;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -78,6 +79,24 @@ public class ProcCallStatm extends Statement {
             }
 
             Main.log.prettyPrint(")");
+        }
+    }
+
+    private void genWriteCode(CodeFile f) {
+        f.genString("", "", "write call here");
+    }
+
+    public void genCode(CodeFile f) {
+        System.out.println("fooo " + name);
+
+        // Check this is a call on the library function write
+        if (name.toLowerCase() == "write") {
+            genWriteCode(f);
+            return;
+        }
+
+        for (int i = exprs.size() -1; i > 0; i--) {
+            
         }
     }
 }

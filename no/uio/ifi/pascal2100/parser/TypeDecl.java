@@ -26,7 +26,7 @@ public class TypeDecl extends PascalDecl {
 
         td.name = TypeName.parse(s); 
         s.skip(equalToken);
-        td.type= Type.parse(s);
+        td.type = Type.parse(s);
         s.skip(semicolonToken);
 
         leaveParser("type decl");
@@ -48,5 +48,9 @@ public class TypeDecl extends PascalDecl {
         Main.log.prettyPrint(" = ");
         type.prettyPrint();
         Main.log.prettyPrint(";");
+    }
+
+    public int getSize() {
+        return type.getSize();
     }
 }

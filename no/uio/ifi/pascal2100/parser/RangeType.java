@@ -44,4 +44,8 @@ public class RangeType extends Type {
         Main.log.prettyPrint(" .. ");
         to.prettyPrint();
     }
+
+    public int getSize() {
+        return 4;
+    }
 }
