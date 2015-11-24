@@ -83,7 +83,7 @@ public class ProcCallStatm extends Statement {
     }
 
     private void genWriteCode(CodeFile f) {
-        f.genString("", "", "write call here");
+        
     }
 
     public void genCode(CodeFile f) {

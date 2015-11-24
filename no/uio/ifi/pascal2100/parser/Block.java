@@ -122,6 +122,15 @@ public class Block extends PascalSyntax {
 
     @Override
     public void check(Block curScope, Library lib) {
+        // Variable declarations
+        if (varDeclPart != null) {
+            varDeclPart.check(this, lib);
+
+            for (VarDecl vd: varDeclPart.decls) {
+                this.addDecl(vd.name, vd);
+            }
+        }
+
         // Constant declarations
         if (constDeclPart != null) {
             constDeclPart.check(this, lib);
@@ -137,15 +146,6 @@ public class Block extends PascalSyntax {
 
             for (TypeDecl td: typeDeclPart.decls) {
                 this.addDecl(td.name.name, td);
-            }
-        }
-
-        // Variable declarations
-        if (varDeclPart != null) {
-            varDeclPart.check(this, lib);
-
-            for (VarDecl vd: varDeclPart.decls) {
-                this.addDecl(vd.name, vd);
             }
         }
 
@@ -193,16 +193,12 @@ public class Block extends PascalSyntax {
     }
 
     /**
-     * Get number of bytes that should be allocated for this block
+     * Get number of bytes that should be allocated for this block. 32 + (number-of-variables * 4)
      * 
      * @return integer Number of bytes
      */
     int getSize() {
-        return (
-            (constDeclPart != null ? constDeclPart.getSize() : 0) +
-            (typeDeclPart != null ? typeDeclPart.getSize() : 0) +
-            (varDeclPart != null ? varDeclPart.getSize() : 0)
-        );
+        return 32 + (varDeclPart != null ? varDeclPart.decls.size() * 4 : 0);
     }
 
     @Override

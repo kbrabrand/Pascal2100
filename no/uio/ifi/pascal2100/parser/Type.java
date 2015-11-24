@@ -35,6 +35,4 @@ abstract class Type extends PascalSyntax {
 
         return t;
     }
-
-    abstract public int getSize();
 }

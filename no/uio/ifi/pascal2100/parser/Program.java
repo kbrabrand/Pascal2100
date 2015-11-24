@@ -57,7 +57,7 @@ public class Program extends PascalDecl {
     @Override
     public void genCode(CodeFile f) {
         String progLabel = f.getLabel("prog$" + name);
-        int progBlockSize = (32 + progBlock.getSize());
+        int progBlockSize = progBlock.getSize();
 
         f.genInstr("", ".extern", "write_char");
         f.genInstr("", ".extern", "write_int");
@@ -79,10 +79,5 @@ public class Program extends PascalDecl {
         progBlock.genCode(f);
         f.genInstr("", "leave", "", "End of " + name);
         f.genInstr("", "ret");
-    }
-
-    @Override
-    public int getSize() {
-        return 0;
     }
 }

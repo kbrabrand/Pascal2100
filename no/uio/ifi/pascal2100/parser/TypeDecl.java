@@ -49,8 +49,4 @@ public class TypeDecl extends PascalDecl {
         type.prettyPrint();
         Main.log.prettyPrint(";");
     }
-
-    public int getSize() {
-        return type.getSize();
-    }
 }

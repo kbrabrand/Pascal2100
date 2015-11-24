@@ -56,14 +56,4 @@ public class VarDeclPart extends PascalSyntax {
             vd.prettyPrint();
         }
     }
-
-    public int getSize() {
-        int size = 0;
-        
-        for (VarDecl vd : decls) {
-            size += vd.getSize();
-        }
-        
-        return size;
-    }
 }

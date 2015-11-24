@@ -1,5 +1,6 @@
 package no.uio.ifi.pascal2100.parser;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -77,7 +78,7 @@ public class ArrayType extends Type {
     }
 
     @Override
-    public int getSize() {
-        return (getHigh() - getLow()) * type.getSize();
+    void genCode(CodeFile f) {
+        // TODO Auto-generated method stub
     }
 }

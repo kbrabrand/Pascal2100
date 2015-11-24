@@ -49,9 +49,4 @@ public class VarDecl extends PascalDecl {
         type.prettyPrint();
         Main.log.prettyPrint(";");
     }
-
-    @Override
-    public int getSize() {
-        return 0;
-    }
 }

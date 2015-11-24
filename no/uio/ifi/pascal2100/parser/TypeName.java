@@ -40,9 +40,4 @@ public class TypeName extends Type {
     void prettyPrint() {
         Main.log.prettyPrint(name);
     }
-
-    @Override
-    public int getSize() {
-        return 0;
-    }
 }

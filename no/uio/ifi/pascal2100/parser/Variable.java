@@ -4,6 +4,7 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.nameToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.leftBracketToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.rightBracketToken;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -62,5 +63,11 @@ public class Variable extends Factor {
             expr.prettyPrint();
             Main.log.prettyPrint("]");
         }
+    }
+
+    @Override
+    void genCode(CodeFile f) {
+        f.genInstr("", "movl", "-" + (4 * nameDecl.declLevel) + "(%ebp),%edx");
+        f.genInstr("", "movl", "-" + (36 + (4 * nameDecl.declOffset)) + "(%edx),%eax", name);
     }
 }

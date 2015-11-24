@@ -56,14 +56,4 @@ public class ConstDeclPart extends PascalSyntax {
             cd.prettyPrint();
         }
     }
-
-    public int getSize() {
-        int size = 0;
-        
-        for (ConstDecl cd : decls) {
-            size += cd.getSize();
-        }
-        
-        return size;
-    }
 }

@@ -74,9 +74,4 @@ public class ProcDecl extends PascalDecl {
         block.prettyPrint();
         Main.log.prettyPrintLn("; {" + name + "}");
     }
-
-    @Override
-    public int getSize() {
-        return 0;
-    }
 }

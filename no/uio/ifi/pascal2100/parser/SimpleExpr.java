@@ -1,5 +1,6 @@
 package no.uio.ifi.pascal2100.parser;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -72,6 +73,23 @@ public class SimpleExpr extends PascalSyntax {
                 Main.log.prettyPrint(" ");
                 termOpersIter.next().prettyPrint();
             }
+        }
+    }
+
+    @Override
+    void genCode(CodeFile f) {
+        Iterator<TermOperator> termOpersIter = termOpers.iterator();
+
+        for (Term t : terms) {
+            t.genCode(f);
+            
+            if (termOpersIter.hasNext()) {
+                termOpersIter.next().genCode(f);
+            }
+        }
+
+        if (prefOper != null) {
+            prefOper.genCode(f);
         }
     }
 }

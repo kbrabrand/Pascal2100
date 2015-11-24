@@ -45,9 +45,4 @@ public class ConstDecl extends PascalDecl {
         constant.prettyPrint();
         Main.log.prettyPrint(";");
     }
-
-    @Override
-    public int getSize() {
-        return 0;
-    }
 }

@@ -48,25 +48,6 @@ public class AssignStatm extends Statement {
     public void genCode(CodeFile f) {
         expr.genCode(f);
 
-        String varLocation = "-" + (4 * var.nameDecl.declLevel) + "(%ebp),%edx";
-        
-        // Assignment to array value
-        if (var.nameDecl.type instanceof ArrayType) {
-            ArrayType at = (ArrayType) var.nameDecl.type;
-
-            var.expr.genCode(f);
-            f.genInstr("", "pushl", "%eax");
-            expr.genCode(f);
-            f.genInstr("", "subl", at.getLow() + "%eax");
-            f.genInstr("", "movl", varLocation);
-
-            // get array offset value and lower end of range
-            f.genInstr("", "leal", "-" + var.nameDecl.declOffset + "(%edx),%edx");
-            f.genInstr("", "popl", "%ecx");
-            f.genInstr("", "movl", "%ecx,(%edx,%eax,4)");
-            return;
-        }
-
         // Assign function return value
         if (var.nameDecl instanceof FuncDecl) {
             f.genInstr("", "movl", "%eax,-32(%ebp)");
@@ -74,7 +55,7 @@ public class AssignStatm extends Statement {
         }
 
         // Simple variable assignment
-        f.genInstr("", "movl", varLocation);
-        f.genInstr("", "movl", "%eax,-0(%edx)");
+        f.genInstr("", "movl", "-" + (4 * var.nameDecl.declLevel) + "(%ebp),%edx");
+        f.genInstr("", "movl", "%eax,-" + (36 + (4 * var.nameDecl.declOffset)) + "(%edx)", var.name + " :=");
     }
 }

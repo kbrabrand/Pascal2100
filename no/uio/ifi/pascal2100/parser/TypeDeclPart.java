@@ -56,14 +56,4 @@ public class TypeDeclPart extends PascalSyntax {
             td.prettyPrint();
         }
     }
-
-    public int getSize() {
-        int size = 0;
-        
-        for (TypeDecl td : decls) {
-            size += td.getSize();
-        }
-        
-        return size;
-    }
 }

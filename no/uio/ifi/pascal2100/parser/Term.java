@@ -3,6 +3,7 @@ package no.uio.ifi.pascal2100.parser;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -65,6 +66,19 @@ public class Term extends Operator {
             if (factorOpersIter.hasNext()) {
                 Main.log.prettyPrint(" ");
                 factorOpersIter.next().prettyPrint();
+            }
+        }
+    }
+
+    @Override
+    void genCode(CodeFile f) {
+        Iterator<FactorOperator> factorOpersIter = factorOpers.iterator();
+
+        for (Factor factor : factors) {
+            factor.genCode(f);
+
+            if (factorOpersIter.hasNext()) {
+                factorOpersIter.next().genCode(f);
             }
         }
     }
