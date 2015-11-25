@@ -1,5 +1,6 @@
 package no.uio.ifi.pascal2100.parser;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -34,5 +35,12 @@ public class CharLiteral extends Constant {
     @Override
     void prettyPrint() {
         Main.log.prettyPrint("'" + String.valueOf(val) + "'");
+    }
+
+    @Override
+    void genCode(CodeFile f) {
+        int intVal = Character.getNumericValue(val);
+
+        f.genInstr("", "movl", "$" + intVal + ",%eax", "" + val);
     }
 }
