@@ -1,5 +1,6 @@
 package no.uio.ifi.pascal2100.parser;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 import no.uio.ifi.pascal2100.scanner.TokenKind;
@@ -53,5 +54,19 @@ public class TermOperator extends Operator {
         }
 
         Main.log.prettyPrint(symbol);
+    }
+
+    @Override
+    void genCode(CodeFile f) {
+        switch (kind) {
+            case addToken:
+                f.genInstr("", "movl", "%eax,%ecx");
+                f.genInstr("", "popl", "%eax");
+                f.genInstr("", "addl", "%ecx,%eax", "+");
+                break;
+            default:
+                f.genInstr("", "", "", kind.name());
+                break;
+        }
     }
 }
