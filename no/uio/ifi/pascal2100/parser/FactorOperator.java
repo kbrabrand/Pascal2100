@@ -72,6 +72,11 @@ public class FactorOperator extends Operator {
                 f.genInstr("", "cdq");
                 f.genInstr("", "idivl", "%ecx", "/");
                 break;
+            case modToken:
+                f.genInstr("", "cdq");
+                f.genInstr("", "idivl", "%ecx");
+                f.genInstr("", "movl", "%edx,%eax", "mod");
+                break;
             default:
                 f.genInstr("", "", "", kind.name());
                 break;
