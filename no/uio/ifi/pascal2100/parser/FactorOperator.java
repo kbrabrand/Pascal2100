@@ -1,5 +1,6 @@
 package no.uio.ifi.pascal2100.parser;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 import no.uio.ifi.pascal2100.scanner.TokenKind;
@@ -56,5 +57,24 @@ public class FactorOperator extends Operator {
         }
 
         Main.log.prettyPrint(symbol);
+    }
+
+    @Override
+    void genCode(CodeFile f) {
+        f.genInstr("", "movl", "%eax,%ecx");
+        f.genInstr("", "popl", "%eax");
+
+        switch (kind) {
+            case multiplyToken:
+                f.genInstr("", "imull", "%ecx,%eax", "*");
+                break;
+            case divToken:
+                f.genInstr("", "cdq");
+                f.genInstr("", "idivl", "%ecx", "/");
+                break;
+            default:
+                f.genInstr("", "", "", kind.name());
+                break;
+        }
     }
 }
