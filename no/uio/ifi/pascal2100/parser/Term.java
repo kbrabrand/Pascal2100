@@ -72,15 +72,15 @@ public class Term extends Operator {
 
     @Override
     void genCode(CodeFile f) {
-        for (int i = 0; i < factorOpers.size(); i++) {
-            if (i == 0) {
+        for (int i = -1; i < factorOpers.size(); i++) {
+            if (i < 0) {
                 factors.get(0).genCode(f);
+            } else {
+                f.genInstr("", "pushl", "%eax");
+                factors.get(i + 1).genCode(f);
+
+                factorOpers.get(i).genCode(f);
             }
-
-            f.genInstr("", "pushl", "%eax");
-            factors.get(i + 1).genCode(f);
-
-            factorOpers.get(i).genCode(f);
         }
     }
 }

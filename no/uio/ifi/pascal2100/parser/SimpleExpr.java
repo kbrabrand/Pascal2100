@@ -78,15 +78,15 @@ public class SimpleExpr extends PascalSyntax {
 
     @Override
     void genCode(CodeFile f) {
-        for (int i = 0; i < termOpers.size(); i++) {
-            if (i == 0) {
+        for (int i = -1; i < termOpers.size(); i++) {
+            if (i < 0) {
                 terms.get(0).genCode(f);
+            } else {
+                f.genInstr("", "pushl", "%eax");
+                terms.get(i + 1).genCode(f);
+
+                termOpers.get(i).genCode(f);
             }
-
-            f.genInstr("", "pushl", "%eax");
-            terms.get(i + 1).genCode(f);
-
-            termOpers.get(i).genCode(f);
         }
 
         if (prefOper != null) {
