@@ -67,7 +67,25 @@ public class Variable extends Factor {
 
     @Override
     void genCode(CodeFile f) {
+        TypeDecl td;
+        EnumType et;
+
+        // Check if this is a reference to a enum type value
+        if (nameDecl instanceof TypeDecl) {
+            td = (TypeDecl) nameDecl;
+            et = (EnumType) td.type;
+
+            for (int i = 0; i < et.literals.size(); i++) {
+                if (name.equals(et.literals.get(i).name)) {
+                    f.genInstr("", "movl", "$" + i, "enum value " + name + "(=" + i + ")");
+                    return;
+                }
+            }
+
+            return;
+        }
+
         f.genInstr("", "movl", "-" + (4 * nameDecl.declLevel) + "(%ebp),%edx");
-        f.genInstr("", "movl", "-" + (36 + (4 * nameDecl.declOffset)) + "(%edx),%eax", name);
+        f.genInstr("", "movl", "-" + (36 + (4 * nameDecl.declOffset)) + "(%edx),%eax", name + "(" + nameDecl.identify() + ")");
     }
 }
