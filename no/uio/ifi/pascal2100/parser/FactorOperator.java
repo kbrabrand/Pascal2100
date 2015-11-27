@@ -78,7 +78,7 @@ public class FactorOperator extends Operator {
                 f.genInstr("", "movl", "%edx,%eax", "mod");
                 break;
             default:
-                f.genInstr("", "", "", kind.name());
+                f.genInstr("", "andl", "%ecx,%eax", "and");
                 break;
         }
     }
