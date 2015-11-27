@@ -77,7 +77,7 @@ public class Variable extends Factor {
 
             for (int i = 0; i < et.literals.size(); i++) {
                 if (name.equals(et.literals.get(i).name)) {
-                    f.genInstr("", "movl", "$" + i, "enum value " + name + "(=" + i + ")");
+                    f.genInstr("", "movl", "$" + i + ",%eax", "enum value " + name + "(=" + i + ")");
                     return;
                 }
             }
