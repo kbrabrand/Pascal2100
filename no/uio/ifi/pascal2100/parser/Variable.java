@@ -70,7 +70,7 @@ public class Variable extends Factor {
         TypeDecl td;
         EnumType et;
 
-        // Check if this is a reference to a enum type value
+        // Check if this is a reference to a enumerated type value
         if (nameDecl instanceof TypeDecl) {
             td = (TypeDecl) nameDecl;
             et = (EnumType) td.type;
