@@ -9,6 +9,11 @@ public class Expression extends PascalSyntax {
     public RelOperator relOperator = null;
     public SimpleExpr trailing = null;
 
+    public boolean isNumeric = false;
+    public boolean isString = false;
+    public boolean isChar = false;
+    public StringLiteral string;
+
     Expression(int n) {
         super(n);
     }
@@ -35,14 +40,34 @@ public class Expression extends PascalSyntax {
         return e;
     }
 
-    @Override
-    public void check(Block curScope, Library lib) {
-        leading.check(curScope, lib);
+    public boolean isString() {
+        return this.isString;
+    }
+
+    public String getString() {
+        return string.val;
+    }
+
+    public boolean isChar() {
+        return this.isChar;
+    }
+
+    public boolean isNumeric() {
+        return this.isNumeric;
+    }
+
+    public void check(Block curScope, Library lib, Expression e) {
+        leading.check(curScope, lib, e);
 
         if (relOperator != null) {
             relOperator.check(curScope, lib);
-            trailing.check(curScope, lib);
+            trailing.check(curScope, lib, e);
         }
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        check(curScope, lib, this);
     }
 
     @Override

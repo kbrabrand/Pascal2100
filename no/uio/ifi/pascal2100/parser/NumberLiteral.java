@@ -32,6 +32,10 @@ public class NumberLiteral extends Constant {
         return nl;
     }
 
+    public void check(Block curScope, Library lib, Expression e) {
+        e.isNumeric = true;
+    }
+
     @Override
     public void check(Block curScope, Library lib) { }
 

@@ -29,6 +29,12 @@ public class StringLiteral extends Constant {
     }
 
     @Override
+    public void check(Block curScope, Library lib, Expression e) {
+        e.isString = true;
+        e.string = this;
+    }
+
+    @Override
     public void check(Block curScope, Library lib) { }
 
     @Override

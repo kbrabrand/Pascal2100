@@ -30,4 +30,6 @@ abstract class Constant extends Factor {
         leaveParser("constant");
         return c;
     }
+
+    abstract void check(Block curScope, Library lib, Expression e);
 }

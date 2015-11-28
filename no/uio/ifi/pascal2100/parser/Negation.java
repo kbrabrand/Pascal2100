@@ -33,6 +33,11 @@ public class Negation extends Factor {
     }
 
     @Override
+    void check(Block curScope, Library lib, Expression e) {
+        factor.check(curScope, lib, e);
+    }
+
+    @Override
     public void check(Block curScope, Library lib) {
         factor.check(curScope, lib);
     }

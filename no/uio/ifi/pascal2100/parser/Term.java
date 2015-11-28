@@ -44,6 +44,12 @@ public class Term extends Operator {
         return t;
     }
 
+    public void check(Block curScope, Library lib, Expression e) {
+        for (Factor f : factors) {
+            f.check(curScope, lib, e);
+        }
+    }
+
     @Override
     public void check(Block curScope, Library lib) {
         for (Factor f : factors) {

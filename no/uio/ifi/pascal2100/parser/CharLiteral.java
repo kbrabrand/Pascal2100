@@ -30,6 +30,11 @@ public class CharLiteral extends Constant {
     }
 
     @Override
+    public void check(Block curScope, Library lib, Expression e) {
+        e.isChar = true;
+    }
+
+    @Override
     public void check(Block curScope, Library lib) { }
 
     @Override
@@ -39,8 +44,8 @@ public class CharLiteral extends Constant {
 
     @Override
     void genCode(CodeFile f) {
-        int intVal = Character.getNumericValue(val);
+        int intVal = (int) val;
 
-        f.genInstr("", "movl", "$" + intVal + ",%eax", "" + val);
+        f.genInstr("", "movl", "$" + intVal + ",%eax", "char " + intVal + " (" + val + ")");
     }
 }

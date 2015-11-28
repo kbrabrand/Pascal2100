@@ -83,14 +83,37 @@ public class ProcCallStatm extends Statement {
     }
 
     private void genWriteCode(CodeFile f) {
-        
+        Expression e;
+        String funcName = "";
+
+        for (int i = 0; i < exprs.size(); i++) {
+            e = exprs.get(i);
+
+            if (e.isNumeric()) {
+                e.genCode(f);
+                funcName = "write_int";
+            } else if (e.isChar()) {
+                e.genCode(f);
+                funcName = "write_char";
+            } else if (e.isString()) {
+                String label = f.getLocalLabel();
+                f.genString(label, e.getString(), "");
+                f.genInstr("", "leal", label + ",%eax", "Addr(\"" + e.getString() + "\")");
+            } else {
+                f.genInstr("", "", "", "write call, but not sure what type of value to write");
+            }
+
+            f.genInstr("", "pushl", "%eax", "Push param #" + (i + 1));
+            f.genInstr("", "call", "write_string");
+            f.genInstr("", "addl", "$4,%esp", "Pop parameter");
+        }
     }
 
     public void genCode(CodeFile f) {
         System.out.println("fooo " + name);
 
         // Check this is a call on the library function write
-        if (name.toLowerCase() == "write") {
+        if (name.toLowerCase().equals("write")) {
             genWriteCode(f);
             return;
         }
