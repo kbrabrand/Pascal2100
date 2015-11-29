@@ -96,6 +96,12 @@ public class Variable extends Factor {
             return;
         }
 
+        // Check if this is a reference to a constant
+        if (nameDecl instanceof ConstDecl) {
+            ((ConstDecl) nameDecl).constant.genCode(f);
+            return;
+        }
+
         f.genInstr("", "movl", "-" + (4 * nameDecl.declLevel) + "(%ebp),%edx");
         f.genInstr("", "movl", nameDecl.declOffset + "(%edx),%eax", name);
     }

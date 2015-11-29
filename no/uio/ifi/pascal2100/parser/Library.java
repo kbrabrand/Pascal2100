@@ -4,14 +4,14 @@ public class Library extends Block {
     public Library() {
         super(-1);
 
-        addEof();
+        addEol();
         addChar();
         addBoolean();
         addInteger();
         addWrite();
     }
 
-    void addEof() {
+    void addEol() {
         ConstDecl eol = new ConstDecl("eol", -1);
         eol.constant = new CharLiteral('\n', -1);
 

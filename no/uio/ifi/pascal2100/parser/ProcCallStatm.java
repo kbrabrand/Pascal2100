@@ -102,6 +102,7 @@ public class ProcCallStatm extends Statement {
                 f.genInstr("", "leal", label + ",%eax", "Addr(\"" + e.getString() + "\")");
             } else {
                 f.genInstr("", "", "", "write call, but not sure what type of value to write");
+                return;
             }
 
             f.genInstr("", "pushl", "%eax", "Push param #" + (i + 1));
