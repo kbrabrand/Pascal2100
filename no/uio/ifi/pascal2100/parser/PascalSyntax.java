@@ -4,6 +4,7 @@ import no.uio.ifi.pascal2100.main.*;
 
 public abstract class PascalSyntax {
     public int lineNum;
+    public boolean isBindingNoted = false;
 
     PascalSyntax(int n) {
         lineNum = n;
