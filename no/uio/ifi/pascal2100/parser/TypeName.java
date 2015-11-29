@@ -7,7 +7,7 @@ import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class TypeName extends Type {
     public String name;
-    public PascalDecl decl;
+    public PascalDecl decl = null;
 
     TypeName(String id, int lNum) {
         super(lNum);
@@ -30,6 +30,14 @@ public class TypeName extends Type {
         leaveParser("type name");
 
         return tn;
+    }
+
+    public void check(Block curScope, Library lib, Expression e) {
+        check(curScope, lib);
+
+        if (decl.type != null) {
+            decl.type.check(curScope, lib, e);
+        }
     }
 
     @Override

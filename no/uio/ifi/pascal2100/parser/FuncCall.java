@@ -56,15 +56,13 @@ public class FuncCall extends Factor {
 
     @Override
     public void check(Block curScope, Library lib, Expression expr) {
-        curScope.findDecl(name, this);
+        FuncDecl fd = (FuncDecl) curScope.findDecl(name, this);
 
         for (Expression e : exprs) {
-            if (expr == null) {
-                e.check(curScope, lib);
-            } else {
-                e.check(curScope, lib, expr);
-            }
+            e.check(curScope, lib);
         }
+
+        fd.check(curScope, lib, expr);
     }
 
     @Override

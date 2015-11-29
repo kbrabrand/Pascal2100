@@ -34,9 +34,13 @@ public class TypeDecl extends PascalDecl {
         return td;
     }
 
+    public void check(Block curScope, Library lib, Expression e) {
+        type.check(curScope, lib, e != null ? e : null);
+    }
+
     @Override
     public void check(Block curScope, Library lib) {
-        type.check(curScope, lib);
+        check(curScope, lib, null);
     }
 
     public void prettyPrint() {

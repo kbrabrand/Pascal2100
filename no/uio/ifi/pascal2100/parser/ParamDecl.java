@@ -34,9 +34,14 @@ public class ParamDecl extends PascalDecl {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
+    public void check(Block curScope, Library lib, Expression e) {
         curScope.findDecl(typeName.name, this);
-        typeName.check(curScope, lib);
+        typeName.check(curScope, lib, e != null ? e : null);
+    }
+
+    @Override
+    public void check(Block curScope, Library lib) {
+        check(curScope, lib, null);
     }
 
     public void prettyPrint() {

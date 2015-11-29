@@ -48,15 +48,13 @@ public class SimpleExpr extends PascalSyntax {
 
     public void check(Block curScope, Library lib, Expression e) {
         for (Term t : terms) {
-            t.check(curScope, lib, e);
+            t.check(curScope, lib, e != null ? e : null);
         }
     }
 
     @Override
     public void check(Block curScope, Library lib) {
-        for (Term t : terms) {
-            t.check(curScope, lib);
-        }
+        check(curScope, lib, null);
     }
 
     @Override

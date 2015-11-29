@@ -64,10 +64,14 @@ public class ArrayType extends Type {
         return high.val;
     }
 
+    public void check(Block curScope, Library lib, Expression e) {
+        type.check(curScope, lib);
+        ofType.check(curScope, lib, e);
+    }
+
     @Override
     public void check(Block curScope, Library lib) {
-        type.check(curScope, lib);
-        ofType.check(curScope, lib);
+        check(curScope, lib, null);
     }
 
     void prettyPrint() {

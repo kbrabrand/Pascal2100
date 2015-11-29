@@ -46,6 +46,6 @@ public class CharLiteral extends Constant {
     void genCode(CodeFile f) {
         int intVal = (int) val;
 
-        f.genInstr("", "movl", "$" + intVal + ",%eax", "char " + intVal + " (" + val + ")");
+        f.genInstr("", "movl", "$" + intVal + ",%eax", "char " + intVal);
     }
 }

@@ -29,6 +29,11 @@ public class EnumLiteral extends PascalDecl {
     }
 
     @Override
+    public void check(Block curScope, Library lib, Expression e) {
+        e.isNumeric = true;
+    }
+
+    @Override
     public void check(Block curScope, Library lib) { }
 
     public void prettyPrint() {

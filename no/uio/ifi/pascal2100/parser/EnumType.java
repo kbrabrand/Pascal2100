@@ -37,6 +37,12 @@ public class EnumType extends Type {
         return et;
     }
 
+    public void check(Block curScope, Library lib, Expression e) {
+        check(curScope, lib);
+
+        e.isNumeric = true;
+    }
+
     @Override
     public void check(Block curScope, Library lib) {
         for (EnumLiteral el : literals) {

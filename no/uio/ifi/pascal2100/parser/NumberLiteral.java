@@ -33,6 +33,10 @@ public class NumberLiteral extends Constant {
     }
 
     public void check(Block curScope, Library lib, Expression e) {
+        if (e == null) {
+            return;
+        }
+
         e.isNumeric = true;
     }
 

@@ -35,4 +35,6 @@ abstract class Type extends PascalSyntax {
 
         return t;
     }
+
+    abstract void check(Block curScope, Library lib, Expression e);
 }

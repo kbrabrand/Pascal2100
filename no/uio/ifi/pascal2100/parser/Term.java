@@ -46,15 +46,13 @@ public class Term extends Operator {
 
     public void check(Block curScope, Library lib, Expression e) {
         for (Factor f : factors) {
-            f.check(curScope, lib, e);
+            f.check(curScope, lib, e != null ? e : null);
         }
     }
 
     @Override
     public void check(Block curScope, Library lib) {
-        for (Factor f : factors) {
-            f.check(curScope, lib);
-        }
+        check(curScope, lib);
     }
 
     @Override
