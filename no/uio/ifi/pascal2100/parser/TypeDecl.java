@@ -37,10 +37,6 @@ public class TypeDecl extends PascalDecl {
     @Override
     public void check(Block curScope, Library lib) {
         type.check(curScope, lib);
-
-        if (type instanceof TypeName) {
-            curScope.findDecl(((TypeName) type).name, this);
-       }
     }
 
     public void prettyPrint() {
