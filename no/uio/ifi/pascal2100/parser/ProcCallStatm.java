@@ -14,6 +14,7 @@ import no.uio.ifi.pascal2100.scanner.Scanner;
 public class ProcCallStatm extends Statement {
     public String name;
     public LinkedList<Expression> exprs = new LinkedList<Expression>();
+    public ProcDecl decl;
 
     ProcCallStatm(String id, int lNum) {
         super(lNum);
@@ -56,7 +57,7 @@ public class ProcCallStatm extends Statement {
 
     @Override
     public void check(Block curScope, Library lib) {
-        curScope.findDecl(name, this);
+        decl = (ProcDecl) curScope.findDecl(name, this);
 
         for (Expression e : exprs) {
             e.check(curScope, lib);
@@ -104,22 +105,27 @@ public class ProcCallStatm extends Statement {
             }
 
             f.genInstr("", "pushl", "%eax", "Push param #" + (i + 1));
-            f.genInstr("", "call", "write_string");
+            f.genInstr("", "call", funcName);
             f.genInstr("", "addl", "$4,%esp", "Pop parameter");
         }
     }
 
     public void genCode(CodeFile f) {
-        System.out.println("fooo " + name);
-
         // Check this is a call on the library function write
         if (name.toLowerCase().equals("write")) {
             genWriteCode(f);
             return;
         }
 
-        for (int i = exprs.size() -1; i > 0; i--) {
-            
+        for (int i = exprs.size() - 1; i >= 0; i--) {
+            exprs.get(i).genCode(f);
+            f.genInstr("", "pushl", "%eax", "Push param #" + (i + 1));
+        }
+
+        f.genInstr("", "call", decl.label);
+
+        if (exprs.size() > 0) {
+            f.genInstr("", "addl", "$" + exprs.size() * 4 + ",%esp", "Pop parameters");
         }
     }
 }

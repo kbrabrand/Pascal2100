@@ -56,6 +56,6 @@ public class AssignStatm extends Statement {
 
         // Simple variable assignment
         f.genInstr("", "movl", "-" + (4 * var.nameDecl.declLevel) + "(%ebp),%edx");
-        f.genInstr("", "movl", "%eax,-" + (36 + (4 * var.nameDecl.declOffset)) + "(%edx)", var.name + " :=");
+        f.genInstr("", "movl", "%eax," + var.nameDecl.declOffset + "(%edx)", var.name + " :=");
     }
 }

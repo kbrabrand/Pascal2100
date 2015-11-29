@@ -100,9 +100,6 @@ public class Block extends PascalSyntax {
             decl.error(id + " declared twice in same block");
         }
 
-        decl.declLevel = blockLevel;
-        decl.declOffset = decls.size();
-
         decls.put(id.toLowerCase(), decl);
     }
 
@@ -126,7 +123,13 @@ public class Block extends PascalSyntax {
         if (varDeclPart != null) {
             varDeclPart.check(this, lib);
 
-            for (VarDecl vd: varDeclPart.decls) {
+            VarDecl vd;
+            for (int i = 0; i < varDeclPart.decls.size(); i++) {
+                vd = varDeclPart.decls.get(i);
+
+                vd.declLevel = blockLevel;
+                vd.declOffset = -36 - (i * 4);
+
                 this.addDecl(vd.name, vd);
             }
         }

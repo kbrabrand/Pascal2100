@@ -62,11 +62,7 @@ public class Variable extends Factor {
 
     @Override
     public void check(Block curScope, Library lib) {
-        nameDecl = curScope.findDecl(name, this);
-
-        if (expr != null) {
-            expr.check(curScope, lib);
-        }
+        check(curScope, lib, null);
     }
 
     @Override
@@ -101,6 +97,6 @@ public class Variable extends Factor {
         }
 
         f.genInstr("", "movl", "-" + (4 * nameDecl.declLevel) + "(%ebp),%edx");
-        f.genInstr("", "movl", "-" + (36 + (4 * nameDecl.declOffset)) + "(%edx),%eax", name + "(" + nameDecl.identify() + ")");
+        f.genInstr("", "movl", nameDecl.declOffset + "(%edx),%eax", name);
     }
 }
