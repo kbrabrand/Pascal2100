@@ -204,6 +204,12 @@ public class Block extends PascalSyntax {
         return 32 + (varDeclPart != null ? varDeclPart.decls.size() * 4 : 0);
     }
 
+    public void genDeclCode(CodeFile f) {
+        for (PascalDecl pd : decls.values()) {
+            pd.genCode(f);
+        }
+    }
+
     @Override
     public void genCode(CodeFile f) {
         if (stmtList != null) {
