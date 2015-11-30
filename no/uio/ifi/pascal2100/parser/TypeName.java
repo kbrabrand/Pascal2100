@@ -35,8 +35,8 @@ public class TypeName extends Type {
     public void check(Block curScope, Library lib, Expression e) {
         check(curScope, lib);
 
-        if (decl.type != null) {
-            decl.type.check(curScope, lib, e);
+        if (decl != null) {
+            decl.check(curScope, lib, e);
         }
     }
 

@@ -40,7 +40,9 @@ public class EnumType extends Type {
     public void check(Block curScope, Library lib, Expression e) {
         check(curScope, lib);
 
-        e.isNumeric = true;
+        if (e != null) {
+            e.isNumeric = true;
+        }
     }
 
     @Override

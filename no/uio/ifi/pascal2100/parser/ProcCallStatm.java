@@ -98,6 +98,7 @@ public class ProcCallStatm extends Statement {
                 funcName = "write_char";
             } else if (e.isString()) {
                 String label = f.getLocalLabel();
+                funcName = "write_string";
                 f.genString(label, e.getString(), "");
                 f.genInstr("", "leal", label + ",%eax", "Addr(\"" + e.getString() + "\")");
             } else {
