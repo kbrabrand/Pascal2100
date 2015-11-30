@@ -51,6 +51,7 @@ public class Negation extends Factor {
 
     @Override
     void genCode(CodeFile f) {
-        f.genInstr("", "xorl", "%1,%eax");
+        factor.genCode(f);
+        f.genInstr("", "xorl", "$1,%eax", "not");
     }
 }
