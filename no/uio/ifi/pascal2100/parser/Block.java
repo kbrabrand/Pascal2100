@@ -109,19 +109,20 @@ public class Block extends PascalSyntax {
      * @param outerScope
      * @param curScope
      * @param lib
+     * @param e
      */
-    public void check(Block outerScope, Block curScope, Library lib) {
+    public void check(Block outerScope, Block curScope, Library lib, Expression e) {
         curScope.blockLevel = outerScope.blockLevel + 1;
         curScope.outerScope = outerScope;
 
-        check(curScope, lib);
+        check(curScope, lib, e);
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
+    public void check(Block curScope, Library lib, Expression e) {
         // Variable declarations
         if (varDeclPart != null) {
-            varDeclPart.check(this, lib);
+            varDeclPart.check(this, lib, e);
 
             VarDecl vd;
             for (int i = 0; i < varDeclPart.decls.size(); i++) {
@@ -136,7 +137,7 @@ public class Block extends PascalSyntax {
 
         // Constant declarations
         if (constDeclPart != null) {
-            constDeclPart.check(this, lib);
+            constDeclPart.check(this, lib, e);
 
             for (ConstDecl cd: constDeclPart.decls) {
                 this.addDecl(cd.name, cd);
@@ -145,7 +146,7 @@ public class Block extends PascalSyntax {
 
         // Type declarations
         if (typeDeclPart != null) {
-            typeDeclPart.check(this, lib);
+            typeDeclPart.check(this, lib, e);
 
             for (TypeDecl td: typeDeclPart.decls) {
                 this.addDecl(td.name.name, td);
@@ -154,10 +155,10 @@ public class Block extends PascalSyntax {
 
         // Procedure declarations
         for (ProcDecl pd : procDeclList) {
-            pd.check(curScope, lib);
+            pd.check(curScope, lib, e);
         }
 
-        stmtList.check(this, lib);
+        stmtList.check(this, lib, e);
     }
 
     public void prettyPrint() {

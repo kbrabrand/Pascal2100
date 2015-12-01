@@ -65,13 +65,8 @@ public class ArrayType extends Type {
     }
 
     public void check(Block curScope, Library lib, Expression e) {
-        type.check(curScope, lib);
+        type.check(curScope, lib, e);
         ofType.check(curScope, lib, e);
-    }
-
-    @Override
-    public void check(Block curScope, Library lib) {
-        check(curScope, lib, null);
     }
 
     void prettyPrint() {

@@ -37,12 +37,7 @@ public class VarDecl extends PascalDecl {
 
     @Override
     public void check(Block curScope, Library lib, Expression e) {
-        type.check(curScope, lib, e != null ? e : null);
-    }
-
-    @Override
-    public void check(Block curScope, Library lib) {
-        check(curScope, lib, null);
+        type.check(curScope, lib, e);
     }
 
     public void prettyPrint() {

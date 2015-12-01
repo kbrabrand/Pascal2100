@@ -36,9 +36,9 @@ public class WhileStatm extends Statement {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
-        expr.check(curScope, lib);
-        body.check(curScope, lib);
+    public void check(Block curScope, Library lib, Expression e) {
+        expr.check(curScope, lib, e);
+        body.check(curScope, lib, e);
     }
 
     @Override

@@ -50,11 +50,6 @@ public class ProcDecl extends PascalDecl {
 
     @Override
     public void check(Block curScope, Library lib, Expression e) {
-        check(curScope, lib);
-    }
-
-    @Override
-    public void check(Block curScope, Library lib) {
         ParamDecl pd;
 
         curScope.addDecl(name, this);
@@ -69,10 +64,10 @@ public class ProcDecl extends PascalDecl {
                 block.addDecl(pd.name, pd);
             }
 
-            paramDeclList.check(curScope, lib);
+            paramDeclList.check(curScope, lib, e);
         }
 
-        block.check(curScope, block, lib);
+        block.check(curScope, block, lib, e);
     }
 
     public void prettyPrint() {

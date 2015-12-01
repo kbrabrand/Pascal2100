@@ -56,11 +56,11 @@ public class ProcCallStatm extends Statement {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
+    public void check(Block curScope, Library lib, Expression expr) {
         decl = (ProcDecl) curScope.findDecl(name, this);
 
         for (Expression e : exprs) {
-            e.check(curScope, lib);
+            e.check(curScope, lib, expr);
         }
     }
 

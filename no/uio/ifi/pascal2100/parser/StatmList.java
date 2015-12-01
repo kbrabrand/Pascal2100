@@ -49,9 +49,9 @@ public class StatmList extends PascalSyntax {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
+    public void check(Block curScope, Library lib, Expression e) {
         for (Statement s : statements) {
-            s.check(curScope, lib);
+            s.check(curScope, lib, e);
         }
     }
 

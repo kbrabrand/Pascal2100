@@ -113,7 +113,7 @@ public class Main {
         System.out.print(" checking...");
 
         library = new Library();
-        prog.check(library, library);
+        prog.check(library, library, null);
 
         System.out.print(" generating code...");
         CodeFile code = new CodeFile(baseFileName+".s");

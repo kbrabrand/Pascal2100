@@ -44,12 +44,12 @@ public class IfStatm extends Statement {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
-        expr.check(curScope, lib);
-        thenStatm.check(curScope, lib);
+    public void check(Block curScope, Library lib, Expression e) {
+        expr.check(curScope, lib, e);
+        thenStatm.check(curScope, lib, e);
 
         if (elseStatm != null) {
-            elseStatm.check(curScope, lib);
+            elseStatm.check(curScope, lib, e);
         }
     }
 

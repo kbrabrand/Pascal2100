@@ -37,11 +37,6 @@ public class NamedConst extends Constant {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
-        check(curScope, lib, null);
-    }
-
-    @Override
     void prettyPrint() {
         Main.log.prettyPrint(name);
     }

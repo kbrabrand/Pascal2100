@@ -34,8 +34,8 @@ public class CompoundStatm extends Statement {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
-        stmtList.check(curScope, lib);
+    public void check(Block curScope, Library lib, Expression e) {
+        stmtList.check(curScope, lib, e);
     }
 
     @Override

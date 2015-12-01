@@ -39,6 +39,4 @@ public abstract class PascalDecl extends PascalSyntax {
     abstract void checkWhetherProcedure(PascalSyntax where);
     abstract void checkWhetherValue(PascalSyntax where);
     */
-
-    abstract void check(Block curScope, Library lib, Expression e);
 }

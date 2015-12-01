@@ -34,9 +34,9 @@ public class AssignStatm extends Statement {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
-        var.check(curScope, lib);
-        expr.check(curScope, lib);
+    public void check(Block curScope, Library lib, Expression e) {
+        var.check(curScope, lib, e);
+        expr.check(curScope, lib, e);
     }
 
     void prettyPrint() {

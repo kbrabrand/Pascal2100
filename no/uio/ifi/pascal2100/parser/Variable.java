@@ -48,18 +48,13 @@ public class Variable extends Factor {
     @Override
     public void check(Block curScope, Library lib, Expression e) {
         nameDecl = curScope.findDecl(name, this);
-        nameDecl.check(curScope, lib, e != null ? e : null);
+        nameDecl.check(curScope, lib, e);
 
         if (expr == null) {
             return;
         }
 
-        expr.check(curScope, lib, e != null ? e : null);
-    }
-
-    @Override
-    public void check(Block curScope, Library lib) {
-        check(curScope, lib, null);
+        expr.check(curScope, lib, e);
     }
 
     @Override

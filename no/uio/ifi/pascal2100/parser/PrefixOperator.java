@@ -36,7 +36,7 @@ public class PrefixOperator extends Operator {
     }
 
     @Override
-    public void check(Block curScope, Library lib) { }
+    public void check(Block curScope, Library lib, Expression e) { }
 
     @Override
     void prettyPrint() {

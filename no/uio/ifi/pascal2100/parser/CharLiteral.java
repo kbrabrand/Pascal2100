@@ -31,11 +31,10 @@ public class CharLiteral extends Constant {
 
     @Override
     public void check(Block curScope, Library lib, Expression e) {
-        e.isChar = true;
+        if (e != null) {
+            e.isChar = true;
+        }
     }
-
-    @Override
-    public void check(Block curScope, Library lib) { }
 
     @Override
     void prettyPrint() {

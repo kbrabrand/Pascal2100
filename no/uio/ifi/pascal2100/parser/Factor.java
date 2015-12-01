@@ -42,6 +42,4 @@ abstract class Factor extends PascalSyntax {
 
         return f;
     }
-
-    abstract void check(Block curScope, Library lib, Expression e);
 }

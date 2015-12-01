@@ -57,17 +57,14 @@ public class Expression extends PascalSyntax {
     }
 
     public void check(Block curScope, Library lib, Expression e) {
-        leading.check(curScope, lib, e);
+        Expression checkExpr = e != null ? e : this;
+
+        leading.check(curScope, lib, checkExpr);
 
         if (relOperator != null) {
-            relOperator.check(curScope, lib);
-            trailing.check(curScope, lib, e);
+            relOperator.check(curScope, lib, checkExpr);
+            trailing.check(curScope, lib, checkExpr);
         }
-    }
-
-    @Override
-    public void check(Block curScope, Library lib) {
-        check(curScope, lib, this);
     }
 
     @Override
