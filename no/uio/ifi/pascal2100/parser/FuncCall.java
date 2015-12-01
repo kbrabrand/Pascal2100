@@ -90,13 +90,18 @@ public class FuncCall extends Factor {
     public void genCode(CodeFile f) {
         for (int i = exprs.size() - 1; i >= 0; i--) {
             exprs.get(i).genCode(f);
-            f.genInstr("", "pushl", "%eax", "Push param #" + (i + 1));
+            f.genInstr("", "pushl", "%eax", "Push param #" + (i + 1) + ".");
         }
 
         f.genInstr("", "call", decl.label);
 
         if (exprs.size() > 0) {
-            f.genInstr("", "addl", "$" + exprs.size() * 4 + ",%esp", "Pop parameters");
+            f.genInstr(
+                "",
+                "addl", 
+                "$" + exprs.size() * 4 + ",%esp", 
+                "Pop parameter" + (exprs.size() > 1 ? "s" : "") + "."
+            );
         }
     }
 }

@@ -2,6 +2,7 @@ package no.uio.ifi.pascal2100.parser;
 
 import static no.uio.ifi.pascal2100.scanner.TokenKind.nameToken;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -39,5 +40,9 @@ public class EnumLiteral extends PascalDecl {
 
     public void prettyPrint() {
         Main.log.prettyPrint(name);
+    }
+
+    public void genCode(CodeFile f) {
+        f.genInstr("", "movl", "$" + index + ",%eax", "  enum value " + name + " (=" + index + ")");
     }
 }

@@ -67,7 +67,7 @@ public class Program extends PascalDecl {
 
         f.genInstr("_main", "", "");
         f.genInstr("main", "call", progLabel, "Start program");
-        f.genInstr("", "movl", "$0,%eax", "Set status 0");
+        f.genInstr("", "movl", "$0,%eax", "Set status 0 and");
         f.genInstr("", "ret", "", "terminate the program");
 
         for (PascalDecl pd : progBlock.procDeclList) {

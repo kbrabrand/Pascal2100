@@ -63,19 +63,19 @@ public class FactorOperator extends Operator {
 
         switch (kind) {
             case multiplyToken:
-                f.genInstr("", "imull", "%ecx,%eax", "*");
+                f.genInstr("", "imull", "%ecx,%eax", "  *");
                 break;
             case divToken:
                 f.genInstr("", "cdq");
-                f.genInstr("", "idivl", "%ecx", "/");
+                f.genInstr("", "idivl", "%ecx", "  /");
                 break;
             case modToken:
                 f.genInstr("", "cdq");
                 f.genInstr("", "idivl", "%ecx");
-                f.genInstr("", "movl", "%edx,%eax", "mod");
+                f.genInstr("", "movl", "%edx,%eax", "  mod");
                 break;
             default:
-                f.genInstr("", "andl", "%ecx,%eax", "and");
+                f.genInstr("", "andl", "%ecx,%eax", "  and");
                 break;
         }
     }

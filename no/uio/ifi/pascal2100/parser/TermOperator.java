@@ -60,13 +60,13 @@ public class TermOperator extends Operator {
 
         switch (kind) {
             case addToken:
-                f.genInstr("", "addl", "%ecx,%eax", "+");
+                f.genInstr("", "addl", "%ecx,%eax", "  +");
                 break;
             case subtractToken:
-                f.genInstr("", "subl", "%ecx,%eax", "-");
+                f.genInstr("", "subl", "%ecx,%eax", "  -");
                 break;
             default:
-                f.genInstr("", "orl", "%ecx,%eax", "or");
+                f.genInstr("", "orl", "%ecx,%eax", "  or");
                 break;
         }
     }

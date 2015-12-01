@@ -45,6 +45,6 @@ public class NumberLiteral extends Constant {
 
     @Override
     void genCode(CodeFile f) {
-        f.genInstr("", "movl", "$" + val + ",%eax", "" + val);
+        f.genInstr("", "movl", "$" + val + ",%eax", "  " + val);
     }
 }

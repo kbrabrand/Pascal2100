@@ -74,8 +74,7 @@ public class Variable extends Factor {
 
         // Check if this is a reference to a enumerated type value
         if (nameDecl instanceof EnumLiteral) {
-            el = (EnumLiteral) nameDecl;
-            f.genInstr("", "movl", "$" + el.index + ",%eax", "enum value " + name + " (=" + el.index + ")");
+            nameDecl.genCode(f);
             return;
         }
 
@@ -86,6 +85,6 @@ public class Variable extends Factor {
         }
 
         f.genInstr("", "movl", "-" + (4 * nameDecl.declLevel) + "(%ebp),%edx");
-        f.genInstr("", "movl", nameDecl.declOffset + "(%edx),%eax", name);
+        f.genInstr("", "movl", nameDecl.declOffset + "(%edx),%eax", "  " + name);
     }
 }

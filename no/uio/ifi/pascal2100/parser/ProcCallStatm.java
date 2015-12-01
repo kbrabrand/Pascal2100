@@ -106,9 +106,9 @@ public class ProcCallStatm extends Statement {
                 continue;
             }
 
-            f.genInstr("", "pushl", "%eax", "Push param #" + (i + 1));
+            f.genInstr("", "pushl", "%eax", "Push param #" + (i + 1) + ".");
             f.genInstr("", "call", funcName);
-            f.genInstr("", "addl", "$4,%esp", "Pop parameter");
+            f.genInstr("", "addl", "$4,%esp", "Pop parameter.");
         }
     }
 
@@ -121,13 +121,18 @@ public class ProcCallStatm extends Statement {
 
         for (int i = exprs.size() - 1; i >= 0; i--) {
             exprs.get(i).genCode(f);
-            f.genInstr("", "pushl", "%eax", "Push param #" + (i + 1));
+            f.genInstr("", "pushl", "%eax", "Push param #" + (i + 1) + ".");
         }
 
         f.genInstr("", "call", decl.label);
 
         if (exprs.size() > 0) {
-            f.genInstr("", "addl", "$" + exprs.size() * 4 + ",%esp", "Pop parameters");
+            f.genInstr(
+                "",
+                "addl", 
+                "$" + exprs.size() * 4 + ",%esp", 
+                "Pop parameter."
+            );
         }
     }
 }

@@ -73,8 +73,8 @@ public class IfStatm extends Statement {
     }
 
     void genCode(CodeFile f) {
-        String elseLabel = f.getLocalLabel(),
-               endLabel = f.getLocalLabel();
+        String endLabel = f.getLocalLabel();
+        String elseLabel;
 
         f.genInstr("", "", "", "Start if-statement");
         expr.genCode(f);
@@ -84,6 +84,8 @@ public class IfStatm extends Statement {
             f.genInstr("", "je", endLabel, "");
             thenStatm.genCode(f);
         } else {
+            elseLabel = f.getLocalLabel();
+
             f.genInstr("", "je", elseLabel, "");
             thenStatm.genCode(f);
             f.genInstr("", "jmp", endLabel, "");

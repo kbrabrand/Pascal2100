@@ -57,6 +57,6 @@ public class PrefixOperator extends Operator {
             return;
         }
 
-        f.genInstr("", "negl", "%eax", "- (prefix)");
+        f.genInstr("", "negl", "%eax", "  - (prefix)");
     }
 }
