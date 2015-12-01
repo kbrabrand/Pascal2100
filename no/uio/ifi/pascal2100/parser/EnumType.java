@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
-import no.uio.ifi.pascal2100.scanner.TokenKind;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.commaToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.leftParToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.rightParToken;

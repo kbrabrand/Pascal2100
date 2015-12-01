@@ -96,6 +96,14 @@ public class Block extends PascalSyntax {
     }
 
     public void addDecl(String id, PascalDecl decl) {
+        // Because we're recursing through the tree, different check paths may call addDecl
+        // on the same object, but since the AST contains only unique nodes and the tree has been
+        // validated we can safely skip adding them if we already have the exact same node in
+        // the decls map for this particular scope
+        if (decls.containsValue(decl)) {
+            return;
+        }
+
         if (decls.containsKey(id.toLowerCase())) {
             decl.error(id + " declared twice in same block");
         }
@@ -112,6 +120,13 @@ public class Block extends PascalSyntax {
      * @param e
      */
     public void check(Block outerScope, Block curScope, Library lib, Expression e) {
+        // If we're trying to set the outer scope on an block that has the outer scope
+        // set already, we're about to check the same subtree over again. Return here to
+        // prevent an infinite loop
+        if (curScope.outerScope != null) {
+            return;
+        }
+
         curScope.blockLevel = outerScope.blockLevel + 1;
         curScope.outerScope = outerScope;
 
@@ -148,17 +163,21 @@ public class Block extends PascalSyntax {
         if (typeDeclPart != null) {
             typeDeclPart.check(this, lib, e);
 
+            System.out.println("type decls at line " + lineNum + ": " + typeDeclPart.decls.size() + " decls");
+            
             for (TypeDecl td: typeDeclPart.decls) {
                 this.addDecl(td.name.name, td);
             }
         }
+
+        System.out.println("proc decls at line " + lineNum + ": " + procDeclList.size() + " decls");
 
         // Procedure declarations
         for (ProcDecl pd : procDeclList) {
             pd.check(curScope, lib, e);
         }
 
-        stmtList.check(this, lib, e);
+        stmtList.check(curScope, lib, e);
     }
 
     public void prettyPrint() {
@@ -203,12 +222,6 @@ public class Block extends PascalSyntax {
      */
     int getSize() {
         return 32 + (varDeclPart != null ? varDeclPart.decls.size() * 4 : 0);
-    }
-
-    public void genDeclCode(CodeFile f) {
-        for (PascalDecl pd : decls.values()) {
-            pd.genCode(f);
-        }
     }
 
     @Override

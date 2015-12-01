@@ -113,6 +113,8 @@ public class Main {
         System.out.print(" checking...");
 
         library = new Library();
+        library.check(library, library, null);
+
         prog.check(library, library, null);
 
         System.out.print(" generating code...");

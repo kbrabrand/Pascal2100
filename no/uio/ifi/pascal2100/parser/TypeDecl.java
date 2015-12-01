@@ -36,6 +36,7 @@ public class TypeDecl extends PascalDecl {
 
     public void check(Block curScope, Library lib, Expression e) {
         type.check(curScope, lib, e);
+        curScope.addDecl(name.name, this);
     }
 
     public void prettyPrint() {

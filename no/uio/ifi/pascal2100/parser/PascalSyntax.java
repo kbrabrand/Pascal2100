@@ -22,7 +22,7 @@ public abstract class PascalSyntax {
         }
     }
 
-    abstract void check(Block curScope, Library lib, Expression e);
+    void check(Block curScope, Library lib, Expression e) { }
 
     //abstract void genCode(CodeFile f);
     void genCode(CodeFile f) { }

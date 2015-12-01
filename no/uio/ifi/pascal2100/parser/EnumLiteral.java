@@ -6,7 +6,9 @@ import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class EnumLiteral extends PascalDecl {
-    EnumLiteral(String id, int lNum) {
+    public int index;
+	
+	EnumLiteral(String id, int lNum) {
         super(id, lNum);
     }
 
