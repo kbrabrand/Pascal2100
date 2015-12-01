@@ -7,12 +7,14 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.commaToken;
 
 import java.util.LinkedList;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class FuncCall extends Factor {
     public String name;
     public LinkedList<Expression> exprs = new LinkedList<Expression>();
+    public FuncDecl decl;
 
     FuncCall(String id, int lNum) {
         super(lNum);
@@ -56,18 +58,13 @@ public class FuncCall extends Factor {
 
     @Override
     public void check(Block curScope, Library lib, Expression expr) {
-        FuncDecl fd = (FuncDecl) curScope.findDecl(name, this);
+        decl = (FuncDecl) curScope.findDecl(name, this);
 
         for (Expression e : exprs) {
-            e.check(curScope, lib);
+            e.check(curScope, lib, expr);
         }
 
-        fd.check(curScope, lib, expr);
-    }
-
-    @Override
-    public void check(Block curScope, Library lib) {
-        check(curScope, lib, null);
+        decl.check(curScope, lib, expr);
     }
 
     @Override
@@ -87,6 +84,19 @@ public class FuncCall extends Factor {
             }
 
             Main.log.prettyPrint(")");
+        }
+    }
+
+    public void genCode(CodeFile f) {
+        for (int i = exprs.size() - 1; i >= 0; i--) {
+            exprs.get(i).genCode(f);
+            f.genInstr("", "pushl", "%eax", "Push param #" + (i + 1));
+        }
+
+        f.genInstr("", "call", decl.label);
+
+        if (exprs.size() > 0) {
+            f.genInstr("", "addl", "$" + exprs.size() * 4 + ",%esp", "Pop parameters");
         }
     }
 }
