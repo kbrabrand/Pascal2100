@@ -80,6 +80,10 @@ public class FuncDecl extends ProcDecl {
     public void genCode(CodeFile f) {
         label = f.getLabel("func$" + name);
 
+        for (ProcDecl pd : block.procDeclList) {
+            pd.genCode(f);
+        }
+
         for (PascalDecl pd : paramDeclList.decls) {
             pd.genCode(f);
         }

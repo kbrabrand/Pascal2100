@@ -88,6 +88,10 @@ public class ProcDecl extends PascalDecl {
     public void genCode(CodeFile f) {
         label = f.getLabel("proc$" + name);
 
+        for (ProcDecl pd : block.procDeclList) {
+            pd.genCode(f);
+        }
+
         if (paramDeclList != null) {
             for (PascalDecl pd : paramDeclList.decls) {
                 pd.genCode(f);
