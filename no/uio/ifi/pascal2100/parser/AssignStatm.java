@@ -2,6 +2,7 @@ package no.uio.ifi.pascal2100.parser;
 
 import static no.uio.ifi.pascal2100.scanner.TokenKind.assignToken;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -33,14 +34,28 @@ public class AssignStatm extends Statement {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
-        var.check(curScope, lib);
-        expr.check(curScope, lib);
+    public void check(Block curScope, Library lib, Expression e) {
+        var.check(curScope, lib, e);
+        expr.check(curScope, lib, e);
     }
 
     void prettyPrint() {
         var.prettyPrint();
         Main.log.prettyPrint(" := ");
         expr.prettyPrint();
+    }
+
+    public void genCode(CodeFile f) {
+        expr.genCode(f);
+
+        // Assign function return value
+        if (var.nameDecl instanceof FuncDecl) {
+            f.genInstr("", "movl", "%eax,-32(%ebp)");
+            return;
+        }
+
+        // Simple variable assignment
+        f.genInstr("", "movl", "-" + (4 * var.nameDecl.declLevel) + "(%ebp),%edx");
+        f.genInstr("", "movl", "%eax," + var.nameDecl.declOffset + "(%edx)", var.name + " :=");
     }
 }

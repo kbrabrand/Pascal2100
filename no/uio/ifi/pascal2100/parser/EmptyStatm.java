@@ -27,9 +27,6 @@ public class EmptyStatm extends Statement {
     }
 
     @Override
-    public void check(Block curScope, Library lib) { }
-
-    @Override
     void prettyPrint() {
         Main.log.prettyPrint(";");
     }

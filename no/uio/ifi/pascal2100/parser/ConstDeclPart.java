@@ -37,9 +37,9 @@ public class ConstDeclPart extends PascalSyntax {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
+    public void check(Block curScope, Library lib, Expression e) {
         for (ConstDecl cd : decls) {
-            cd.check(curScope, lib);
+            cd.check(curScope, lib, e);
         }
     }
 

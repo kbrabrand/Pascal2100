@@ -4,6 +4,7 @@ import no.uio.ifi.pascal2100.main.*;
 
 public abstract class PascalSyntax {
     public int lineNum;
+    public boolean isBindingNoted = false;
 
     PascalSyntax(int n) {
         lineNum = n;
@@ -21,9 +22,11 @@ public abstract class PascalSyntax {
         }
     }
 
-    abstract void check(Block curScope, Library lib);
+    void check(Block curScope, Library lib, Expression e) { }
 
-    //Del 4: abstract void genCode(CodeFile f);
+    //abstract void genCode(CodeFile f);
+    void genCode(CodeFile f) { }
+    
     abstract public String identify();
     abstract void prettyPrint();
 

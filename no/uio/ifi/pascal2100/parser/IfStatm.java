@@ -4,6 +4,7 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.ifToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.thenToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.elseToken;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -43,12 +44,12 @@ public class IfStatm extends Statement {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
-        expr.check(curScope, lib);
-        thenStatm.check(curScope, lib);
+    public void check(Block curScope, Library lib, Expression e) {
+        expr.check(curScope, lib, e);
+        thenStatm.check(curScope, lib, e);
 
         if (elseStatm != null) {
-            elseStatm.check(curScope, lib);
+            elseStatm.check(curScope, lib, e);
         }
     }
 
@@ -69,5 +70,29 @@ public class IfStatm extends Statement {
         }
 
         Main.log.prettyOutdent();
+    }
+
+    void genCode(CodeFile f) {
+        String endLabel = f.getLocalLabel();
+        String elseLabel;
+
+        f.genInstr("", "", "", "Start if-statement");
+        expr.genCode(f);
+        f.genInstr("", "cmpl", "$0,%eax", "");
+
+        if (elseStatm == null) {
+            f.genInstr("", "je", endLabel, "");
+            thenStatm.genCode(f);
+        } else {
+            elseLabel = f.getLocalLabel();
+
+            f.genInstr("", "je", elseLabel, "");
+            thenStatm.genCode(f);
+            f.genInstr("", "jmp", endLabel, "");
+            f.genInstr(elseLabel, "", "", "");
+            elseStatm.genCode(f);
+        }
+
+        f.genInstr(endLabel, "", "", "End if-statement");
     }
 }

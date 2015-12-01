@@ -37,9 +37,9 @@ public class TypeDeclPart extends PascalSyntax {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
+    public void check(Block curScope, Library lib, Expression e) {
         for (TypeDecl td : decls) {
-            td.check(curScope, lib);
+            td.check(curScope, lib, e);
         }
     }
 

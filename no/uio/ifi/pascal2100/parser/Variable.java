@@ -4,13 +4,14 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.nameToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.leftBracketToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.rightBracketToken;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class Variable extends Factor {
     public String name;
     public Expression expr = null;
-    
+    public PascalDecl nameDecl = null;
 
     Variable(String id, int lNum) {
         super(lNum);
@@ -45,12 +46,15 @@ public class Variable extends Factor {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
-        curScope.findDecl(name, this);
+    public void check(Block curScope, Library lib, Expression e) {
+        nameDecl = curScope.findDecl(name, this);
+        nameDecl.check(curScope, lib, e);
 
-        if (expr != null) {
-            expr.check(curScope, lib);
+        if (expr == null) {
+            return;
         }
+
+        expr.check(curScope, lib, e);
     }
 
     @Override
@@ -62,5 +66,25 @@ public class Variable extends Factor {
             expr.prettyPrint();
             Main.log.prettyPrint("]");
         }
+    }
+
+    @Override
+    void genCode(CodeFile f) {
+        EnumLiteral el;
+
+        // Check if this is a reference to a enumerated type value
+        if (nameDecl instanceof EnumLiteral) {
+            nameDecl.genCode(f);
+            return;
+        }
+
+        // Check if this is a reference to a constant
+        if (nameDecl instanceof ConstDecl) {
+            ((ConstDecl) nameDecl).constant.genCode(f);
+            return;
+        }
+
+        f.genInstr("", "movl", "-" + (4 * nameDecl.declLevel) + "(%ebp),%edx");
+        f.genInstr("", "movl", nameDecl.declOffset + "(%edx),%eax", "  " + name);
     }
 }

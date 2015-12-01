@@ -3,7 +3,7 @@ package no.uio.ifi.pascal2100.parser;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 abstract class Constant extends Factor {
-	Constant(int lNum) {
+    Constant(int lNum) {
         super(lNum);
     }
 

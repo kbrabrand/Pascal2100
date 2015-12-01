@@ -3,6 +3,7 @@ package no.uio.ifi.pascal2100.parser;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.leftParToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.rightParToken;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -34,9 +35,8 @@ public class InnerExpr extends Factor {
         return ie;
     }
 
-    @Override
-    public void check(Block curScope, Library lib) {
-        expr.check(curScope, lib);
+    public void check(Block curScope, Library lib, Expression e) {
+        expr.check(curScope, lib, e);
     }
 
     @Override
@@ -46,5 +46,10 @@ public class InnerExpr extends Factor {
         expr.prettyPrint();
 
         Main.log.prettyPrint(")");
+    }
+
+    @Override
+    void genCode(CodeFile f) {
+        expr.genCode(f);
     }
 }

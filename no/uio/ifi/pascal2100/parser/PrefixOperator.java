@@ -1,8 +1,10 @@
 package no.uio.ifi.pascal2100.parser;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 import no.uio.ifi.pascal2100.scanner.TokenKind;
+import static no.uio.ifi.pascal2100.scanner.TokenKind.subtractToken;
 
 public class PrefixOperator extends Operator {
     public TokenKind kind;
@@ -34,9 +36,6 @@ public class PrefixOperator extends Operator {
     }
 
     @Override
-    public void check(Block curScope, Library lib) { }
-
-    @Override
     void prettyPrint() {
         String symbol;
 
@@ -50,5 +49,14 @@ public class PrefixOperator extends Operator {
         }
 
         Main.log.prettyPrint(symbol);
+    }
+
+    @Override
+    void genCode(CodeFile f) {
+        if (kind != subtractToken) {
+            return;
+        }
+
+        f.genInstr("", "negl", "%eax", "  - (prefix)");
     }
 }

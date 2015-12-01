@@ -33,10 +33,9 @@ public class RangeType extends Type {
         return rt;
     }
 
-    @Override
-    public void check(Block curScope, Library lib) {
-        from.check(curScope, lib);
-        to.check(curScope, lib);
+    public void check(Block curScope, Library lib, Expression e) {
+        from.check(curScope, lib, e);
+        from.check(curScope, lib, e);
     }
 
     void prettyPrint() {

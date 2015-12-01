@@ -11,6 +11,7 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.endToken;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -22,6 +23,7 @@ public class Block extends PascalSyntax {
     public VarDeclPart varDeclPart = null;
     public LinkedList<ProcDecl> procDeclList = new LinkedList<ProcDecl>();
 
+    int blockLevel = 0;
     Block outerScope = null;
     HashMap<String, PascalDecl> decls = new HashMap<String, PascalDecl>();
 
@@ -94,6 +96,14 @@ public class Block extends PascalSyntax {
     }
 
     public void addDecl(String id, PascalDecl decl) {
+        // Because we're recursing through the tree, different check paths may call addDecl
+        // on the same object, but since the AST contains only unique nodes and the tree has been
+        // validated we can safely skip adding them if we already have the exact same node in
+        // the decls map for this particular scope
+        if (decls.containsValue(decl)) {
+            return;
+        }
+
         if (decls.containsKey(id.toLowerCase())) {
             decl.error(id + " declared twice in same block");
         }
@@ -107,18 +117,42 @@ public class Block extends PascalSyntax {
      * @param outerScope
      * @param curScope
      * @param lib
+     * @param e
      */
-    public void check(Block outerScope, Block curScope, Library lib) {
+    public void check(Block outerScope, Block curScope, Library lib, Expression e) {
+        // If we're trying to set the outer scope on an block that has the outer scope
+        // set already, we're about to check the same subtree over again. Return here to
+        // prevent an infinite loop
+        if (curScope.outerScope != null) {
+            return;
+        }
+
+        curScope.blockLevel = outerScope.blockLevel + 1;
         curScope.outerScope = outerScope;
 
-        check(curScope, lib);
+        check(curScope, lib, e);
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
+    public void check(Block curScope, Library lib, Expression e) {
+        // Variable declarations
+        if (varDeclPart != null) {
+            varDeclPart.check(this, lib, e);
+
+            VarDecl vd;
+            for (int i = 0; i < varDeclPart.decls.size(); i++) {
+                vd = varDeclPart.decls.get(i);
+
+                vd.declLevel = blockLevel;
+                vd.declOffset = -36 - (i * 4);
+
+                this.addDecl(vd.name, vd);
+            }
+        }
+
         // Constant declarations
         if (constDeclPart != null) {
-            constDeclPart.check(this, lib);
+            constDeclPart.check(this, lib, e);
 
             for (ConstDecl cd: constDeclPart.decls) {
                 this.addDecl(cd.name, cd);
@@ -127,28 +161,19 @@ public class Block extends PascalSyntax {
 
         // Type declarations
         if (typeDeclPart != null) {
-            typeDeclPart.check(this, lib);
+            typeDeclPart.check(this, lib, e);
 
             for (TypeDecl td: typeDeclPart.decls) {
                 this.addDecl(td.name.name, td);
             }
         }
 
-        // Variable declarations
-        if (varDeclPart != null) {
-            varDeclPart.check(this, lib);
-
-            for (VarDecl vd: varDeclPart.decls) {
-                this.addDecl(vd.name, vd);
-            }
-        }
-
         // Procedure declarations
         for (ProcDecl pd : procDeclList) {
-            pd.check(curScope, lib);
+            pd.check(curScope, lib, e);
         }
 
-        stmtList.check(this, lib);
+        stmtList.check(curScope, lib, e);
     }
 
     public void prettyPrint() {
@@ -184,5 +209,21 @@ public class Block extends PascalSyntax {
 
         Main.log.prettyOutdent();
         Main.log.prettyPrint("end");
+    }
+
+    /**
+     * Get number of bytes that should be allocated for this block. 32 + (number-of-variables * 4)
+     * 
+     * @return integer Number of bytes
+     */
+    int getSize() {
+        return 32 + (varDeclPart != null ? varDeclPart.decls.size() * 4 : 0);
+    }
+
+    @Override
+    public void genCode(CodeFile f) {
+        if (stmtList != null) {
+            stmtList.genCode(f);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package no.uio.ifi.pascal2100.parser;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 import no.uio.ifi.pascal2100.scanner.TokenKind;
@@ -34,9 +35,6 @@ public class RelOperator extends Operator {
     }
 
     @Override
-    public void check(Block curScope, Library lib) { }
-
-    @Override
     void prettyPrint() {
         String symbol;
 
@@ -63,4 +61,32 @@ public class RelOperator extends Operator {
 
         Main.log.prettyPrint(symbol);
     }
+
+    @Override
+    void genCode(CodeFile f) {
+        f.genInstr("", "popl", "%ecx");
+        f.genInstr("", "cmpl", "%eax,%ecx");
+        f.genInstr("", "movl", "$0,%eax");
+
+        switch (kind) {
+            case equalToken:
+                f.genInstr("", "sete", "%al", "Test =");
+                break;
+            case notEqualToken:
+                f.genInstr("", "setne", "%al", "Test <>");
+                break;
+            case lessToken:
+                f.genInstr("", "setl", "%al", "Test <");
+                break;
+            case lessEqualToken:
+                f.genInstr("", "setle", "%al", "Test <=");
+                break;
+            case greaterToken:
+                f.genInstr("", "setg", "%al", "Test >");
+                break;
+            default:
+                f.genInstr("", "setge", "%al", "Test >=");
+                break;
+        }
+	}
 }

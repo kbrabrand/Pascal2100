@@ -7,12 +7,14 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.commaToken;
 
 import java.util.LinkedList;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class ProcCallStatm extends Statement {
     public String name;
     public LinkedList<Expression> exprs = new LinkedList<Expression>();
+    public ProcDecl decl;
 
     ProcCallStatm(String id, int lNum) {
         super(lNum);
@@ -54,11 +56,11 @@ public class ProcCallStatm extends Statement {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
-        curScope.findDecl(name, this);
+    public void check(Block curScope, Library lib, Expression expr) {
+        decl = (ProcDecl) curScope.findDecl(name, this);
 
         for (Expression e : exprs) {
-            e.check(curScope, lib);
+            e.check(curScope, lib, expr);
         }
     }
 
@@ -78,6 +80,59 @@ public class ProcCallStatm extends Statement {
             }
 
             Main.log.prettyPrint(")");
+        }
+    }
+
+    private void genWriteCode(CodeFile f) {
+        Expression e;
+        String funcName = "";
+
+        for (int i = 0; i < exprs.size(); i++) {
+            e = exprs.get(i);
+
+            if (e.isNumeric()) {
+                e.genCode(f);
+                funcName = "write_int";
+            } else if (e.isChar()) {
+                e.genCode(f);
+                funcName = "write_char";
+            } else if (e.isString()) {
+                String label = f.getLocalLabel();
+                funcName = "write_string";
+                f.genString(label, e.getString(), "");
+                f.genInstr("", "leal", label + ",%eax", "Addr(\"" + e.getString() + "\")");
+            } else {
+                f.genInstr("", "", "", "write call, but not sure what type of value to write");
+                continue;
+            }
+
+            f.genInstr("", "pushl", "%eax", "Push param #" + (i + 1) + ".");
+            f.genInstr("", "call", funcName);
+            f.genInstr("", "addl", "$4,%esp", "Pop parameter.");
+        }
+    }
+
+    public void genCode(CodeFile f) {
+        // Check this is a call on the library function write
+        if (name.toLowerCase().equals("write")) {
+            genWriteCode(f);
+            return;
+        }
+
+        for (int i = exprs.size() - 1; i >= 0; i--) {
+            exprs.get(i).genCode(f);
+            f.genInstr("", "pushl", "%eax", "Push param #" + (i + 1) + ".");
+        }
+
+        f.genInstr("", "call", decl.label);
+
+        if (exprs.size() > 0) {
+            f.genInstr(
+                "",
+                "addl", 
+                "$" + exprs.size() * 4 + ",%esp", 
+                "Pop parameter."
+            );
         }
     }
 }

@@ -32,7 +32,7 @@ public class NamedConst extends Constant {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
+    void check(Block curScope, Library lib, Expression e) {
         curScope.findDecl(name, this);
     }
 

@@ -26,7 +26,7 @@ public class TypeDecl extends PascalDecl {
 
         td.name = TypeName.parse(s); 
         s.skip(equalToken);
-        td.type= Type.parse(s);
+        td.type = Type.parse(s);
         s.skip(semicolonToken);
 
         leaveParser("type decl");
@@ -34,13 +34,9 @@ public class TypeDecl extends PascalDecl {
         return td;
     }
 
-    @Override
-    public void check(Block curScope, Library lib) {
-        type.check(curScope, lib);
-
-        if (type instanceof TypeName) {
-            curScope.findDecl(((TypeName) type).name, this);
-       }
+    public void check(Block curScope, Library lib, Expression e) {
+        type.check(curScope, lib, e);
+        curScope.addDecl(name.name, this);
     }
 
     public void prettyPrint() {

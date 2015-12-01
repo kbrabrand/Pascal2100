@@ -7,6 +7,7 @@ import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class TypeName extends Type {
     public String name;
+    public PascalDecl decl = null;
 
     TypeName(String id, int lNum) {
         super(lNum);
@@ -31,8 +32,13 @@ public class TypeName extends Type {
         return tn;
     }
 
-    @Override
-    public void check(Block curScope, Library lib) { }
+    public void check(Block curScope, Library lib, Expression e) {
+        decl = curScope.findDecl(name, this);
+
+        if (decl != null) {
+            decl.check(curScope, lib, e);
+        }
+    }
 
     void prettyPrint() {
         Main.log.prettyPrint(name);

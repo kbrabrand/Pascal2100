@@ -4,61 +4,69 @@ public class Library extends Block {
     public Library() {
         super(-1);
 
-        addEof();
+        typeDeclPart = new TypeDeclPart(lineNum);
+        constDeclPart = new ConstDeclPart(lineNum);
+        stmtList = new StatmList(lineNum);
+
+        addEol();
         addChar();
         addBoolean();
         addInteger();
         addWrite();
     }
 
-    void addEof() {
-        ConstDecl eol = new ConstDecl("eol", -1);
-        eol.constant = new CharLiteral('\n', -1);
+    void addEol() {
+        ConstDecl eol = new ConstDecl("eol", lineNum);
+        eol.constant = new CharLiteral('\n', lineNum);
 
-        addDecl(eol.name, eol);
+        constDeclPart.decls.add(eol);
     }
 
     void addChar() {
-        RangeType charRange = new RangeType(-1);
-        charRange.from = new CharLiteral('␀', -1); // NUL
-        charRange.to = new CharLiteral('␡', -1); // DEL
+        RangeType charRange = new RangeType(lineNum);
+        charRange.from = new CharLiteral('␀', lineNum); // NUL
+        charRange.to = new CharLiteral('␡', lineNum); // DEL
 
-        TypeDecl charType = new TypeDecl(-1);
-        charType.name = new TypeName("char", -1);
+        TypeDecl charType = new TypeDecl(lineNum);
+        charType.name = new TypeName("char", lineNum);
         charType.type = charRange;
 
-        addDecl(charType.name.name, charType);
+        typeDeclPart.decls.add(charType);
     }
 
     void addBoolean() {
-        EnumType enumType = new EnumType(-1);
-        enumType.literals.add(new EnumLiteral("false", -1));
-        enumType.literals.add(new EnumLiteral("true", -1));
+        EnumType enumType = new EnumType(lineNum);
+        enumType.literals.add(new EnumLiteral("false", lineNum));
+        enumType.literals.add(new EnumLiteral("true", lineNum));
 
-        TypeDecl boolType = new TypeDecl(-1);
-        boolType.name = new TypeName("Boolean", -1);
+        TypeDecl boolType = new TypeDecl(lineNum);
+        boolType.name = new TypeName("Boolean", lineNum);
         boolType.type = enumType; 
 
-        addDecl(boolType.name.name, boolType);
-
-        for (EnumLiteral el : enumType.literals) {
-            addDecl(el.name, boolType);
-        }
+        typeDeclPart.decls.add(boolType);
     }
 
     void addInteger() {
-        RangeType integer = new RangeType(-1);
-        integer.from = new NumberLiteral(-2147483648, -1);
-        integer.to = new NumberLiteral(2147483647, -1);
+        RangeType integer = new RangeType(lineNum);
+        integer.from = new NumberLiteral(-2147483648, lineNum);
+        integer.to = new NumberLiteral(2147483647, lineNum);
 
-        TypeDecl integerType = new TypeDecl(-1);
-        integerType.name = new TypeName("Integer", -1);
+        TypeDecl integerType = new TypeDecl(lineNum);
+        integerType.name = new TypeName("Integer", lineNum);
         integerType.type = integer;
 
-        addDecl(integerType.name.name, integerType);
+        typeDeclPart.decls.add(integerType);
     }
 
     void addWrite() {
-        addDecl("write", new ProcDecl("write", -1));
+        StatmList sl = new StatmList(lineNum);
+
+        Block b = new Block(lineNum);
+        b.stmtList = sl;
+
+        ProcDecl write = new ProcDecl("write", lineNum);
+        write.block = b;
+
+        procDeclList.add(write);
     }
 }

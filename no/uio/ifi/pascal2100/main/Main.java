@@ -113,18 +113,19 @@ public class Main {
         System.out.print(" checking...");
 
         library = new Library();
-        prog.check(library, library);
+        library.check(library, library, null);
 
-        /* Del 4
-         * System.out.print(" generating code...");
-         * CodeFile code = new CodeFile(baseFileName+".s");
-         * library.genCode(code);  prog.genCode(code);
-         * code.finish();
-         */
+        prog.check(library, library, null);
+
+        System.out.print(" generating code...");
+        CodeFile code = new CodeFile(baseFileName+".s");
+        library.genCode(code);
+        prog.genCode(code);
+        code.finish();
 
         System.out.println("OK");
 
-        // Del 4: assembleCode();
+        assembleCode();
     }
 
     private static void assembleCode() {

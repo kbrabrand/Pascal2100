@@ -1,5 +1,6 @@
 package no.uio.ifi.pascal2100.parser;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.*;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.*;
@@ -43,13 +44,40 @@ public class Program extends PascalDecl {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
-        progBlock.check(curScope, progBlock, lib);
+    public void check(Block curScope, Library lib, Expression e) {
+        progBlock.check(curScope, progBlock, lib, e);
     }
 
     public void prettyPrint() {
         Main.log.prettyPrintLn("program " + name + ";");
         progBlock.prettyPrint();
         Main.log.prettyPrintLn(".");
+    }
+
+    @Override
+    public void genCode(CodeFile f) {
+        String progLabel = f.getLabel("prog$" + name);
+        int progBlockSize = progBlock.getSize();
+
+        f.genInstr("", ".extern", "write_char");
+        f.genInstr("", ".extern", "write_int");
+        f.genInstr("", ".extern", "write_string");
+        f.genInstr("", ".globl", "_main");
+        f.genInstr("", ".globl", "main");
+
+        f.genInstr("_main", "", "");
+        f.genInstr("main", "call", progLabel, "Start program");
+        f.genInstr("", "movl", "$0,%eax", "Set status 0 and");
+        f.genInstr("", "ret", "", "terminate the program");
+
+        for (PascalDecl pd : progBlock.procDeclList) {
+            pd.genCode(f);
+        }
+
+        f.genInstr(progLabel, "");
+        f.genInstr("", "enter", "$" + progBlockSize + ",$" + progBlock.blockLevel, "Start of " + name);
+        progBlock.genCode(f);
+        f.genInstr("", "leave", "", "End of " + name);
+        f.genInstr("", "ret");
     }
 }

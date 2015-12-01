@@ -2,6 +2,7 @@ package no.uio.ifi.pascal2100.parser;
 
 import static no.uio.ifi.pascal2100.scanner.TokenKind.notToken;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -32,8 +33,8 @@ public class Negation extends Factor {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
-        factor.check(curScope, lib);
+    void check(Block curScope, Library lib, Expression e) {
+        factor.check(curScope, lib, e);
     }
 
     @Override
@@ -41,5 +42,11 @@ public class Negation extends Factor {
         Main.log.prettyPrint("not ");
 
         factor.prettyPrint();
+    }
+
+    @Override
+    void genCode(CodeFile f) {
+        factor.genCode(f);
+        f.genInstr("", "xorl", "$1,%eax", "  not");
     }
 }

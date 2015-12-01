@@ -37,9 +37,9 @@ public class VarDeclPart extends PascalSyntax {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
+    public void check(Block curScope, Library lib, Expression e) {
         for (VarDecl vd : decls) {
-            vd.check(curScope, lib);
+            vd.check(curScope, lib, e);
         }
     }
 

@@ -236,7 +236,7 @@ public class Scanner {
                 tok = new Token("", matcher.group(1), getFileLineNum());
                 break;
             case nameToken:
-                tok = new Token(matcher.group(), getFileLineNum());
+                tok = new Token(matcher.group().toLowerCase(), getFileLineNum());
                 break;
             case intValToken:
                 tok = new Token(Integer.parseInt(matcher.group()), getFileLineNum());

@@ -6,6 +6,7 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.colonToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.semicolonToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.leftParToken;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -50,11 +51,11 @@ public class FuncDecl extends ProcDecl {
         return fd;
     }
 
-    @Override
-    public void check(Block curScope, Library lib) {
-        curScope.findDecl(typeName.name, this);
+    public void check(Block curScope, Library lib, Expression e) {
+        TypeDecl td = (TypeDecl) curScope.findDecl(typeName.name, this);
+        td.check(curScope, lib, e);
 
-        super.check(curScope, lib);
+        super.check(curScope, lib, null);
     }
 
     public void prettyPrint() {
@@ -73,5 +74,25 @@ public class FuncDecl extends ProcDecl {
         block.prettyPrint();
 
         Main.log.prettyPrintLn("; {" + name + "}");
+    }
+
+    @Override
+    public void genCode(CodeFile f) {
+        label = f.getLabel("func$" + name);
+
+        for (ProcDecl pd : block.procDeclList) {
+            pd.genCode(f);
+        }
+
+        for (PascalDecl pd : paramDeclList.decls) {
+            pd.genCode(f);
+        }
+
+        f.genInstr(label, "");
+        f.genInstr("", "enter", "$" + block.getSize() + ",$" + block.blockLevel, "Start of " + name);
+        block.genCode(f);
+        f.genInstr("", "movl", "-32(%ebp),%eax", "Fetch return value");
+        f.genInstr("", "leave", "", "End of " + name);
+        f.genInstr("", "ret");
     }
 }

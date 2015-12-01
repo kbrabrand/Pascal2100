@@ -5,12 +5,14 @@ import static no.uio.ifi.pascal2100.scanner.TokenKind.procedureToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.semicolonToken;
 import static no.uio.ifi.pascal2100.scanner.TokenKind.leftParToken;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
 public class ProcDecl extends PascalDecl {
     public ParamDeclList paramDeclList = null;
     public Block block;
+    public String label;
 
     ProcDecl(String id, int lNum) {
         super(id, lNum);
@@ -47,18 +49,25 @@ public class ProcDecl extends PascalDecl {
     }
 
     @Override
-    public void check(Block curScope, Library lib) {
+    public void check(Block curScope, Library lib, Expression e) {
+        ParamDecl pd;
+
         curScope.addDecl(name, this);
 
         if (paramDeclList != null) {
-            for (ParamDecl pd: paramDeclList.decls) {
+            for (int i = 0; i < paramDeclList.decls.size(); i++) {
+                pd = paramDeclList.decls.get(i);
+
+                pd.declLevel = curScope.blockLevel + 1;
+                pd.declOffset = 8 + (4 * i);
+
                 block.addDecl(pd.name, pd);
             }
 
-            paramDeclList.check(curScope, lib);
+            paramDeclList.check(curScope, lib, e);
         }
 
-        block.check(curScope, block, lib);
+        block.check(curScope, block, lib, e);
     }
 
     public void prettyPrint() {
@@ -73,5 +82,26 @@ public class ProcDecl extends PascalDecl {
         Main.log.prettyPrint("; ");
         block.prettyPrint();
         Main.log.prettyPrintLn("; {" + name + "}");
+    }
+
+    @Override
+    public void genCode(CodeFile f) {
+        label = f.getLabel("proc$" + name);
+
+        for (ProcDecl pd : block.procDeclList) {
+            pd.genCode(f);
+        }
+
+        if (paramDeclList != null) {
+            for (PascalDecl pd : paramDeclList.decls) {
+                pd.genCode(f);
+            }
+        }
+
+        f.genInstr(label, "");
+        f.genInstr("", "enter", "$" + block.getSize() + ",$" + block.blockLevel, "Start of " + name);
+        block.genCode(f);
+        f.genInstr("", "leave", "", "End of " + name);
+        f.genInstr("", "ret");
     }
 }

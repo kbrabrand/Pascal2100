@@ -1,5 +1,6 @@
 package no.uio.ifi.pascal2100.parser;
 
+import no.uio.ifi.pascal2100.main.CodeFile;
 import no.uio.ifi.pascal2100.main.Main;
 import no.uio.ifi.pascal2100.scanner.Scanner;
 
@@ -7,6 +8,11 @@ public class Expression extends PascalSyntax {
     public SimpleExpr leading;
     public RelOperator relOperator = null;
     public SimpleExpr trailing = null;
+
+    public boolean isNumeric = false;
+    public boolean isString = false;
+    public boolean isChar = false;
+    public StringLiteral string;
 
     Expression(int n) {
         super(n);
@@ -34,13 +40,30 @@ public class Expression extends PascalSyntax {
         return e;
     }
 
-    @Override
-    public void check(Block curScope, Library lib) {
-        leading.check(curScope, lib);
+    public boolean isString() {
+        return this.isString;
+    }
+
+    public String getString() {
+        return string.val;
+    }
+
+    public boolean isChar() {
+        return this.isChar;
+    }
+
+    public boolean isNumeric() {
+        return this.isNumeric;
+    }
+
+    public void check(Block curScope, Library lib, Expression e) {
+        Expression checkExpr = e != null ? e : this;
+
+        leading.check(curScope, lib, checkExpr);
 
         if (relOperator != null) {
-            relOperator.check(curScope, lib);
-            trailing.check(curScope, lib);
+            relOperator.check(curScope, lib, checkExpr);
+            trailing.check(curScope, lib, checkExpr);
         }
     }
 
@@ -53,6 +76,17 @@ public class Expression extends PascalSyntax {
             relOperator.prettyPrint();
             Main.log.prettyPrint(" ");
             trailing.prettyPrint();
+        }
+    }
+
+    @Override
+    void genCode(CodeFile f) {
+        leading.genCode(f);
+
+        if (trailing != null) {
+            f.genInstr("", "pushl", "%eax");
+            trailing.genCode(f);
+            relOperator.genCode(f);
         }
     }
 }
