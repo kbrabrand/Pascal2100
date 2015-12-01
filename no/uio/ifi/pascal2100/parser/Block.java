@@ -163,14 +163,10 @@ public class Block extends PascalSyntax {
         if (typeDeclPart != null) {
             typeDeclPart.check(this, lib, e);
 
-            System.out.println("type decls at line " + lineNum + ": " + typeDeclPart.decls.size() + " decls");
-            
             for (TypeDecl td: typeDeclPart.decls) {
                 this.addDecl(td.name.name, td);
             }
         }
-
-        System.out.println("proc decls at line " + lineNum + ": " + procDeclList.size() + " decls");
 
         // Procedure declarations
         for (ProcDecl pd : procDeclList) {
