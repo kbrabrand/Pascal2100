@@ -70,21 +70,12 @@ public class Variable extends Factor {
 
     @Override
     void genCode(CodeFile f) {
-        TypeDecl td;
-        EnumType et;
+        EnumLiteral el;
 
         // Check if this is a reference to a enumerated type value
-        if (nameDecl instanceof TypeDecl) {
-            td = (TypeDecl) nameDecl;
-            et = (EnumType) td.type;
-
-            for (int i = 0; i < et.literals.size(); i++) {
-                if (name.equals(et.literals.get(i).name)) {
-                    f.genInstr("", "movl", "$" + i + ",%eax", "enum value " + name + "(=" + i + ")");
-                    return;
-                }
-            }
-
+        if (nameDecl instanceof EnumLiteral) {
+            el = (EnumLiteral) nameDecl;
+            f.genInstr("", "movl", "$" + el.index + ",%eax", "enum value " + name + " (=" + el.index + ")");
             return;
         }
 
