@@ -1,5 +1,5 @@
 # Pascal2100 compiler
-Pascal[2100] parser written in Java as course assignment in INF2100, fall 2015. When done, the compiler is supposed to compile from Pascal2100 (a subset of Pascal) to X86 Assembly.
+Pascal[2100] parser written in Java as course assignment in INF2100, fall 2015. The compiler compiles from Pascal2100 (a subset of Pascal) to X86 Assembly.
 
 ## Building the jar file
 ```sh
